@@ -1,5 +1,5 @@
 # F5 Professional Services
-Solutions, examples and tools developed by F5 Professional Services team.
+Solutions, tools and examples developed by the F5 Professional Services team.
 
 ## Examples
 The examples folder has common examples and solutions for different products of the F5 portfolio. Use them as a reference for your own or extend them for a particular use case.
