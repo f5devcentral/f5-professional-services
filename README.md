@@ -2,7 +2,7 @@
 Solutions, examples and tools developed by F5 Professional Services team.
 
 ## Examples
-The examples folder has common solutions for different F5 portfolio. Use these solutions as a reference for your own or extend them for a particular use case.
+The examples folder has common examples and solutions for different products of the F5 portfolio. Use them as a reference for your own or extend them for a particular use case.
 
 
 | Example                                         | Description |
@@ -20,7 +20,7 @@ The examples folder has common solutions for different F5 portfolio. Use these s
 
 
 ## Tools
-The tools folder contains ready-made utilities which can assist with a variaty of tasks related to F5 portfolio.
+The tools folder contains utilities which can assist with a variaty of tasks related to the F5 portfolio.
 
 | Tool                                         | Description |
 | ----------------------------------------------- | ----------- |
@@ -28,7 +28,7 @@ The tools folder contains ready-made utilities which can assist with a variaty o
 | [f5-waf-quick-view](tools/f5-waf-quick-view)| This reports on some settings across BIG-IP ASM policies  |
 
 ## Utils
-The utils folder contains common commands used day to day for F5 technologies and cheatsheet on various anxialliary tools.
+The utils folder contains common commands used day to day in F5 technologies as well as cheatsheet and tips on various anxialliary tools.
 
 | Util                                         | Description |
 | ----------------------------------------------- | ----------- |
