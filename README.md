@@ -27,10 +27,10 @@ The tools folder contains utilities which can assist with a variaty of tasks rel
 | [f5-waf-quick-patch-cve-2021-44228](tools/f5-waf-quick-patch-cve-2021-44228)| This patches various BIG-IP ASM policies for CVE-2021-44228  |
 | [f5-waf-quick-view](tools/f5-waf-quick-view)| This reports on some settings across BIG-IP ASM policies  |
 
-## Utils
-The utils folder contains common commands used day to day in F5 technologies as well as cheatsheet and tips on various anxialliary tools.
+## Tips & Tricks
+The tip-and-tricks folder contains common commands used day to day in F5 technologies as well as cheatsheet and tips (!) on various ancialliary tools.
 
-| Util                                         | Description |
+| tips-and-tricks                                         | Description |
 | ----------------------------------------------- | ----------- |
 | [big-ip-common-commands](utils/big-ip-common-commands)| This contains a list of very useful BIG-IP commands  |
 | [traffic-generator-tools-cheatsheet](utils/traffic-generator-tools-cheatsheet)| This contains a list of traffic generator tools their cheatsheets |
