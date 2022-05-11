@@ -38,6 +38,9 @@ The tip-and-tricks folder contains common commands used day to day in F5 technol
 ## Contributing
 See the contributing [instructions](/CONTRIBUTING.md) (work in progress) to get started contributing.
 
+## Community Code of Conduct
+Please refer to the [F5 DevCentral Community Code of Conduct](code_of_conduct.md).
+
 ## License
 All solutions within this repository are provided under the [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) license. Please see the [LICENSE](/LICENSE) file for more detailed terms and conditions.
 
