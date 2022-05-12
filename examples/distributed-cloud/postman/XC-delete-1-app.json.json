@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "0a36274d-1be6-4d10-8008-9605a8b9f6fe",
+		"name": "F5 XC Delete App (1 App)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Set Collection Variables + Retrieve HTTP LB Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ce4daad6-c593-456d-a47f-77099dddb550",
+						"exec": [
+							"//Get app name and http payload ",
+							"const appName = pm.environment.get(\"app_name_1\");",
+							"var jsonData = JSON.parse(responseBody);",
+							"var jsonNamesData = jsonData.items;",
+							"",
+							"//Retrieve full http lb name from namespace configuration",
+							"for(var i=0;i<jsonNamesData.length;i++){",
+							"    lbName = jsonNamesData[i].name;",
+							"    if (lbName.includes(appName)) {",
+							"        pm.collectionVariables.set(\"lbName\", lbName);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "bea28545-25dd-4660-8aff-1a1a397dcf69",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers?report_fields",
+					"protocol": "https",
+					"host": [
+						"{{voltconsole-host}}",
+						"console",
+						"ves",
+						"volterra",
+						"io"
+					],
+					"path": [
+						"api",
+						"config",
+						"namespaces",
+						"{{namespace_1}}",
+						"http_loadbalancers"
+					],
+					"query": [
+						{
+							"key": "report_fields",
+							"value": null
+						}
+					]
+				},
+				"description": "Shared NamesSpace Sites"
+			},
+			"response": []
+		},
+		{
+			"name": "HTTP LB Config",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1f58e7ab-bcdd-4125-b201-5b6ff83a92b2",
+						"exec": [
+							"// get namespaces and set variables for object counts and payload",
+							"var JSONobj = JSON.parse(responseBody);",
+							"//for troubleshooting",
+							"//console.log(JSONobj);",
+							"",
+							"//set collection variables for application migration",
+							"var poolName = JSONobj.spec.default_route_pools[0].pool.name;",
+							"pm.collectionVariables.set(\"poolName\", poolName);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "2ca2784a-cfad-4cf0-9a78-9b01785dbb97",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers/{{lbName}}",
+				"description": "Shared NamesSpace Sites"
+			},
+			"response": []
+		},
+		{
+			"name": "Origin Pool Config",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6825e733-169d-4ea5-8084-b8c49bc36fc3",
+						"exec": [
+							"//set collection variables for application migration",
+							"var JSONobj = JSON.parse(responseBody);",
+							"var monitorName = JSONobj.spec.healthcheck[0].name;",
+							"pm.collectionVariables.set(\"monitorName\", monitorName);",
+							"",
+							"//for troubleshooting",
+							"//console.log(JSONobj);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "8fab59f3-dd67-4ba8-98a2-6111417255e6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools/{{poolName}}",
+				"description": "Shared NamesSpace Sites"
+			},
+			"response": []
+		},
+		{
+			"name": "HTTP LB",
+			"_postman_id": "82697afa-4a52-48d7-8369-80f0d141d2f7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers/{{lbName}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Origin Pool",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d07bd9ea-1694-48e9-8e89-e85a78b6ef43",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "04979904-f8e1-48bf-aab2-83dfab85c91c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools/{{poolName}}",
+				"description": "Shared NamesSpace Sites"
+			},
+			"response": []
+		},
+		{
+			"name": "Health Check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d07bd9ea-1694-48e9-8e89-e85a78b6ef43",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "de1fa4bc-7277-4a46-8d7b-d3769bbeadea",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks/{{monitorName}}",
+				"description": "Shared NamesSpace Sites"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"value": "APIToken {{api_credential}}",
+			"key": "Authorization"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7e10a887-f0f8-47bc-aced-cf1537a21d2e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ad33a9b8-d43c-4f7f-8072-8de688c8d1fa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "df47ac56-1973-4d7e-b0ec-02b900c5722f",
+			"key": "lbName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "3ecf07f1-3bfb-42a7-8155-073ef9d70b76",
+			"key": "poolName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "fca1facc-a41e-4df0-af5d-53364c38adf3",
+			"key": "monitorName",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
