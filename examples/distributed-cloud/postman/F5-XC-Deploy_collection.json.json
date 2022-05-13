@@ -1,0 +1,1873 @@
+{
+	"info": {
+		"_postman_id": "dcf51e35-b57b-41c8-a28a-5c42b38a3f44",
+		"name": "F5 XC Deploy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Deploy HTTP App + WAAP (1 App) - Manual DNS/Cert",
+			"item": [
+				{
+					"name": "shared namespace",
+					"item": [
+						{
+							"name": "Create namespace1",
+							"id": "e3c462c9-aa47-457c-9155-670e3789700b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_1}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Shared App Firewall",
+							"id": "9d650be2-b700-4e19-b4b6-9145540bf5c2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{shared-appfw-name}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"blocking\": {},\n    \"default_detection_settings\": {},\n    \"default_bot_setting\": {},\n    \"allow_all_response_codes\": {},\n    \"default_anonymization\": {},\n    \"use_default_blocking_page\": {}\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_firewalls",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Shared Service Policy- block-countries",
+							"id": "250b575e-7946-42a8-9c94-c561f44c06b0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"web-srvpolicy-block-countries\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"algo\": \"FIRST_MATCH\",\n    \"any_server\": {},\n    \"port_matcher\": null,\n    \"deny_list\": {\n      \"prefix_list\": null,\n      \"ip_prefix_set\": null,\n      \"asn_list\": null,\n      \"asn_set\": null,\n      \"country_list\": [\n        \"COUNTRY_CU\",\n        \"COUNTRY_IR\",\n        \"COUNTRY_KP\",\n        \"COUNTRY_LY\",\n        \"COUNTRY_SY\",\n        \"COUNTRY_SD\"\n      ],\n      \"tls_fingerprint_classes\": null,\n      \"tls_fingerprint_values\": null,\n      \"default_action_next_policy\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/service_policys",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Shared Service Policy - allowed-http-methods",
+							"id": "84bab523-aebb-49a8-834e-4d5cb4bbc98b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"web-srvpolicy-allowed-http-methods\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"algo\": \"FIRST_MATCH\",\n    \"any_server\": {},\n    \"port_matcher\": null,\n    \"rule_list\": {\n      \"rules\": [\n        {\n          \"metadata\": {\n            \"name\": \"policy-allow\",\n            \"description\": null,\n            \"disable\": null\n          },\n          \"spec\": {\n            \"action\": \"ALLOW\",\n            \"any_client\": {},\n            \"client_role\": null,\n            \"server_selector\": null,\n            \"label_matcher\": {\n              \"keys\": null\n            },\n            \"path\": null,\n            \"headers\": null,\n            \"query_params\": null,\n            \"http_method\": {\n              \"methods\": [\n                \"GET\",\n                \"HEAD\",\n                \"POST\"\n              ],\n              \"invert_matcher\": null\n            },\n            \"any_ip\": {},\n            \"any_asn\": {},\n            \"api_group_matcher\": null,\n            \"port_matcher\": null,\n            \"expiration_timestamp\": null,\n            \"body_matcher\": null,\n            \"arg_matchers\": null,\n            \"cookie_matchers\": null,\n            \"waf_action\": {\n              \"none\": {}\n            },\n            \"domain_matcher\": null,\n            \"rate_limiter\": null,\n            \"virtual_host_matcher\": null,\n            \"tls_fingerprint_matcher\": null,\n            \"forwarding_class\": null,\n            \"malicious_user_mitigation_bypass\": null,\n            \"scheme\": null,\n            \"url_matcher\": null,\n            \"l4_dest_matcher\": null,\n            \"challenge_action\": \"DEFAULT_CHALLENGE\",\n            \"goto_policy\": null\n          }\n        }\n      ]\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/service_policys",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 AI+ML Shared Namespace",
+							"id": "335bbd93-6e6c-44af-80a3-e32fa6a5a2cb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "c8b20e06-9df4-4b9c-89e3-4e38dd663f88"
+				},
+				{
+					"name": "Namespace1",
+					"item": [
+						{
+							"name": "Create AI+ML App Type",
+							"id": "3f0ebffa-45f1-4cbe-8478-123d121fd441",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-aset\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_1}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Health Check",
+							"id": "7a774be3-df96-4b35-a4a3-d55a6338e506",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-tcp-check\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Origin Pool",
+							"id": "f7e589b2-0097-40cb-81b7-07a40d07540f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_name\": {\n          \"dns_name\": \"{{pool_1}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{app_name_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Web App Firewall",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6ba44685-80e3-4e2e-bdbe-d106d7b7fcbf",
+										"exec": [
+											"//Determine Key Type ",
+											"var TLSkey = pm.environment.get(\"namespace_1-key\");",
+											"if (TLSkey.includes(\"-----BEGIN PRIVATE KEY-----\")) {",
+											"    postman.setNextRequest(\"Create HTTP LB - Cleartext Key\");",
+											"}",
+											"else {",
+											"    postman.setNextRequest(\"Create HTTP LB - Blindfold Key\");",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "b35f8585-f4d3-4253-88ab-6a2fea2f30ee",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-appwf\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/app_firewalls",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create HTTP LB - Blindfold Key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9b847ed7-2e7d-49de-9c43-c40b5a951a16",
+										"exec": [
+											"postman.setNextRequest(null);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "d3d4143b-f7ed-4dd7-ac42-10a9ddd3b053",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"blindfold_secret_info\": {\n                                \"location\": \"string:///{{namespace_1-key}}\",\n                                \"decryption_provider\": null,\n                                \"store_provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": null\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"app_firewall\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"shared\",\n      \"name\": \"{{shared-appfw-name}}\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create HTTP LB - Cleartext Key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d92feb23-49d1-49a7-a8f9-422e438cddfb",
+										"exec": [
+											"postman.setNextRequest(null);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "91b7b0dd-b618-4233-910c-f98935a4e068",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"clear_secret_info\": {\n                                \"url\": \"string:///{{base64EncodedKey}}\",\n                                \"provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": \"EncodingNone\"\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": {\n      \"allow_origin\": null,\n      \"allow_origin_regex\": null,\n      \"allow_methods\": \"GET,POST,HEAD\",\n      \"allow_headers\": null,\n      \"expose_headers\": null,\n      \"maximum_age\": 0,\n      \"allow_credentials\": null,\n      \"disabled\": null,\n      \"max_age\": null\n    },\n    \"app_firewall\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"{{app_name_1}}-appwf\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "eeac2b84-5dce-4252-915c-691e94009f16"
+				}
+			],
+			"id": "68855377-2997-42c3-a68a-7695d1a91976",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "664cd16f-ca6d-489e-b392-304fdfc236bd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
+							"pm.collectionVariables.set(\"base64EncodedKey\", btoa(pm.environment.get(\"namespace_1-key\")));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "678c9565-c1da-4d1a-98fb-0d7423e783b9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Deploy HTTP WAAP App - Auto DNS (4 Apps)",
+			"item": [
+				{
+					"name": "shared namespace",
+					"item": [
+						{
+							"name": "Create namespace1",
+							"id": "7ebeb8a2-e2c5-46fe-8612-0aef0555802f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_1}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2",
+							"id": "8064d537-86cd-41fe-9777-d30e2fc67f38",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_2}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3",
+							"id": "d65388e6-c1be-43ab-af02-c77585132814",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_3}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4",
+							"id": "07007e8c-fa51-4b43-8866-67ce078b67af",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_4}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create block-countries shared Service Policy",
+							"id": "3a65b365-04af-4901-b72b-08399ae773ea",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"web-srvpolicy-block-countries\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"algo\": \"FIRST_MATCH\",\n    \"any_server\": {},\n    \"port_matcher\": null,\n    \"deny_list\": {\n      \"prefix_list\": null,\n      \"ip_prefix_set\": null,\n      \"asn_list\": null,\n      \"asn_set\": null,\n      \"country_list\": [\n        \"COUNTRY_CU\",\n        \"COUNTRY_IR\",\n        \"COUNTRY_KP\",\n        \"COUNTRY_LY\",\n        \"COUNTRY_SY\",\n        \"COUNTRY_SD\"\n      ],\n      \"tls_fingerprint_classes\": null,\n      \"tls_fingerprint_values\": null,\n      \"default_action_next_policy\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/service_policys",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create allowed-http-methods- shared Service Policy",
+							"id": "3caa4fa4-9ae3-4786-b59a-16986b343118",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"web-srvpolicy-allowed-http-methods\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"algo\": \"FIRST_MATCH\",\n    \"any_server\": {},\n    \"port_matcher\": null,\n    \"rule_list\": {\n      \"rules\": [\n        {\n          \"metadata\": {\n            \"name\": \"policy-allow\",\n            \"description\": null,\n            \"disable\": null\n          },\n          \"spec\": {\n            \"action\": \"ALLOW\",\n            \"any_client\": {},\n            \"client_role\": null,\n            \"server_selector\": null,\n            \"label_matcher\": {\n              \"keys\": null\n            },\n            \"path\": null,\n            \"headers\": null,\n            \"query_params\": null,\n            \"http_method\": {\n              \"methods\": [\n                \"GET\",\n                \"HEAD\",\n                \"POST\"\n              ],\n              \"invert_matcher\": null\n            },\n            \"any_ip\": {},\n            \"any_asn\": {},\n            \"api_group_matcher\": null,\n            \"port_matcher\": null,\n            \"expiration_timestamp\": null,\n            \"body_matcher\": null,\n            \"arg_matchers\": null,\n            \"cookie_matchers\": null,\n            \"waf_action\": {\n              \"none\": {}\n            },\n            \"domain_matcher\": null,\n            \"rate_limiter\": null,\n            \"virtual_host_matcher\": null,\n            \"tls_fingerprint_matcher\": null,\n            \"forwarding_class\": null,\n            \"malicious_user_mitigation_bypass\": null,\n            \"scheme\": null,\n            \"url_matcher\": null,\n            \"l4_dest_matcher\": null,\n            \"challenge_action\": \"DEFAULT_CHALLENGE\",\n            \"goto_policy\": null\n          }\n        }\n      ]\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/service_policys",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 AI+ML Shared Namespace",
+							"id": "2ea03e03-048f-499c-9e41-e2b6dd0c081a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 AI+ML Shared Namespace",
+							"id": "8decf396-eb95-411d-af18-3bbb93896f85",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 AI+ML Shared Namespace",
+							"id": "753c68d3-7469-4f86-8e96-c0687dbf7ec5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 AI+ML Shared Namespace",
+							"id": "73684886-62c3-45fa-bcf7-374e0ab76cd6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "f13abeee-e761-4179-88ec-45800c81f6aa"
+				},
+				{
+					"name": "Namespace1",
+					"item": [
+						{
+							"name": "Create namespace1 AI+ML app type",
+							"id": "cad2d10b-6cab-4c2d-8f1b-cb4d749fe8ab",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-aset\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_1}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 health check",
+							"id": "a294bff5-a400-4288-9f48-d5dcda90ea06",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-tcp-check\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 origin pool",
+							"id": "a81aa798-d318-47ff-a4cb-f449bfb33ca6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_name\": {\n          \"dns_name\": \"{{pool_1}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{namespace_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 app firewall",
+							"id": "6393eade-5c21-49ca-8501-67221d81eafc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-appwf\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/wafs",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 http lb",
+							"id": "75874f69-46fc-4fc0-9c81-d460bd70b253",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{namespace_1}}\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n     \"http\": {\n      \"dns_volterra_managed\": true\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{namespace_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    \"waf\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"{{namespace_1}}-appwf\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "8f972ca3-64f0-49e9-8429-090e29dfd41d"
+				},
+				{
+					"name": "Namespace2",
+					"item": [
+						{
+							"name": "Create namespace2 AI+ML app type",
+							"id": "4833c2c8-eca6-4c62-b1d1-8d79b08c781f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-aset\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_2}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 health check",
+							"id": "c3625fac-b500-41b0-8574-77f054037a03",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-tcp-check\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 origin pool",
+							"id": "e009c737-19f4-4695-a917-3150a5eac411",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-pool\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_name\": {\n          \"dns_name\": \"{{pool_2}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_2}}\",\n        \"name\": \"{{namespace_2}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 app firewall",
+							"id": "264cfb81-2e97-47ee-9538-c89257cfabb0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-appwf\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/wafs",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 http lb",
+							"id": "20b0e599-1119-41f6-8a50-9dd6ce6b604f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-http-lb\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{namespace_2}}\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_2-http-lb-domain}}\"\n    ],\n     \"http\": {\n      \"dns_volterra_managed\": true\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_2}}\",\n          \"name\": \"{{namespace_2}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    \"waf\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_2}}\",\n      \"name\": \"{{namespace_2}}-appwf\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "8b183976-df9f-4e9b-8d26-114d25244d90"
+				},
+				{
+					"name": "Namespace3",
+					"item": [
+						{
+							"name": "Create namespace3 AI+ML app type",
+							"id": "ae070a79-a167-4823-82d9-65f6e38957c9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-aset\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_3}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 health check",
+							"id": "0549bd46-6acf-4315-a64d-435a8f9b684e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-tcp-check\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 origin pool",
+							"id": "aa99e636-a4ff-48ca-875b-11c370730ae3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-pool\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_name\": {\n          \"dns_name\": \"{{pool_3}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_3}}\",\n        \"name\": \"{{namespace_3}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 app firewall",
+							"id": "bba89059-a671-4552-b290-754fd5685801",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-appfw\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/wafs",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 http lb",
+							"id": "a0576ffb-7066-41ab-8a82-1bbbc5978911",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-http-lb\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{namespace_3}}\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_3-http-lb-domain}}\"\n    ],\n     \"http\": {\n      \"dns_volterra_managed\": true\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_3}}\",\n          \"name\": \"{{namespace_3}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    \"waf\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_3}}\",\n      \"name\": \"{{namespace_3}}-appfw\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "df53b027-4a4b-4e01-9e9c-020d91312c11"
+				},
+				{
+					"name": "Namespace4",
+					"item": [
+						{
+							"name": "Create namespace4 AI+ML app type",
+							"id": "b340977f-3803-49be-8ce6-53cf1637d2f9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-aset\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_4}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 health check",
+							"id": "2a964a35-600e-4f21-bf2f-ab0b077b2b43",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-tcp-check\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 origin pool",
+							"id": "bd3e2930-d119-40e0-9802-10edc9512ce1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-pool\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_ip\": {\n          \"ip\": \"{{pool_4}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_4}}\",\n        \"name\": \"{{namespace_4}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 app firewall",
+							"id": "1d9bfe22-c991-4518-862e-7671631a934c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-appfw\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/app_firewalls",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 http lb",
+							"id": "f64dc8e5-89ce-49fd-a000-e5d8f1a47356",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-http-lb\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{namespace_4}}\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_4-http-lb-domain}}\"\n    ],\n     \"http\": {\n      \"dns_volterra_managed\": true\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_4}}\",\n          \"name\": \"{{namespace_4}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    \"waf\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_4}}\",\n      \"name\": \"{{namespace_4}}-appfw\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "d37d6fcd-a16d-48df-9d71-0190cc902f49"
+				}
+			],
+			"id": "2362b57f-8abe-477d-92e4-68f321a3e6e9",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2668fd48-9f52-4277-993f-8b204ab2e171",
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
+							"pm.collectionVariables.set(\"base64EncodedKey\", btoa(pm.environment.get(\"namespace_1-key\")));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b00a0c5b-9b7d-4273-8f66-73b54662f07d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Deploy HTTPS WAAP App - Auto DNS/Cert (4 Apps)",
+			"item": [
+				{
+					"name": "shared namespace",
+					"item": [
+						{
+							"name": "Create namespace1",
+							"id": "966ef109-3d12-4983-9f01-1a4b98c4eed2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_1}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2",
+							"id": "97e5459e-88aa-41f6-ba5c-1791bf8de87f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_2}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3",
+							"id": "44e8b0ff-b762-40e8-ad81-0095660d7871",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_3}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4",
+							"id": "da4c1943-81d5-4d94-b05a-8e96c0fb86ff",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_4}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create block-countries shared Service Policy",
+							"id": "3cc3d445-1863-4e1b-a7c0-fbf25e495d75",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"web-srvpolicy-block-countries\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"algo\": \"FIRST_MATCH\",\n    \"any_server\": {},\n    \"port_matcher\": null,\n    \"deny_list\": {\n      \"prefix_list\": null,\n      \"ip_prefix_set\": null,\n      \"asn_list\": null,\n      \"asn_set\": null,\n      \"country_list\": [\n        \"COUNTRY_CU\",\n        \"COUNTRY_IR\",\n        \"COUNTRY_KP\",\n        \"COUNTRY_LY\",\n        \"COUNTRY_SY\",\n        \"COUNTRY_SD\"\n      ],\n      \"tls_fingerprint_classes\": null,\n      \"tls_fingerprint_values\": null,\n      \"default_action_next_policy\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/service_policys",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create allowed-http-methods- shared Service Policy",
+							"id": "5cb080b5-f5a2-46ea-8d3e-cc9a18abfd10",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"web-srvpolicy-allowed-http-methods\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"algo\": \"FIRST_MATCH\",\n    \"any_server\": {},\n    \"port_matcher\": null,\n    \"rule_list\": {\n      \"rules\": [\n        {\n          \"metadata\": {\n            \"name\": \"policy-allow\",\n            \"description\": null,\n            \"disable\": null\n          },\n          \"spec\": {\n            \"action\": \"ALLOW\",\n            \"any_client\": {},\n            \"client_role\": null,\n            \"server_selector\": null,\n            \"label_matcher\": {\n              \"keys\": null\n            },\n            \"path\": null,\n            \"headers\": null,\n            \"query_params\": null,\n            \"http_method\": {\n              \"methods\": [\n                \"GET\",\n                \"HEAD\",\n                \"POST\"\n              ],\n              \"invert_matcher\": null\n            },\n            \"any_ip\": {},\n            \"any_asn\": {},\n            \"api_group_matcher\": null,\n            \"port_matcher\": null,\n            \"expiration_timestamp\": null,\n            \"body_matcher\": null,\n            \"arg_matchers\": null,\n            \"cookie_matchers\": null,\n            \"waf_action\": {\n              \"none\": {}\n            },\n            \"domain_matcher\": null,\n            \"rate_limiter\": null,\n            \"virtual_host_matcher\": null,\n            \"tls_fingerprint_matcher\": null,\n            \"forwarding_class\": null,\n            \"malicious_user_mitigation_bypass\": null,\n            \"scheme\": null,\n            \"url_matcher\": null,\n            \"l4_dest_matcher\": null,\n            \"challenge_action\": \"DEFAULT_CHALLENGE\",\n            \"goto_policy\": null\n          }\n        }\n      ]\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/service_policys",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 AI+ML Shared Namespace",
+							"id": "994072a7-a899-4f19-893f-28a5b1382b7a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 AI+ML Shared Namespace",
+							"id": "6d456139-ab86-4626-95bc-545c05af0957",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 AI+ML Shared Namespace",
+							"id": "ecb47138-669b-4eb1-b273-5bc323eb4240",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 AI+ML Shared Namespace",
+							"id": "dc39212d-5759-478d-9c9d-8fd1a76613ef",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "a401a840-1fd3-4330-a8ef-ab6144d5d43d"
+				},
+				{
+					"name": "Namespace1",
+					"item": [
+						{
+							"name": "Create namespace1 AI+ML app type",
+							"id": "55ce9616-4beb-47e6-9e53-b8270b00e7cf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-aset\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_1}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 health check",
+							"id": "c59b8f98-3501-4d84-9a44-58a5448f9ef2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-tcp-check\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 origin pool",
+							"id": "2b533155-3226-4b3c-b7dd-3998180b1eca",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_name\": {\n          \"dns_name\": \"{{pool_1}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{namespace_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 app firewall",
+							"id": "1ca1f779-bcdb-4a92-84ca-3c42d4abc0a7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-appwf\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/wafs",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace1 http lb",
+							"id": "2e0a913d-adc4-4564-8940-9715da1ae999",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{namespace_1}}\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"add_hsts\": null,\n      \"no_mtls\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"default_header\": {}\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{namespace_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": {\n      \"allow_origin\": null,\n      \"allow_origin_regex\": null,\n      \"allow_methods\": \"GET,POST,HEAD\",\n      \"allow_headers\": null,\n      \"expose_headers\": null,\n      \"maximum_age\": 0,\n      \"allow_credentials\": null,\n      \"disabled\": null,\n      \"max_age\": null\n    },\n    \"waf\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"{{namespace_1}}-appwf\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "80978a65-fca5-46e0-aad5-8e3f4d3b9ef9"
+				},
+				{
+					"name": "Namespace2",
+					"item": [
+						{
+							"name": "Create namespace2 AI+ML app type",
+							"id": "69aeae43-dcf5-4ab4-a707-8544d24f830e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-aset\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_2}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 health check",
+							"id": "29472b01-6728-4b6f-992b-c680b30f7b9c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-tcp-check\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 origin pool",
+							"id": "63277b83-fec1-4b0e-9452-439c26b6b569",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-pool\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_name\": {\n          \"dns_name\": \"{{pool_2}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_2}}\",\n        \"name\": \"{{namespace_2}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 app firewall",
+							"id": "3a8687cd-b7bf-4f7f-822a-a32e2b4a1f6a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-appwf\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/wafs",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace2 http lb",
+							"id": "1ba7508f-3a87-47c9-8030-1ff4bd275e20",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_2}}-http-lb\",\n    \"namespace\": \"{{namespace_2}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{namespace_2}}\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_2-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"add_hsts\": null,\n      \"no_mtls\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"default_header\": {}\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_2}}\",\n          \"name\": \"{{namespace_2}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    \"waf\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_2}}\",\n      \"name\": \"{{namespace_2}}-appwf\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_2}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "b918145f-09a3-4fd6-b766-2244b183ddf6"
+				},
+				{
+					"name": "Namespace3",
+					"item": [
+						{
+							"name": "Create namespace3 AI+ML app type",
+							"id": "ddaa0c9f-43d8-4e5f-9074-9807015f9016",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-aset\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_3}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 health check",
+							"id": "acb8d2b1-0971-4dd8-9f02-48717cc69c4f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-tcp-check\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 origin pool",
+							"id": "15dca17f-d06e-49b3-91ec-a95e5d50c59d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-pool\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_name\": {\n          \"dns_name\": \"{{pool_3}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_3}}\",\n        \"name\": \"{{namespace_3}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 app firewall",
+							"id": "f75c8b7d-bd5a-481f-a6ca-767338548b39",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-appfw\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/wafs",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace3 http lb",
+							"id": "dc6b0cb9-a74a-47b2-80fd-faa47ac8058f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_3}}-http-lb\",\n    \"namespace\": \"{{namespace_3}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{namespace_3}}\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_3-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"add_hsts\": null,\n      \"no_mtls\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"default_header\": {}\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_3}}\",\n          \"name\": \"{{namespace_3}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    \"waf\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_3}}\",\n      \"name\": \"{{namespace_3}}-appfw\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_3}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "38a5172e-aab1-449d-bc2f-efa1889f78a6"
+				},
+				{
+					"name": "Namespace4",
+					"item": [
+						{
+							"name": "Create namespace4 AI+ML app type",
+							"id": "a509b3c4-c7d6-4cac-85e7-d4972c96e019",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-aset\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_4}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/app_settings",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 health check",
+							"id": "ee462c3a-535f-44d1-b845-fb2ec54a2068",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-tcp-check\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": null,\n      \"expected_response\": null\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/healthchecks",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 origin pool",
+							"id": "40eab8f8-dfbd-4ae8-bab6-3e0bcd14828a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-pool\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"labels\": {},\n        \"public_ip\": {\n          \"ip\": \"{{pool_4}}\"\n        }\n      }\n    ],\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_4}}\",\n        \"name\": \"{{namespace_4}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/origin_pools",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 app firewall",
+							"id": "6308dc57-46f7-40d7-b44f-276db6780b38",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-appfw\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/wafs",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						},
+						{
+							"name": "Create namespace4 http lb",
+							"id": "35bee666-94d6-49de-b0b4-6c082b286a34",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_4}}-http-lb\",\n    \"namespace\": \"{{namespace_4}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{namespace_4}}\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_4-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"add_hsts\": null,\n      \"no_mtls\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"default_header\": {}\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_4}}\",\n          \"name\": \"{{namespace_4}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    \"waf\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_4}}\",\n      \"name\": \"{{namespace_4}}-appfw\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_4}}/http_loadbalancers",
+								"description": "Shared NamesSpace Sites"
+							},
+							"response": []
+						}
+					],
+					"id": "8754ddde-7e2d-4f05-8dde-0870dd4baddf"
+				}
+			],
+			"id": "82db501a-e731-436d-be6d-03123ef954b3",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "40a17900-78dc-4ad1-aaf5-a5a0d2a8bbad",
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
+							"pm.collectionVariables.set(\"base64EncodedKey\", btoa(pm.environment.get(\"namespace_1-key\")));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "debe099e-8942-41e1-a7e6-10b092a55489",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"value": "APIToken {{api_credential}}",
+			"key": "Authorization"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "083c08a2-c6ce-446c-961c-a9dcc698b688",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d6cd00a8-e98d-471d-9faf-4ac31be92595",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
