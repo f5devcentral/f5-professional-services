@@ -6,3 +6,5 @@ The provided Postman Collections are examples of how to accomplish the following
 * Delete Applications
 
 Additionally, there are associated Postman Environments that need to be downloaded and used along with the Postman Collections
+
+To Use, any of the content, download the _collection.json+_environment.json files, and import them into Postman
