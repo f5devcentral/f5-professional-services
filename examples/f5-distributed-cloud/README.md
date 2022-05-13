@@ -1,0 +1,1 @@
+Welcome to the F5 Professional Services Distributed Cloud on DevCentral!  The content in these subfolders contain examples for assisting with deploying and managing F5 XC environment.  The content is NOT officially supported by F5, so it is to be used at your own risk.  
