@@ -16,8 +16,8 @@ To Use, any of the content, download the **_collection.json+_environment.json** 
 Used to deploy individual applications.  
 
 Collection contains subfolder with examples for the following tasks:
-  * Deploy Single HTTP Application + WAAP for BYO Cert/Key + CNAME based DNS delegation
-  * Deploy Single HTTP Application + WAAP for Auto Manage Cert+DNS (for zones delgetated to XC)
+  * Deploy Single HTTP Application + WAAP Manual DNS/Cert (1 App) - for BYO Cert/Key + CNAME based DNS delegation
+  * Deploy Single HTTP Application + WAAP Auto DNS/Cert (1 App) - for Auto Manage Cert+DNS (DNS zones delgetated to XC)
 
 ### **F5-XC-Data-Retrieval_collection.json.json**
 Used to retrieve logs and configuration information from a tenant/namespace/application
