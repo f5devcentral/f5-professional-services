@@ -10,15 +10,15 @@ Additionally, there are associated Postman Environments that need to be download
 To Use, any of the content, download the **_collection.json+_environment.json** files, and import them into Postman
 
 
-# **Postman Collections**
-## **F5-XC-Deploy-WAAP-(1 App)_collection.json.json** - Used to deploy individual applications.  Contains examples for the following
+## **Postman Collections**
+### **F5-XC-Deploy-WAAP-(1 App)_collection.json.json** - Used to deploy individual applications.  Contains examples for the following
   * Deploy Single HTTP Application + WAAP for BYO Cert/Key + CNAME based DNS delegation
   * Deploy Single HTTP Application + WAAP for Auto Manage Cert+DNS (for zones delgetated to XC)
 
 
-# **Postman Environments**
+## **Postman Environments**
 
-## Variables common to all collections:
+### Variables common to all collections:
   * voltconsole-host - shortname of the XC console host (example - if customer-a.console.ves.volterra.io is fqdn, then the value would be customer-a)
   * tenant-id - can be found under administration tab of the XC Console GUI
   * api_credential - needs to be generated from XC Console
