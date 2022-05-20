@@ -12,12 +12,16 @@ To Use, any of the content, download the **_collection.json+_environment.json** 
 
 ## **Postman Collections**
 ### **F5-XC-Deploy-WAAP-(1 App)_collection.json.json**
-Used to deploy individual applications.  Contains examples for the following:
+Used to deploy individual applications.  
+
+Collection contains subfolder with examples for the following tasks:
   * Deploy Single HTTP Application + WAAP for BYO Cert/Key + CNAME based DNS delegation
   * Deploy Single HTTP Application + WAAP for Auto Manage Cert+DNS (for zones delgetated to XC)
 
 ### **F5-XC-Data-Retrieval_collection.json.json**
 Used to retrieve logs and configuration information from a tenant/namespace/application
+
+Collection contains subfolder with examples for the following tasks:
   * Retrieve HTTP App Config (1 App)
   * Retrieve HTTP App Configs (1 Namespace)
   * Retrieve WAF+HTTP Request Logs (1 App)
@@ -25,12 +29,15 @@ Used to retrieve logs and configuration information from a tenant/namespace/appl
   * Retreive HTTP LB CNAMES (Tenant) - also includes IP address Advertisements for each HTTP LB object
   
 ### **F5-XC-Migrate_collection.json.json**
-Used to migrate individual applications from one namespace to another.  
-Creates a new destination namespace if non-existent.
+Used to migrate individual applications from one namespace to another.  Creates a new destination namespace if non-existent.
+
+Collection contains subfolder with examples for the following tasks:
   * Migrate HTTP LB to new Namespace (1 App)
 
 ### **F5-XC-Delete_collection.json.json**
 Used to delete either individual HTTP LB+associated objects, or an entire namespace+associated shared objects
+
+Collection contains subfolder with examples for the following tasks:
   * Delete App (1 App)
   * Delete Namespace + WAAP Shared Objects (1 App)  
 
@@ -56,5 +63,10 @@ Used to deploy individual applications.  Notes on some of the variables:
    * **namespace_1-key**
 
 ### **F5-XC-Migrate-(1 App)_environment.json**
+More information to come!
 
 ### **F5-XC-Data-Retrieval_environment.json**
+More information to come!
+
+
+
