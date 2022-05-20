@@ -19,7 +19,7 @@ To Use, any of the content, download the **_collection.json+_environment.json** 
 **Postman Environments information**
 
 * Variables common to all collections:
-* * voltconsole-host - shortname of the XC console host (example - if customer-a.console.ves.volterra.io is fqdn, then the value would be customer-a)
+ * voltconsole-host - shortname of the XC console host (example - if customer-a.console.ves.volterra.io is fqdn, then the value would be customer-a)
  * tenant-id - can be found under administration tab of the XC Console GUI
  * api_credential - needs to be generated from XC Console
  * namespace_1 - namespace for data retrieval/deploy/delete
