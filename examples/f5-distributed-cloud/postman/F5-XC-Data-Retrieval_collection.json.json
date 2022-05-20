@@ -33,7 +33,7 @@
 							}
 						}
 					],
-					"_postman_id": "ab5cb166-0f06-4b2a-b5c7-6e29c7912345",
+					"id": "ab5cb166-0f06-4b2a-b5c7-6e29c7912345",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -96,7 +96,7 @@
 							}
 						}
 					],
-					"_postman_id": "a534c26d-c795-4d7a-84a3-36f3054d4f1f",
+					"id": "a534c26d-c795-4d7a-84a3-36f3054d4f1f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -138,7 +138,7 @@
 							}
 						}
 					],
-					"_postman_id": "bcffb69f-7266-44c0-89b6-898de2d230c8",
+					"id": "bcffb69f-7266-44c0-89b6-898de2d230c8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -188,7 +188,7 @@
 							}
 						}
 					],
-					"_postman_id": "5e7d7654-fb72-4188-b18c-48e45b712733",
+					"id": "5e7d7654-fb72-4188-b18c-48e45b712733",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -201,7 +201,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "2c159ec5-9493-4f80-accc-75f6427a7374"
+			"id": "2c159ec5-9493-4f80-accc-75f6427a7374"
 		},
 		{
 			"name": "Retrieve HTTP App Configs (1 Namespace)",
@@ -221,7 +221,7 @@
 							}
 						}
 					],
-					"_postman_id": "34d04eb0-cec6-4757-8a2b-5b881806997f",
+					"id": "34d04eb0-cec6-4757-8a2b-5b881806997f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -271,7 +271,7 @@
 							}
 						}
 					],
-					"_postman_id": "d8eea1b8-9067-4920-84b4-8382fbed20c9",
+					"id": "d8eea1b8-9067-4920-84b4-8382fbed20c9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -321,7 +321,7 @@
 							}
 						}
 					],
-					"_postman_id": "b3158d09-4be0-4425-8463-71cc199a5410",
+					"id": "b3158d09-4be0-4425-8463-71cc199a5410",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -357,7 +357,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "b3007e97-2c95-4725-b777-4b2259360eae"
+			"id": "b3007e97-2c95-4725-b777-4b2259360eae"
 		},
 		{
 			"name": "Retrieve WAF + HTTP Request Logs (1 App)",
@@ -416,7 +416,7 @@
 							}
 						}
 					],
-					"_postman_id": "8d1fe623-b826-4e8d-a762-2810b7d6b4e4",
+					"id": "8d1fe623-b826-4e8d-a762-2810b7d6b4e4",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -483,7 +483,7 @@
 							}
 						}
 					],
-					"_postman_id": "01395032-c3ad-42f4-a61b-7c53dfc73668",
+					"id": "01395032-c3ad-42f4-a61b-7c53dfc73668",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -535,7 +535,7 @@
 							}
 						}
 					],
-					"_postman_id": "5571f736-c211-4583-ae07-50c19a6b33a5",
+					"id": "5571f736-c211-4583-ae07-50c19a6b33a5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -587,7 +587,7 @@
 							}
 						}
 					],
-					"_postman_id": "b1f808f2-9507-47b5-99e6-79b848f00050",
+					"id": "b1f808f2-9507-47b5-99e6-79b848f00050",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -639,7 +639,7 @@
 							}
 						}
 					],
-					"_postman_id": "8e6b4ace-1652-437f-ac55-bda432a1e76d",
+					"id": "8e6b4ace-1652-437f-ac55-bda432a1e76d",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -660,7 +660,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "1444a43a-6ec7-4a92-a2e8-d359089975e5"
+			"id": "1444a43a-6ec7-4a92-a2e8-d359089975e5"
 		},
 		{
 			"name": "Retrieve WAF + HTTP Request Logs (Tenant)",
@@ -710,7 +710,7 @@
 							}
 						}
 					],
-					"_postman_id": "31cfa90c-25e8-4819-b352-5a51026dbbd3",
+					"id": "31cfa90c-25e8-4819-b352-5a51026dbbd3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -776,7 +776,7 @@
 							}
 						}
 					],
-					"_postman_id": "2081a95d-9e33-47fd-ad3d-b73a4d54aaef",
+					"id": "2081a95d-9e33-47fd-ad3d-b73a4d54aaef",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -797,7 +797,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "dcb1eaf5-d95c-4182-9ac6-f70bd0686487"
+			"id": "dcb1eaf5-d95c-4182-9ac6-f70bd0686487"
 		},
 		{
 			"name": "Retrieve HTTP LB CNAMES (Tenant)",
@@ -818,7 +818,7 @@
 							}
 						}
 					],
-					"_postman_id": "6ca0b218-23e5-4ed5-a646-cff02c30584b",
+					"id": "6ca0b218-23e5-4ed5-a646-cff02c30584b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -852,7 +852,9 @@
 									"var jsonNamesData = jsonData.items;",
 									"var parsedData = \"\";",
 									"for(var i=0;i<jsonNamesData.length;i++){",
-									"    console.log(\"NAMESPACE: \"+jsonNamesData[i].namespace+\", HTTP_LB: \"+jsonNamesData[i].name+\", DOMAIN: \"+jsonNamesData[i].get_spec.domains+\", CNAME: \" +jsonNamesData[i].get_spec.host_name);",
+									"    if (jsonNamesData[i].get_spec.dns_info[0] !== undefined ) {",
+									"        console.log(\"NAMESPACE: \"+jsonNamesData[i].namespace+\", HTTP_LB: \"+jsonNamesData[i].name+\", DOMAIN: \"+jsonNamesData[i].get_spec.domains+\", CNAME: \" +jsonNamesData[i].get_spec.host_name+\", Advertised IP: \" +jsonNamesData[i].get_spec.dns_info[0].ip_address);",
+									"    }",
 									"}"
 								],
 								"type": "text/javascript"
@@ -883,7 +885,7 @@
 							}
 						}
 					],
-					"_postman_id": "5516d742-1922-4942-899b-b1026dde8626",
+					"id": "5516d742-1922-4942-899b-b1026dde8626",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -919,7 +921,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "c5b57ac5-0925-4b46-bbf1-c515a9a10a80"
+			"id": "c5b57ac5-0925-4b46-bbf1-c515a9a10a80"
 		}
 	],
 	"auth": {
