@@ -44,7 +44,7 @@ Collection contains subfolder with examples for the following tasks:
 
 # **Postman Environments**
 
-### Variables common to all collections:
+### Variables common to all environments:
   * **voltconsole-host** - shortname of the XC console host (example - if customer-a.console.ves.volterra.io is fqdn, then the value would be customer-a)
   * **tenant-id** - can be found under administration tab of the XC Console GUI
   * **api_credential** - needs to be generated from XC Console
