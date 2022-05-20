@@ -318,7 +318,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"blindfold_secret_info\": {\n                                \"location\": \"string:///{{namespace_1-key}}\",\n                                \"decryption_provider\": null,\n                                \"store_provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": null\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"app_firewall\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"shared\",\n      \"name\": \"{{shared-appfw-name}}\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"blindfold_secret_info\": {\n                                \"location\": \"string:///{{namespace_1-key}}\",\n                                \"decryption_provider\": null,\n                                \"store_provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": null\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -353,7 +353,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"clear_secret_info\": {\n                                \"url\": \"string:///{{base64EncodedKey}}\",\n                                \"provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": \"EncodingNone\"\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": {\n      \"allow_origin\": null,\n      \"allow_origin_regex\": null,\n      \"allow_methods\": \"GET,POST,HEAD\",\n      \"allow_headers\": null,\n      \"expose_headers\": null,\n      \"maximum_age\": 0,\n      \"allow_credentials\": null,\n      \"disabled\": null,\n      \"max_age\": null\n    },\n    \"app_firewall\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"{{app_name_1}}-appwf\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"clear_secret_info\": {\n                                \"url\": \"string:///{{base64EncodedKey}}\",\n                                \"provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": \"EncodingNone\"\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -374,18 +374,88 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "664cd16f-ca6d-489e-b392-304fdfc236bd",
+						"id": "d336be42-8351-45c8-9b72-61f127cbe233",
 						"type": "text/javascript",
 						"exec": [
 							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
-							"pm.collectionVariables.set(\"base64EncodedKey\", btoa(pm.environment.get(\"namespace_1-key\")));"
+							"pm.collectionVariables.set(\"base64EncodedKey\", btoa(pm.environment.get(\"namespace_1-key\")));",
+							"",
+							"//Create Pool Config",
+							"var poolName = pm.environment.get(\"pool_1\");",
+							"var poolNameArray = poolName.split(',');",
+							"var poolConfig = \"\\\"origin_servers\\\": [ \";",
+							"for(var i = 0; i < poolNameArray.length; i++) {",
+							"    var poolMember = poolNameArray[i].trim()",
+							"    //console.log(\"Pool member:\"+poolMember);",
+							"    var isIP = is_IP(poolMember);",
+							"    var HowManyLeft = poolNameArray.length - i;",
+							"    if (isIP === true) {",
+							"        poolConfig = poolConfig+\"{ \\\"public_ip\\\": { \\\"ip\\\": \\\"\"+poolMember+\"\\\" }, \\\"labels\\\": {} } \";",
+							"        if (HowManyLeft > 1) {",
+							"            poolConfig = poolConfig+\",\"",
+							"        }",
+							"    }",
+							"    else {",
+							"        poolConfig = poolConfig+\"{ \\\"public_name\\\": { \\\"dns_name\\\": \\\"\"+poolMember+\"\\\" }, \\\"labels\\\": {} } \";",
+							"        if (HowManyLeft > 1) {",
+							"            poolConfig = poolConfig+\",\"",
+							"        }",
+							"    }",
+							"}",
+							"poolConfig = poolConfig+\"]\"",
+							"pm.collectionVariables.set(\"poolConfig\", poolConfig);",
+							"delete poolConfig;",
+							"",
+							"",
+							"",
+							"//Function to determine if pool member type is an IP or DNS name",
+							"function is_IP(str)",
+							"{",
+							"    regexp =  /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;",
+							"    if (regexp.test(str)) {",
+							"        return true;",
+							"    }",
+							"    else {",
+							"        return false;",
+							"    }",
+							"}",
+							"",
+							"//Build WAF and Service Policy Configuration",
+							"let deployAppFW = pm.environment.get(\"apply_shared-appfw\")",
+							"let deploySvcPol = pm.environment.get(\"apply_shared-svcpol\")",
+							"let tenantID = pm.environment.get(\"tenant-id\")",
+							"let namespace1 = pm.environment.get(\"namespace_1\")",
+							"let appName1 = pm.environment.get(\"app_name_1\")",
+							"let AppFwName = pm.environment.get(\"shared-appfw-name\")",
+							"var appFwConfig = \"\";",
+							"var svcPolConfig = \"\";",
+							"",
+							"//build APP FW Config",
+							"if (deployAppFW === \"yes\") {",
+							"    appFwConfig = \"\\\"app_firewall\\\": { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\",\\\"name\\\": \\\"\"+AppFwName+\"\\\"},\";",
+							"}",
+							"else {",
+							"    appFwConfig = \"\\\"disable_waf\\\": {},\"",
+							"}",
+							"//Build Service Policy Config",
+							"if (deploySvcPol === \"yes\") {",
+							"    svcPolConfig = \"\\\"active_service_policies\\\": { \\\"policies\\\": [ { \\\"tenant\\\": \\\"\"+tenantID+\"\\\",\\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-block-countries\\\" }, { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-allowed-http-methods\\\" } ] },\";",
+							"}",
+							"else {",
+							"    svcPolConfig = \"\\\"service_policies_from_namespace\\\": {},\"",
+							"}",
+							"//Set Configurations to collection variables",
+							"pm.collectionVariables.set(\"appFwConfig\", appFwConfig);",
+							"pm.collectionVariables.set(\"svcPolConfig\", svcPolConfig);",
+							"delete appFwConfig;",
+							""
 						]
 					}
 				},
 				{
 					"listen": "test",
 					"script": {
-						"id": "678c9565-c1da-4d1a-98fb-0d7423e783b9",
+						"id": "774a7a92-aa04-4863-be96-9f12e3d49f4b",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -575,47 +645,7 @@
 									"script": {
 										"id": "74447a93-8b40-465c-958c-afc49a7a3328",
 										"exec": [
-											"//Create Pool Config",
-											"var poolName = pm.environment.get(\"pool_1\");",
-											"var poolNameArray = poolName.split(',');",
-											"var poolConfig = \"\\\"origin_servers\\\": [ \";",
-											"for(var i = 0; i < poolNameArray.length; i++) {",
-											"    var poolMember = poolNameArray[i].trim()",
-											"    //console.log(\"Pool member:\"+poolMember);",
-											"    var isIP = is_IP(poolMember);",
-											"    var HowManyLeft = poolNameArray.length - i;",
-											"    if (isIP === true) {",
-											"        poolConfig = poolConfig+\"{ \\\"public_ip\\\": { \\\"ip\\\": \\\"\"+poolMember+\"\\\" }, \\\"labels\\\": {} } \";",
-											"        if (HowManyLeft > 1) {",
-											"            poolConfig = poolConfig+\",\"",
-											"        }",
-											"    }",
-											"    else {",
-											"        poolConfig = poolConfig+\"{ \\\"public_name\\\": { \\\"dns_name\\\": \\\"\"+poolMember+\"\\\" }, \\\"labels\\\": {} } \";",
-											"        if (HowManyLeft > 1) {",
-											"            poolConfig = poolConfig+\",\"",
-											"        }",
-											"    }",
-											"}",
-											"poolConfig = poolConfig+\"]\"",
-											"pm.collectionVariables.set(\"poolConfig\", poolConfig);",
-											"delete poolConfig;",
-											"",
-											"",
-											"",
-											"",
-											"",
-											"//Function to determine if pool member type is an IP or DNS name",
-											"function is_IP(str)",
-											"{",
-											"    regexp =  /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;",
-											"    if (regexp.test(str)) {",
-											"        return true;",
-											"    }",
-											"    else {",
-											"        return false;",
-											"    }",
-											"}"
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -700,7 +730,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"no_mtls\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"default_header\": {},\n      \"enable_path_normalize\": {},\n      \"port\": 443\n    },\n    \"downstream_tls_certificate_expiration_timestamps\": [],\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": {\n      \"allow_origin\": null,\n      \"allow_origin_regex\": null,\n      \"allow_methods\": \"GET,POST,HEAD\",\n      \"allow_headers\": null,\n      \"expose_headers\": null,\n      \"maximum_age\": 0,\n      \"allow_credentials\": null,\n      \"disabled\": null,\n      \"max_age\": null\n    },\n    \"app_firewall\": {\n      \"tenant\": \"{{tenant-id}}\",\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"{{app_name_1}}-appwf\"\n    },\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    \"active_service_policies\": {\n      \"policies\": [\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-block-countries\"\n        },\n        {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"shared\",\n          \"name\": \"web-srvpolicy-allowed-http-methods\"\n        }\n      ]\n    },\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"no_mtls\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"default_header\": {},\n      \"enable_path_normalize\": {},\n      \"port\": 443\n    },\n    \"downstream_tls_certificate_expiration_timestamps\": [],\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -721,9 +751,77 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "2655928a-e417-4ff4-8327-85ff505b2b96",
+						"id": "b15dd25c-4e4f-454f-ac76-dc2806387756",
 						"type": "text/javascript",
 						"exec": [
+							"//Create Pool Config",
+							"var poolName = pm.environment.get(\"pool_1\");",
+							"var poolNameArray = poolName.split(',');",
+							"var poolConfig = \"\\\"origin_servers\\\": [ \";",
+							"for(var i = 0; i < poolNameArray.length; i++) {",
+							"    var poolMember = poolNameArray[i].trim()",
+							"    //console.log(\"Pool member:\"+poolMember);",
+							"    var isIP = is_IP(poolMember);",
+							"    var HowManyLeft = poolNameArray.length - i;",
+							"    if (isIP === true) {",
+							"        poolConfig = poolConfig+\"{ \\\"public_ip\\\": { \\\"ip\\\": \\\"\"+poolMember+\"\\\" }, \\\"labels\\\": {} } \";",
+							"        if (HowManyLeft > 1) {",
+							"            poolConfig = poolConfig+\",\"",
+							"        }",
+							"    }",
+							"    else {",
+							"        poolConfig = poolConfig+\"{ \\\"public_name\\\": { \\\"dns_name\\\": \\\"\"+poolMember+\"\\\" }, \\\"labels\\\": {} } \";",
+							"        if (HowManyLeft > 1) {",
+							"            poolConfig = poolConfig+\",\"",
+							"        }",
+							"    }",
+							"}",
+							"poolConfig = poolConfig+\"]\"",
+							"pm.collectionVariables.set(\"poolConfig\", poolConfig);",
+							"delete poolConfig;",
+							"",
+							"",
+							"",
+							"//Function to determine if pool member type is an IP or DNS name",
+							"function is_IP(str)",
+							"{",
+							"    regexp =  /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;",
+							"    if (regexp.test(str)) {",
+							"        return true;",
+							"    }",
+							"    else {",
+							"        return false;",
+							"    }",
+							"}",
+							"",
+							"//Build WAF and Service Policy Configuration",
+							"let deployAppFW = pm.environment.get(\"apply_shared-appfw\")",
+							"let deploySvcPol = pm.environment.get(\"apply_shared-svcpol\")",
+							"let tenantID = pm.environment.get(\"tenant-id\")",
+							"let namespace1 = pm.environment.get(\"namespace_1\")",
+							"let appName1 = pm.environment.get(\"app_name_1\")",
+							"let AppFwName = pm.environment.get(\"shared-appfw-name\")",
+							"var appFwConfig = \"\";",
+							"var svcPolConfig = \"\";",
+							"",
+							"//build APP FW Config",
+							"if (deployAppFW === \"yes\") {",
+							"    appFwConfig = \"\\\"app_firewall\\\": { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\",\\\"name\\\": \\\"\"+AppFwName+\"\\\"},\";",
+							"}",
+							"else {",
+							"    appFwConfig = \"\\\"disable_waf\\\": {},\"",
+							"}",
+							"//Build Service Policy Config",
+							"if (deploySvcPol === \"yes\") {",
+							"    svcPolConfig = \"\\\"active_service_policies\\\": { \\\"policies\\\": [ { \\\"tenant\\\": \\\"\"+tenantID+\"\\\",\\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-block-countries\\\" }, { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-allowed-http-methods\\\" } ] },\";",
+							"}",
+							"else {",
+							"    svcPolConfig = \"\\\"service_policies_from_namespace\\\": {},\"",
+							"}",
+							"//Set Configurations to collection variables",
+							"pm.collectionVariables.set(\"appFwConfig\", appFwConfig);",
+							"pm.collectionVariables.set(\"svcPolConfig\", svcPolConfig);",
+							"delete appFwConfig;",
 							""
 						]
 					}
@@ -731,7 +829,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1051e65d-1460-44b9-bd6b-f60808818df8",
+						"id": "a5ee54ae-07fd-4f99-8eef-e9abddf281a6",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -772,18 +870,28 @@
 	],
 	"variable": [
 		{
-			"id": "62dc23d5-827c-4c57-ae51-cb4b26d79cc7",
+			"id": "09125bb2-c312-421b-b264-b4c1b026902e",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "aa44be7b-c2b2-4447-8db1-90cbc232743d",
+			"id": "d9bd5f68-aee5-4f21-beb7-547bbf06d67f",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "46115b0d-f9c5-4566-bf4f-d5a198ab377e",
+			"id": "1fdd2b4c-2125-4024-a049-b246af642ad3",
 			"key": "poolConfig",
+			"value": ""
+		},
+		{
+			"id": "db3305b0-e5ba-4d32-aa38-42122ce95687",
+			"key": "appFwConfig",
+			"value": ""
+		},
+		{
+			"id": "89e51e85-5110-485d-96c6-f7e035c733de",
+			"key": "svcPolConfig",
 			"value": ""
 		}
 	]
