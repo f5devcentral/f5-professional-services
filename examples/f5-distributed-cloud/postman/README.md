@@ -34,6 +34,7 @@ Used to deploy individual applications.  Notes on some of the variables:
   * apply_shared-svcpol - defaults to yes.  Creates+Applies 2 shared namespace service policies in: one which geo-blocks OFAC countries, and another which allows ONLY GET/HEAD/POST HTTP menthods
   * shared-appfw-name - required if apply_shared-appfw variable is set to yes.  assign a name for the app firewall (WAF) object.
 
- * If deploying an application using the auto-certificate+dns management the following variables are optional:
+**Note:** If deploying an application using the auto-certificate+dns management the following variables are optional:
    * namespace_1-cert
    * namespace_1-key
+
