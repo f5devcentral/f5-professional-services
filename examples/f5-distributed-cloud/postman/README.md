@@ -12,8 +12,8 @@ To Use, any of the content, download the **_collection.json+_environment.json** 
 
 **Postman Collections information**
 * **F5-XC-Deploy-WAAP-(1 App)_collection.json.json** - Used to deploy individual applications.  Contains examples for the following
- * Deploy Single HTTP Application + WAAP for BYO Cert/Key + CNAME based DNS delegation
- * Deploy Single HTTP Application + WAAP for Auto Manage Cert+DNS (for zones delgetated to XC)
+  * Deploy Single HTTP Application + WAAP for BYO Cert/Key + CNAME based DNS delegation
+  * Deploy Single HTTP Application + WAAP for Auto Manage Cert+DNS (for zones delgetated to XC)
 
 
 **Postman Environments information**
