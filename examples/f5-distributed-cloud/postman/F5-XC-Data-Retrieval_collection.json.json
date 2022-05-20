@@ -850,10 +850,9 @@
 									"//get domain and cnames from LB objects in namespace",
 									"var jsonData = JSON.parse(responseBody);",
 									"var jsonNamesData = jsonData.items;",
-									"var parsedData = \"\";",
 									"for(var i=0;i<jsonNamesData.length;i++){",
 									"    if (jsonNamesData[i].get_spec.dns_info[0] !== undefined ) {",
-									"        console.log(\"NAMESPACE: \"+jsonNamesData[i].namespace+\", HTTP_LB: \"+jsonNamesData[i].name+\", DOMAIN: \"+jsonNamesData[i].get_spec.domains+\", CNAME: \" +jsonNamesData[i].get_spec.host_name+\", Advertised IP: \" +jsonNamesData[i].get_spec.dns_info[0].ip_address);",
+									"        console.log(\"NAMESPACE: \"+jsonNamesData[i].namespace+\", HTTP_LB: \"+jsonNamesData[i].name+\", DOMAIN: \"+jsonNamesData[i].get_spec.domains+\", CNAME: \"+jsonNamesData[i].get_spec.host_name+\", Advertised IP: \" +jsonNamesData[i].get_spec.dns_info[0].ip_address);",
 									"    }",
 									"}"
 								],
