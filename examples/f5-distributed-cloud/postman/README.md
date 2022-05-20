@@ -16,6 +16,23 @@ Used to deploy individual applications.  Contains examples for the following:
   * Deploy Single HTTP Application + WAAP for BYO Cert/Key + CNAME based DNS delegation
   * Deploy Single HTTP Application + WAAP for Auto Manage Cert+DNS (for zones delgetated to XC)
 
+### **F5-XC-Data-Retrieval_collection.json.json**
+Used to retrieve logs and configuration information from a tenant/namespace/application
+  * Retrieve HTTP App Config (1 App)
+  * Retrieve HTTP App Configs (1 Namespace)
+  * Retrieve WAF+HTTP Request Logs (1 App)
+  * Retreive WAF+HTTP Requests Logs (Tenant)
+  * Retreive HTTP LB CNAMES (Tenant) - also includes IP address Advertisements for each HTTP LB object
+  
+### **F5-XC-Migrate_collection.json.json**
+Used to migrate individual applications from one namespace to another.  
+Creates a new destination namespace if non-existent.
+  * Migrate HTTP LB to new Namespace (1 App)
+
+### **F5-XC-Delete_collection.json.json**
+Used to delete either individual HTTP LB+associated objects, or an entire namespace+associated shared objects
+  * Delete App (1 App)
+  * Delete Namespace + WAAP Shared Objects (1 App)  
 
 ## **Postman Environments**
 
@@ -38,3 +55,6 @@ Used to deploy individual applications.  Notes on some of the variables:
    * **namespace_1-cert**
    * **namespace_1-key**
 
+### **F5-XC-Migrate-(1 App)_environment.json**
+
+### **F5-XC-Data-Retrieval_environment.json**
