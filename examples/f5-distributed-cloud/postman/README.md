@@ -10,22 +10,22 @@ Additionally, there are associated Postman Environments that need to be download
 To Use, any of the content, download the **_collection.json+_environment.json** files, and import them into Postman
 
 
-# H1 **Postman Collections information**
-* **F5-XC-Deploy-WAAP-(1 App)_collection.json.json** - Used to deploy individual applications.  Contains examples for the following
+# **Postman Collections**
+## **F5-XC-Deploy-WAAP-(1 App)_collection.json.json** - Used to deploy individual applications.  Contains examples for the following
   * Deploy Single HTTP Application + WAAP for BYO Cert/Key + CNAME based DNS delegation
   * Deploy Single HTTP Application + WAAP for Auto Manage Cert+DNS (for zones delgetated to XC)
 
 
-#**Postman Environments information**
+# **Postman Environments**
 
-* Variables common to all collections:
+## Variables common to all collections:
   * voltconsole-host - shortname of the XC console host (example - if customer-a.console.ves.volterra.io is fqdn, then the value would be customer-a)
   * tenant-id - can be found under administration tab of the XC Console GUI
   * api_credential - needs to be generated from XC Console
   * namespace_1 - namespace for data retrieval/deploy/delete
   * app_name_1 - application object name for retreival/deploy/delete, used in context of namespace
 
-* **F5-XC-Deploy-WAAP-(1 App)_environment.json** - Used to deploy individual applications.  Notes on some of the variables
+### **F5-XC-Deploy-WAAP-(1 App)_environment.json** - Used to deploy individual applications.  Notes on some of the variables
   * pool_1 - may contain either FQDN values or IP addresses (multi-value, comma delimited)
   * namespace_1-key - Value may either be cleartext TLS key or Blindfold (recommended)
   * apply_shared-appfw - defaults to yes.  Creates+Applies a shared namespace WAF policy with default values for all settings
