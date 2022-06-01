@@ -1,0 +1,57 @@
+
+cli admin-partitions {
+    update-partition Common
+}
+sys application template /Common/iApp_name {
+    actions {
+        definition {
+            html-help {
+            }
+            implementation {
+                set app_dir [tmsh::pwd]
+				set app_name $tmsh::app_name
+				set rule {when RULE_INIT {
+log local0.debug "using pool <%=$::main__debug_pool%>, debug level <%=$::main__debug%>"
+<%D1={#}%>
+}}
+				tmsh::create ltm rule ${app_name}_irule [tmsh::expand_macro $rule -debuginclusive $::main__debug ]
+                #tmsh::create ltm rule ${app_name}_irule [tmsh::expand_macro $rule ]
+
+            }
+            
+            presentation {
+			
+				section main {
+					# The entry below creates a large text box that must be filled out with a valid IP Address
+					# For details of APL, look at the iApps developers guide:
+					# https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-iapps-developer-11-4-0.html
+					
+					choice debug display "medium" default "Off" {"Off" => "0", "Low" => "1","Medium" => "2","High" => "3"}
+					optional (debug != "0") {
+						choice debug_pool display "large" tcl {
+							package require iapp 1.1.0
+							return "[iapp::get_items ltm pool]"
+						}
+					}
+				}
+
+				text {
+					# Entities below set the text for the questions and section names, etc. Make them simple and relevant.
+					main "Main"
+					main.debug "Debug Level"
+					main.debug_pool "Debug Pool"
+				}
+            }
+            role-acl none
+            run-as none
+        }
+    }
+    description "<Add a description such as the version, date, customer and iApp purpose>"
+    ignore-verification false
+    requires-bigip-version-max none
+    requires-bigip-version-min none
+    requires-modules { ltm }
+    signing-key none
+    tmpl-checksum none
+    tmpl-signature none
+}
