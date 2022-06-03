@@ -1,0 +1,23 @@
+- hosts: all
+  connection: local
+
+  vars:
+    provider:
+      password: "{{password}}"
+      server: "{{hosts}}"
+      user: admin
+      validate_certs: no
+      server_port: 443
+
+  tasks:
+    - name: Run multiple commands on remote nodes
+      bigip_command:
+        commands:
+          - modify mgmt tm live-update asm-attack-signatures install-schedule frequency scheduled
+          - modify mgmt tm live-update asm-attack-signatures install-schedule applyOnSaturdays true
+          - modify mgmt tm live-update asm-attack-signatures install-schedule startTime 22:00
+          - modify mgmt tm live-update asm-attack-signatures install-schedule endTime 23:59
+          - save sys config
+        provider: "{{ provider }}"
+      register: result
+      delegate_to: localhost
