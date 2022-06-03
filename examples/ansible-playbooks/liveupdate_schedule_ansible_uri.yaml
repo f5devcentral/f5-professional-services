@@ -1,0 +1,25 @@
+- hosts: all
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Check
+      uri:
+        url: https://{{hosts}}/mgmt/tm/live-update/asm-attack-signatures/install-schedule
+        user: admin
+        password: "{{password}}"
+        method: PATCH
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+        force_basic_auth: yes
+        status_code: 200
+        return_content: true
+        validate_certs: no
+        body_format: json
+        body: '{"frequency": "scheduled","startTime": "21:00","endTime": "23:59","applyOnSaturdays": true,"applyOnAllDays": false,"applyAtAllTimes": false}'
+      register: json_response
+
+    - name: printoutput
+      debug:
+        var: json_response
