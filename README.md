@@ -37,6 +37,12 @@ The tip-and-tricks folder contains common commands used day to day in F5 technol
 | [big-ip-common-commands](utils/big-ip-common-commands)| This contains a list of very useful BIG-IP commands  |
 | [traffic-generator-tools-cheatsheet](utils/traffic-generator-tools-cheatsheet)| This contains a list of traffic generator tools their cheatsheets |
 
+## Support Information
+This repository is community-supported. Follow instructions below on how to raise issues.
+
+### Filing Issues and Getting Help
+If you come across a bug or other issue, use [GitHub Issues](https://github.com/f5devcentral/f5-professional-services/issues) to submit an issue for our team. You can also see the current known issues on that page, which are tagged with a purple Known Issue label.
+
 ## Contributing
 See the contributing [instructions](/CONTRIBUTING.md) (work in progress) to get started contributing.
 
