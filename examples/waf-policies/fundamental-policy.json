@@ -5,7 +5,7 @@
       "description" : "Fundamental Policy",
       "enablePassiveMode" : false,
       "enforcementMode" : "blocking",
-      "fullPath" : "/test/test-policy",
+      "fullPath" : "/Common/test-policy",
       "name" : "test-policy",
       "protocolIndependent" : false,
       "softwareVersion" : "16.1.2",
