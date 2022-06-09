@@ -1,0 +1,24 @@
+{
+	"class":"Cloud_Failover",
+	"environment":"azure",
+	"controls":{
+	   "class":"Controls",
+	   "logLevel":"silly"
+	},
+	"externalStorage":{
+	   "scopingName": "myStorageAccount"
+	},
+    "failoverAddresses": {
+        "enabled": true,
+        "addressGroupDefinitions": [
+          {
+            "type": "networkInterfaceAddress",
+            "scopingAddress": "10.0.12.101"
+          },
+          {
+            "type": "networkInterfaceAddress",
+            "scopingAddress": "10.0.12.102"
+          }
+        ]
+      }
+  }

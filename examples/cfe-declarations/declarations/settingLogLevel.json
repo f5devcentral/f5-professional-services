@@ -1,0 +1,19 @@
+{
+  "class":"Cloud_Failover",
+  "environment":"aws",
+  "controls":{
+     "class":"Controls",
+     "logLevel":"silly"
+  },
+  "externalStorage":{
+     "scopingTags":{
+        "f5_cloud_failover_label":"mydeployment"
+     }
+  },
+  "failoverAddresses":{
+     "enabled":true,
+     "scopingTags":{
+        "f5_cloud_failover_label":"mydeployment"
+     }
+  }
+}
