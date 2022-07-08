@@ -70,7 +70,7 @@ Used to deploy individual applications.  Notes on some of the variables:
 ### **F5-XC-Data-Retrieval_environment.json**
    * **log_duration** - time frame for log retrieval.  interval can be hours or minutes (example:  5 min, 2 hours).  
    
-   **Note** Time will be time back from current time.  So if you put 1 hour, then you will get logs for the last 1 hour. 
+     **Note:** Time will be time back from current time.  So if you put 1 hour, then you will get logs for the last 1 hour. 
 
 
 
