@@ -2,7 +2,7 @@
 The provided Postman Collections are examples of how to accomplish the following tasks:
 
 * Deploy New Applications
-* Migrate Existing Applications (part of Deploy collection)
+* Migrate Existing Applications
 * Retrieve Data from the XC Tenant (WAF Logs, Configuration, CNAMES, etc)
 * Delete Applications
 
