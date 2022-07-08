@@ -64,10 +64,13 @@ Used to deploy individual applications.  Notes on some of the variables:
    * **namespace_1-key**
 
 ### **F5-XC-Migrate-(1 App)_environment.json**
-More information to come!
+   * **namespace_1** * - source namespace where application currently resides
+   * **namespace_2** * - target namespace where  application will be migrated
 
 ### **F5-XC-Data-Retrieval_environment.json**
-More information to come!
+   * **log_duration** * - time frame for log retrieval.  interval can be hours or minutes (example:  5 min, 2 hours).  
+   
+   **Note** Time will be time back from current time.  So if you put 1 hour, then you will get logs for the last 1 hour. 
 
 
 
