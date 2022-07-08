@@ -53,12 +53,11 @@ Collection contains subfolder with examples for the following tasks:
 
 ### **F5-XC-Deploy-WAAP-(1 App)_environment.json** 
 Used to deploy individual applications.  Notes on some of the variables:
-  * **pool_1** - may contain either FQDN values or IP addresses (multi-value, comma delimited)
+  * **pool_1** - origin pool member(s).  may contain either FQDN values or IP addresses (multi-value, comma delimited)
   * **namespace_1-key** - value may either be cleartext TLS key or Blindfold (recommended)
   * **apply_shared-appfw** - defaults to yes.  Creates+Applies a shared namespace WAF policy with default values for all settings
   * **apply_shared-svcpol** - defaults to yes.  Creates+Applies 2 shared namespace service policies in: one which geo-blocks OFAC countries, and another which allows ONLY GET/HEAD/POST HTTP menthods
   * **shared-appfw-name** - required if apply_shared-appfw variable is set to yes.  assign a name for the app firewall (WAF) object.
-  * **pool_1** - origin pool member definition. handles multiple entries comma-delimited.  values can contain either IP addresses or FQDN 
 
 **Note:** If deploying an application using the auto-certificate+dns management the following variables are optional:
    * **namespace_1-cert**
