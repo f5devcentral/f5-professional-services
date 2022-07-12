@@ -10,31 +10,31 @@ For more information about F5 CFE, visit the [official documentation](https://cl
 
 ```bash
 # Obtain info about the CFE installed
-curl -uk user:pass https://bigip/mgmt/shared/cloud-failover/info
+curl -ku user:pass https://bigip/mgmt/shared/cloud-failover/info
 ```
 
 ```bash
 # List associated cloud objects
-curl -uk user:pass https://bigip/mgmt/shared/cloud-failover/inspect
+curl -ku user:pass https://bigip/mgmt/shared/cloud-failover/inspect
 ```
 
 ```bash
 # Obtain current declaration/configuration
-curl -uk user:pass https://bigip/mgmt/shared/cloud-failover/declare
+curl -ku user:pass https://bigip/mgmt/shared/cloud-failover/declare
 ```
 
 ```bash
 # Update declaration/configuration 
-curl -uk user:pass -X POST https://bigip/mgmt/shared/cloud-failover/declare -d @cfe.json
+curl -ku user:pass -X POST https://bigip/mgmt/shared/cloud-failover/declare -d @cfe.json
 ```
 
 
 ```bash
 # Trigger a dry-run failover
-curl -uk user:pass -X POST https://bigip/mgmt/shared/cloud-failover/trigger -d '{"action":"dry-run"}' 
+curl -ku user:pass -X POST https://bigip/mgmt/shared/cloud-failover/trigger -d '{"action":"dry-run"}' 
 ```
 
 ```bash
 # Reset CFE configuration
-curl -uk user:pass -X POST https://bigip/mgmt/shared/cloud-failover/reset -d '{"resetStateFile": true}' 
+curl -ku user:pass -X POST https://bigip/mgmt/shared/cloud-failover/reset -d '{"resetStateFile": true}' 
 ```
