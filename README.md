@@ -45,7 +45,7 @@ This repository is community-supported. Follow instructions below on how to rais
 If you come across a bug or other issue, use [GitHub Issues](https://github.com/f5devcentral/f5-professional-services/issues) to submit an issue for our team. You can also see the current known issues on that page, which are tagged with a purple Known Issue label.
 
 ## Contributing
-See the contributing [instructions](/CONTRIBUTING.md) (work in progress) to get started contributing.
+See the contributing [instructions](/CONTRIBUTING.md) to get started contributing.
 
 ## Community Code of Conduct
 Please refer to the [F5 DevCentral Community Code of Conduct](code_of_conduct.md).
