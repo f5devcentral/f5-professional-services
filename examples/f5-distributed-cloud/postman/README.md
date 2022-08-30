@@ -51,7 +51,7 @@ Collection contains subfolder with examples for the following tasks:
   * **namespace_1** - namespace for data retrieval/deploy/delete
   * **app_name_1** - application object name for retreival/deploy/delete, used in context of namespace
 
-### **F5-XC-Deploy-WAAP-(1 App)_environment.json** 
+### **F5-XC-Deploy_environment.json** 
 Used to deploy individual applications.  Notes on some of the variables:
   * **pool_1** - origin pool member(s).  may contain either FQDN values or IP addresses (multi-value, comma delimited)
   * **namespace_1-key** - value may either be cleartext TLS key or Blindfold (recommended)
