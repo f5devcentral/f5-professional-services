@@ -12,7 +12,7 @@ To Use, any of the content, download the **_collection.json+_environment.json** 
 
 
 # **Postman Collections**
-### **F5-XC-Deploy-WAAP-(1 App)_collection.json**
+### **F5-XC-Deploy_collection.json**
 Used to deploy individual applications.  
 
 Collection contains subfolder with examples for the following tasks:
