@@ -1,0 +1,156 @@
+
+cli admin-partitions {
+    update-partition Common
+}
+sys application template /Common/spring4shell {
+    actions {
+        definition {
+            html-help {
+            }
+            implementation {
+                set app_dir [tmsh::pwd]
+				set app_name $tmsh::app_name
+				set rule {when RULE_INIT {
+     # iRule mitigation for Spring4Shell CVE-2022-22965 
+    # Written by Ismael Goncalves
+    # Used iRule from F5 SIRT Log4j as basis 
+    # This v1.0 - simple match on pattern observed in public exploits/PoC
+}
+
+when HTTP_REQUEST {
+    # set debugLogging to 0 not to log, 1 to log without exploit, 2 to log exploit
+
+    set tmpUri [HTTP::uri -normalized] 
+    set uri [URI::decode $tmpUri]
+     
+    set loopCount 1
+    while { $uri ne $tmpUri } {
+        if {$loopCount >= <%=$::main__decodingLoops%>} {
+            <%D1={log local0.info "spring4shell_rce_detection drop on URI loop limit: $loopCount Source IP: [IP::client_addr]"}%>
+            <%D2={log local0.debug "spring4shell_rce_detection drop on URI loop limit: $loopCount $uri Source IP: [IP::client_addr]"}%>
+            unset -nocomplain tmpUri uri loopLimit loopCount
+            <% if { $::main__blocking > 0 }{ %>
+            # Blocking is set, so drop request
+            drop
+            event disable all
+            return
+            <%}%>
+        } else {
+            set tmpUri $uri
+            set uri [URI::decode $tmpUri]
+            incr loopCount
+        }
+    }
+    unset -nocomplain tmpUri loopLimit loopCount
+
+    if { $uri matches_regex {(?i)class[\.]module[\.]classLoader} } {
+        <%D1={log local0.info "spring4shell_rce_detection drop on URI Source IP: [IP::client_addr]"}%>
+        <%D2={log local0.debug "spring4shell_rce_detection drop on URI: $uri Source IP: [IP::client_addr]"}%>
+        <% if { $::main__blocking > 0 }{ %>
+        # Blocking is set, so drop request
+        drop
+        event disable all
+        return
+        <%}%>
+    }
+    unset -nocomplain uri
+    
+    # POST & PUT Payload blocking collection
+    if {([HTTP::method] eq "POST") || ([HTTP::method] eq "PUT")} {
+    # Trigger collection for up to <%=$::main__collectSize%>Bytes of data
+        if {[HTTP::header "Content-Length"] ne "" && [HTTP::header "Content-Length"] <= <%=$::main__collectSize%>}{
+            set content_length [HTTP::header "Content-Length"]
+        } else {
+            set content_length <%=$::main__collectSize%>
+        }
+        # Check if $content_length is not set to 0
+        if { $content_length > 0} {
+            HTTP::collect $content_length
+        }
+    }
+}
+
+when HTTP_REQUEST_DATA {
+    # POST & PUT Payload blocking
+    
+    set tmpPayload [HTTP::payload]
+    set payload [URI::decode $tmpPayload]
+    
+    set loopCount 1
+    while { $payload ne $tmpPayload } {
+        if {$loopCount >= <%=$::main__decodingLoops%>} {
+            <%D1= {log local0.info "spring4shell_rce_detection drop on payload loop limit: $loopCount source IP: [IP::client_addr]"}%>
+            <%D2= {log local0.debug "spring4shell_rce_detection drop on payload loop limit: $loopCount $payload source IP: [IP::client_addr]"}%>
+            <% if { $::main__blocking > 0 }{ %>
+                # Blocking is set, so drop request
+                unset -nocomplain tmpPayload payload loopLimit loopCount
+                drop
+                event disable all
+                return
+            <% } %>
+        } else {
+            set tmpPayload $payload
+            set payload [URI::decode $tmpPayload]
+            incr loopCount
+        }
+    }
+    unset -nocomplain tmpPayload loopLimit loopCount
+
+    if { $payload matches_regex {(?i)class[\.]module[\.]classLoader} } {
+       <%D1= {log local0.info "spring4shell_rce_detection drop on payload source IP: [IP::client_addr]"}%>
+       <%D2= {log local0.debug "spring4shell_rce_detection drop on payload: $payload source IP: [IP::client_addr]"}%> 
+       <% if { $::main__blocking > 0 }{ %>
+        # Blocking is set, so drop request
+        drop
+        event disable all
+        return
+        <% } %>
+    }
+    
+    unset -nocomplain payload
+}
+                    #}
+				tmsh::create ltm rule ${app_name}_irule [tmsh::expand_macro $rule -debuginclusive $::main__debug ]
+
+            }
+            
+            presentation {
+			
+				section main {
+					# The entry below creates a large text box that must be filled out with a valid IP Address
+					# For details of APL, look at the iApps developers guide:
+					# https://support.f5.com/kb/en-us/products/big-ip_ltm/manuals/product/bigip-iapps-developer-11-4-0.html
+					
+					choice debug display "medium" default "Off" {"Off" => "0", "On" => "1", "Debug" => "2" }
+                    optional (debug == "2") {
+                        message msg1 "Debug logging level should not be used in a high-throughput production environment"
+                    }
+                    choice blocking display "medium" default "Off" {"Off" => "0", "On" => "1"}
+                    string collectSize display "medium" default "1048536"
+                    string decodingLoops display "small" default "4"
+				}
+
+				text {
+					# Entities below set the text for the questions and section names, etc. Make them simple and relevant.
+					main "Main"
+					main.debug "Debug"
+                    main.blocking "Blocking"
+                    main.collectSize "Payload inspection size (Bytes)"
+                    main.decodingLoops "Decoding Loops"
+                    main.msg1 "WARNING"
+					
+				}
+            }
+            role-acl none
+            run-as none
+        }
+    }
+    description "spring4shell iApp for Ismael's iRule v1.0"
+    ignore-verification false
+    requires-bigip-version-max none
+    requires-bigip-version-min none
+    requires-modules { ltm }
+    signing-key none
+    tmpl-checksum none
+    tmpl-signature none
+}
