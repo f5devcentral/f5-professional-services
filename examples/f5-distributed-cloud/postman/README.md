@@ -12,14 +12,14 @@ To Use, any of the content, download the **_collection.json+_environment.json** 
 
 
 # **Postman Collections**
-### **F5-XC-Deploy-WAAP-(1 App)_collection.json.json**
+### **F5-XC-Deploy-WAAP-(1 App)_collection.json**
 Used to deploy individual applications.  
 
 Collection contains subfolder with examples for the following tasks:
   * **Deploy Single HTTP Application + WAAP Manual DNS/Cert (1 App)** - for BYO Cert/Key + CNAME based DNS delegation
   * **Deploy Single HTTP Application + WAAP Auto DNS/Cert (1 App)** - for Auto Manage Cert+DNS (DNS zones delgetated to XC)
 
-### **F5-XC-Data-Retrieval_collection.json.json**
+### **F5-XC-Data-Retrieval_collection.json**
 Used to retrieve logs and configuration information from a tenant/namespace/application
 
 Collection contains subfolder with examples for the following tasks:
@@ -29,13 +29,13 @@ Collection contains subfolder with examples for the following tasks:
   * **Retreive WAF+HTTP Requests Logs (Tenant)**
   * **Retreive HTTP LB CNAMES (Tenant)** - also includes IP address Advertisements for each HTTP LB object
   
-### **F5-XC-Migrate_collection.json.json**
+### **F5-XC-Migrate_collection.json**
 Used to migrate individual applications from one namespace to another.  Creates a new destination namespace if non-existent.
 
 Collection contains subfolder with examples for the following tasks:
   * **Migrate HTTP LB to new Namespace (1 App)**
 
-### **F5-XC-Delete_collection.json.json**
+### **F5-XC-Delete_collection.json**
 Used to delete either individual HTTP LB+associated objects, or an entire namespace+associated shared objects
 
 Collection contains subfolder with examples for the following tasks:
