@@ -63,7 +63,7 @@ Used to deploy individual applications.  Notes on some of the variables:
    * **namespace_1-cert**
    * **namespace_1-key**
 
-### **F5-XC-Migrate-(1 App)_environment.json**
+### **F5-XC-Migrate_environment.json**
    * **namespace_1** - source namespace where application currently resides
    * **namespace_2** - target namespace where  application will be migrated
 
