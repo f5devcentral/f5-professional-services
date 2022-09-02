@@ -1,0 +1,193 @@
+{
+	"info": {
+		"_postman_id": "7c8c42bf-b79d-41ab-ba32-df52b331b77e",
+		"name": "F5 XC Modify HTTPS LB (Single App)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Namespace1",
+			"item": [
+				{
+					"name": "Update Namespace1 HTTP LB - Label",
+					"_postman_id": "47ac427d-cb98-4b46-863c-412d0d3be1c7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"test-ml\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"blindfold_secret_info\": {\n                                \"location\": \"string:///{{namespace_1-key}}\",\n                                \"decryption_provider\": null,\n                                \"store_provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": null\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers/{{app_name_1}}-http-lb",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "ef7329af-c7c8-49e9-b854-98f664967fcf",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7253e9ab-8281-4305-a3a0-9a358f2eabd2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
+							"pm.collectionVariables.set(\"base64EncodedKey\", btoa(pm.environment.get(\"namespace_1-key\")));",
+							"",
+							"//Create Pool Config",
+							"var poolName = pm.environment.get(\"pool_1\");",
+							"var poolNameArray = poolName.split(',');",
+							"var poolConfig = \"\\\"origin_servers\\\": [ \";",
+							"for(var i = 0; i < poolNameArray.length; i++) {",
+							"    var poolMember = poolNameArray[i].trim()",
+							"    //console.log(\"Pool member:\"+poolMember);",
+							"    var isIP = is_IP(poolMember);",
+							"    var HowManyLeft = poolNameArray.length - i;",
+							"    if (isIP === true) {",
+							"        poolConfig = poolConfig+\"{ \\\"public_ip\\\": { \\\"ip\\\": \\\"\"+poolMember+\"\\\" }, \\\"labels\\\": {} } \";",
+							"        if (HowManyLeft > 1) {",
+							"            poolConfig = poolConfig+\",\"",
+							"        }",
+							"    }",
+							"    else {",
+							"        poolConfig = poolConfig+\"{ \\\"public_name\\\": { \\\"dns_name\\\": \\\"\"+poolMember+\"\\\" }, \\\"labels\\\": {} } \";",
+							"        if (HowManyLeft > 1) {",
+							"            poolConfig = poolConfig+\",\"",
+							"        }",
+							"    }",
+							"}",
+							"poolConfig = poolConfig+\"]\"",
+							"pm.collectionVariables.set(\"poolConfig\", poolConfig);",
+							"delete poolConfig;",
+							"",
+							"",
+							"",
+							"//Function to determine if pool member type is an IP or DNS name",
+							"function is_IP(str)",
+							"{",
+							"    regexp =  /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;",
+							"    if (regexp.test(str)) {",
+							"        return true;",
+							"    }",
+							"    else {",
+							"        return false;",
+							"    }",
+							"}",
+							"",
+							"//Build WAF and Service Policy Configuration",
+							"let deployAppFW = pm.environment.get(\"apply_shared-appfw\")",
+							"let deploySvcPol = pm.environment.get(\"apply_shared-svcpol\")",
+							"let tenantID = pm.environment.get(\"tenant-id\")",
+							"let namespace1 = pm.environment.get(\"namespace_1\")",
+							"let appName1 = pm.environment.get(\"app_name_1\")",
+							"let AppFwName = pm.environment.get(\"shared-appfw-name\")",
+							"var appFwConfig = \"\";",
+							"var svcPolConfig = \"\";",
+							"",
+							"//build APP FW Config",
+							"if (deployAppFW === \"yes\") {",
+							"    appFwConfig = \"\\\"app_firewall\\\": { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\",\\\"name\\\": \\\"\"+AppFwName+\"\\\"},\";",
+							"}",
+							"else {",
+							"    appFwConfig = \"\\\"disable_waf\\\": {},\"",
+							"}",
+							"//Build Service Policy Config",
+							"if (deploySvcPol === \"yes\") {",
+							"    svcPolConfig = \"\\\"active_service_policies\\\": { \\\"policies\\\": [ { \\\"tenant\\\": \\\"\"+tenantID+\"\\\",\\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-block-countries\\\" }, { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-allowed-http-methods\\\" } ] },\";",
+							"}",
+							"else {",
+							"    svcPolConfig = \"\\\"service_policies_from_namespace\\\": {},\"",
+							"}",
+							"//Set Configurations to collection variables",
+							"pm.collectionVariables.set(\"appFwConfig\", appFwConfig);",
+							"pm.collectionVariables.set(\"svcPolConfig\", svcPolConfig);",
+							"delete appFwConfig;",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "61de385b-8791-4473-8f79-6610e8869e17",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"value": "APIToken {{api_credential}}",
+			"key": "Authorization"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bd199a21-0f9a-45e1-a6f3-1e925678d5a5",
+				"type": "text/javascript",
+				"exec": [
+					"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
+					"pm.collectionVariables.set(\"base64EncodedKey\", btoa(pm.environment.get(\"namespace_1-key\")));"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1daa66c5-37fa-42c8-91f1-c3bc5f023f33",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "3deca115-4104-4f66-b811-49202b14c84e",
+			"key": "base64EncodedCert",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "2faaefcf-2e78-444e-b24a-2191311125fb",
+			"key": "base64EncodedKey",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "fc850b76-73da-4240-903a-30602cdbf13c",
+			"key": "poolConfig",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "d9c00d0e-9e8d-4bda-8437-d611bce87f5a",
+			"key": "appFwConfig",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "ba603672-4297-4461-aaab-0e33f531c777",
+			"key": "svcPolConfig",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -33,7 +33,7 @@
 							}
 						}
 					],
-					"id": "95d570d9-128a-471e-b748-45905349482c",
+					"_postman_id": "95d570d9-128a-471e-b748-45905349482c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -89,7 +89,7 @@
 							}
 						}
 					],
-					"id": "8baca1e6-b1c7-44a0-86d3-575def846191",
+					"_postman_id": "8baca1e6-b1c7-44a0-86d3-575def846191",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -122,7 +122,7 @@
 							}
 						}
 					],
-					"id": "47ad95eb-7f3b-4845-91db-db21cea14ec1",
+					"_postman_id": "47ad95eb-7f3b-4845-91db-db21cea14ec1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -136,7 +136,7 @@
 				},
 				{
 					"name": "HTTP LB",
-					"id": "6945b462-a446-4ac4-a231-19909f0b36d1",
+					"_postman_id": "6945b462-a446-4ac4-a231-19909f0b36d1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -161,7 +161,7 @@
 							}
 						}
 					],
-					"id": "ebea3f22-27d0-420a-a7e3-33da850b4592",
+					"_postman_id": "ebea3f22-27d0-420a-a7e3-33da850b4592",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -187,7 +187,7 @@
 							}
 						}
 					],
-					"id": "596d1f6f-f980-489d-8bc4-451a4d510bad",
+					"_postman_id": "596d1f6f-f980-489d-8bc4-451a4d510bad",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -200,7 +200,7 @@
 					"response": []
 				}
 			],
-			"id": "662264f0-7c1a-4029-bc4b-ce6ca17d2eac"
+			"_postman_id": "662264f0-7c1a-4029-bc4b-ce6ca17d2eac"
 		},
 		{
 			"name": "Delete Namespace + WAAP Shared Objects (1 App)",
@@ -210,7 +210,7 @@
 					"item": [
 						{
 							"name": "delete namespace1",
-							"id": "67f140c7-0db8-4a48-93be-319093649bcd",
+							"_postman_id": "67f140c7-0db8-4a48-93be-319093649bcd",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -233,7 +233,7 @@
 						},
 						{
 							"name": "delete Shared AI+ML - namespace1",
-							"id": "1c181d1c-d2c3-4ab4-9847-5f9a2d391f80",
+							"_postman_id": "1c181d1c-d2c3-4ab4-9847-5f9a2d391f80",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -256,7 +256,7 @@
 						},
 						{
 							"name": "delete Shared App Firewall",
-							"id": "6c1c8bb7-7483-4287-a527-d014b4ab3942",
+							"_postman_id": "6c1c8bb7-7483-4287-a527-d014b4ab3942",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -279,7 +279,7 @@
 						},
 						{
 							"name": "delete Shared Service Policy - allowed-http-methods",
-							"id": "46877bfe-596c-4b84-b190-3a15101b07fc",
+							"_postman_id": "46877bfe-596c-4b84-b190-3a15101b07fc",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -302,7 +302,7 @@
 						},
 						{
 							"name": "delete Shared Service Policy - web-srvpolicy-block-countries",
-							"id": "0017b1b8-fe53-4c26-bc5a-3f03b28a95a9",
+							"_postman_id": "0017b1b8-fe53-4c26-bc5a-3f03b28a95a9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -324,10 +324,11 @@
 							"response": []
 						}
 					],
-					"id": "c66a0262-2b4a-4e5c-9520-413080819e1e"
+					"_postman_id": "c66a0262-2b4a-4e5c-9520-413080819e1e",
+					"_postman_isSubFolder": true
 				}
 			],
-			"id": "104bf185-5820-4a42-8092-1339509a96f5"
+			"_postman_id": "104bf185-5820-4a42-8092-1339509a96f5"
 		}
 	],
 	"auth": {
@@ -361,19 +362,22 @@
 	],
 	"variable": [
 		{
-			"id": "09e0e470-3665-46cf-a31d-bdd6029115c0",
+			"id": "0fd1393c-a9d1-4722-bd7e-dd489eaf1152",
 			"key": "lbName",
-			"value": ""
+			"value": "",
+			"type": "string"
 		},
 		{
-			"id": "6e8d78a4-73e4-4d24-b985-c75ba541127e",
+			"id": "49964e14-026e-4042-b8c7-5c183198e19f",
 			"key": "poolName",
-			"value": ""
+			"value": "",
+			"type": "string"
 		},
 		{
-			"id": "49943256-dd3e-4dd7-bdfc-d0c44be1ffcf",
+			"id": "b79b12b9-0bfb-4457-98e6-ebd2b9d68fd7",
 			"key": "monitorName",
-			"value": ""
+			"value": "",
+			"type": "string"
 		}
 	]
 }
