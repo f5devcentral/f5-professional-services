@@ -6,7 +6,7 @@
 
 # **Instructions**
 
-* Ensure vesctl CLI tool is installed on the client machine.  Instructions can be found [here]([https://gitlab.com/volterra.io/vesctl/blob/main/](https://gitlab.com/volterra.io/vesctl/-/tree/main)
+* Ensure vesctl CLI tool is installed on the client machine.  Instructions can be found [here](https://gitlab.com/volterra.io/vesctl/-/tree/main)
 * Download copy of script in this repo
 * Copy PEM output of your TLS private key
 * Run Script and paste in TLS private key output
