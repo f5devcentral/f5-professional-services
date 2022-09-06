@@ -7,12 +7,29 @@ This example creates the following objects:
 * HTTPS LB + WAF Policy (in blocking mode)
 
 # **Appendix**
-Creation 
-  * **voltconsole-host** - shortname of the XC console host (example - if customer-a.console.ves.volterra.io is fqdn, then the value would be customer-a)
-  * **tenant-id** - can be found under administration tab of the XC Console GUI
-  * **api_credential** - needs to be generated from XC Console
-  * **namespace_1** - namespace for data retrieval/deploy/delete
-  * **app_name_1** - application object name for retreival/deploy/delete, used in context of namespace
+
+## **variables.tf**
+Please modify the variables.tf to match desired configuration
+
+  variable "api_url" {
+  default = "https://**yourtenant**.console.ves.volterra.io/api"
+}
+
+variable "api_p12_file" {
+  default = "./creds/your-cred.p12"
+}
+
+variable "base" {
+  default = "demo-app"
+}
+
+variable "namespace" {
+  default = "your-namespace"
+}  
+
+variable "domain" {
+  default = "yourdomain"
+} 
 
 ### **Generate credentials (.p12)** 
   
