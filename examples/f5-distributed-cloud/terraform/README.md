@@ -14,9 +14,9 @@ Please create and download creadentials and store them in the **creds** folder
 Create an **VES_P12_PASSWORD** environment variable with your credential password entered in F5 XC GUI/API during creation:
 Example (in Linux)
 
-'''
+```
 export VES_P12_PASSWORD=password123!'
-'''
+```
 
 ## Customize **variables.tf**
 Please modify the variables.tf to match desired configuration
