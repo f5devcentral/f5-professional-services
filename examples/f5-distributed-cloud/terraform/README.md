@@ -15,7 +15,7 @@ Create an **VES_P12_PASSWORD** environment variable with your credential passwor
 
 Example (Linux):
 ```
-export VES_P12_PASSWORD=password123!'
+export VES_P12_PASSWORD='password123!'
 ```
 
 ### Customize **variables.tf**
