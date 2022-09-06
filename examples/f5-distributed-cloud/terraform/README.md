@@ -19,10 +19,9 @@ export VES_P12_PASSWORD=password123!'
 ```
 
 ## Customize **variables.tf**
-Please modify the variables.tf to match desired configuration
+Please modify the bold below strings in variables.tf to match desired configuration output
 
-```
-  variable "api_url" {
+variable "api_url" {
   default = "https://**yourtenant**.console.ves.volterra.io/api"
 }
 
@@ -41,6 +40,6 @@ variable "namespace" {
 variable "domain" {
   default = "**yourdomain**"
 } 
-```
+
 
   
