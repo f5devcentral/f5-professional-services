@@ -1,6 +1,8 @@
 # **Introduction**
 
-Helper bash script to blindfold the TLS private key.  
+**For**: Deployment on F5 Distributed Cloud
+
+**Description**: Helper bash script to blindfold the TLS private key.  
 
 Intended to be used along with other automation tools to assist with deployment of HTTPS LB on F5 Distributed Cloud
 
