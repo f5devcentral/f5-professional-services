@@ -4,11 +4,17 @@ The provided Terraform example to create a new WAAP protected HTTP application.
 This example creates the following objects:
 * Health Check
 * Origin Pool 
-* HTTPS LB + WAF Policy (in blocking mode)
+* HTTPS LB (autocert/DNS + WAF Policy)
 
 # **Appendix**
 
-## **variables.tf**
+### **Generate credentials (.p12)** 
+Please create and download creadentials and store them in the **creds** folder
+
+Create an **VES_P12_PASSWORD** environment variable with your credential password entered in F5 XC GUI/API during creation:
+Example 'export VES_P12_PASSWORD=password123!'
+
+## Customizing **variables.tf**
 Please modify the variables.tf to match desired configuration
 
   variable "api_url" {
@@ -16,20 +22,20 @@ Please modify the variables.tf to match desired configuration
 }
 
 variable "api_p12_file" {
-  default = "./creds/your-cred.p12"
+  default = "./creds/**your-cred.p12**"
 }
 
 variable "base" {
-  default = "demo-app"
+  default = "**demo-app**"
 }
 
 variable "namespace" {
-  default = "your-namespace"
+  default = "**your-namespace**"
 }  
 
 variable "domain" {
-  default = "yourdomain"
+  default = "**yourdomain**"
 } 
 
-### **Generate credentials (.p12)** 
+
   
