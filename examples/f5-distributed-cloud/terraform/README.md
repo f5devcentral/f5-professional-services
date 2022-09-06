@@ -8,8 +8,8 @@ This example creates the following objects:
 
 # **Appendix**
 
-### **Generate credentials (.p12)** 
-Please create and download creadentials and store them in the **creds** folder
+### **Generate XC credentials (.p12)** 
+Please create and download XC credentials and store them in the **creds/** folder
 
 Create an **VES_P12_PASSWORD** environment variable with your credential password entered in F5 XC GUI/API during creation:
 
