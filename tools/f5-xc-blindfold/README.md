@@ -6,6 +6,6 @@ Intended to be used along with other automation tools to assist with deployment 
 
 # **Instructions**
 
-*Copy our PEM output of your TLS private key
-*Run Script and paste in TLS private key output
-*Script will output a string containing the blindfolded key which can be used when deploying an HTTPS LB via API
+* Copy PEM output of your TLS private key
+* Run Script and paste in TLS private key output
+* Script will output a string containing the blindfolded key which can be used when deploying an HTTPS LB via API
