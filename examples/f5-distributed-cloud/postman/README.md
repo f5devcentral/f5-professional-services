@@ -19,7 +19,7 @@ Collection contains subfolder with examples for the following tasks:
   * **Deploy Single HTTP Application + WAAP Manual DNS/Cert (1 App)** - for BYO Cert/Key + CNAME based DNS delegation
   * **Deploy Single HTTP Application + WAAP Auto DNS/Cert (1 App)** - for Auto Manage Cert+DNS (DNS zones delgetated to XC)
   
-**Note**: It is recommended to bindfold your TLS private key before deploying an HTTPS LB.  A helper script to accomplish this task can be found here: [a link](https://github.com/f5devcentral/f5-professional-services/blob/main/tools/f5-xc-blindfold/blindfold-xc-key.sh)
+**Note**: It is recommended to bindfold your TLS private key before deploying an HTTPS LB.  A helper script to accomplish this task can be found here: [xc-blindfold-script](https://github.com/f5devcentral/f5-professional-services/blob/main/tools/f5-xc-blindfold)
 
 
 ### **F5-XC-Data-Retrieval_collection.json**
