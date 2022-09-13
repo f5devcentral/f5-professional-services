@@ -1,0 +1,3 @@
+base_name,fqdn,fe_port,http_redirect,auto_cert,origin_server,origin_server_port,origin_server_no_tls
+app1,app1.acme.com,443,true,true,public.acme.com,80,true
+app2,app2.acme.com,443,true,false,10.128.20.20,443,false
