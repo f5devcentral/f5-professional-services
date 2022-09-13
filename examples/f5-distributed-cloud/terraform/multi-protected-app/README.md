@@ -37,7 +37,7 @@ variable "namespace" {
   default = "**your-namespace**"
 }  
 
-### Customize input.csv**
+### Customize input.csv
 The following CSV fields need to be populated:
 
 | Column                                         | Description |
