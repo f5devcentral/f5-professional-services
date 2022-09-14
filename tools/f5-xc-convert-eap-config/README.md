@@ -3,7 +3,9 @@
 The following script reads the EAP configuration and returns a human-readable file, organizing the configuration according to F5 XC objects.
 
 **Use:**
+
 Supply the EAP config file in JSON format as an argument.
+
 Example: ./GetInfoEAP.sh EAPconfig.json
 
 **Output:**
