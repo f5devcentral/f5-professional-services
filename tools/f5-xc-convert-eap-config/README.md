@@ -8,7 +8,7 @@ Example: ./GetInfoEAP.sh EAPconfig.json
 
 **Output:**
 
-/>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load Balancer:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<</
+*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load Balancer:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Main FQDN: "marketing.customer.com"
 Additionals FQDN: null
 HTTP virtual server:true, redirect:true, port:80
@@ -105,4 +105,4 @@ Exceptions_parameters_objects
 
 - Parameters names:
 _______________________________________________________________________________
-SignatureIDs:
+SignatureIDs:*
