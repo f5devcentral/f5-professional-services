@@ -9,6 +9,7 @@ Example: ./GetInfoEAP.sh EAPconfig.json
 **Output:**
 
 *>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load Balancer:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*
+
 Main FQDN: "marketing.customer.com"
 Additionals FQDN: null
 HTTP virtual server:true, redirect:true, port:80
