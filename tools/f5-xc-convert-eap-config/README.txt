@@ -1,12 +1,13 @@
-Script to convert the EAP config to a human-readable file
+# **Script to convert the EAP config to a human-readable file**
 
 The following script reads the EAP configuration and returns a human-readable file, organizing the configuration according to F5 XC objects.
 
-Use:
+**Use:**
 Supply the EAP config file in JSON format as an argument.
 Example: ./GetInfoEAP.sh EAPconfig.json
 
-Output:
+**Output:**
+
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load Balancer:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Main FQDN: "marketing.customer.com"
 Additionals FQDN: null
