@@ -1,4 +1,4 @@
-# **Script to convert the EAP config to a human-readable file** #
+# **Bash script to convert EAP configuration in JSON format to a human-readable file** #
 
 The following script reads the EAP configuration and returns a human-readable file, organizing the configuration according to F5 XC objects.
 
