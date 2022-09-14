@@ -7,7 +7,7 @@ Supply the EAP config file in JSON format as an argument.
 Example: ./GetInfoEAP.sh EAPconfig.json
 
 **Output:**
-
+```
 *>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load Balancer:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Main FQDN: "marketing.customer.com"
 Additionals FQDN: null
@@ -106,3 +106,4 @@ Exceptions_parameters_objects
 - Parameters names:
 _______________________________________________________________________________
 SignatureIDs:*
+```
