@@ -13,7 +13,7 @@ Main FQDN: "www.example.com"
 Additionals FQDN: null
 HTTP virtual server:true, redirect:true, port:80
 HTTPS virtual server:true, port:443
-Edpoints:X.X.X.X , HTTPS:true, HTTP:true
+Edpoints: , HTTPS:true, HTTP:true
 _______________________________________________________________________________
 Dataguard: true
 _______________________________________________________________________________
