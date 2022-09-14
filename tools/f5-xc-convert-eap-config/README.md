@@ -6,7 +6,7 @@ The following script reads the EAP configuration and returns a human-readable fi
 
 Supply the EAP config file in JSON format as an argument.
 
-Example: ./GetInfoEAP.sh EAPconfig.json
+*Example: ./GetInfoEAP.sh EAPconfig.json*
 
 **Output:**
 ```
