@@ -9,11 +9,11 @@ Example: ./GetInfoEAP.sh EAPconfig.json
 **Output:**
 ```
 *>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load Balancer:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-Main FQDN: "marketing.customer.com"
+Main FQDN: "www.example.com"
 Additionals FQDN: null
 HTTP virtual server:true, redirect:true, port:80
 HTTPS virtual server:true, port:443
-Edpoints: , HTTPS:true, HTTP:true
+Edpoints:X.X.X.X , HTTPS:true, HTTP:true
 _______________________________________________________________________________
 Dataguard: true
 _______________________________________________________________________________
@@ -105,5 +105,5 @@ Exceptions_parameters_objects
 
 - Parameters names:
 _______________________________________________________________________________
-SignatureIDs:*
+SignatureIDs:
 ```
