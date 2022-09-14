@@ -6,11 +6,13 @@ The following script reads the EAP configuration and returns a human-readable fi
 
 Supply the EAP config file in JSON format as an argument.
 
-*Example: ./GetInfoEAP.sh EAPconfig.json*
+*Example:* 
+
+**./GetInfoEAP.sh EAPconfig.json**
 
 **Output:**
 ```
-*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load Balancer:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Load Balancer:<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Main FQDN: "www.example.com"
 Additionals FQDN: null
 HTTP virtual server:true, redirect:true, port:80
