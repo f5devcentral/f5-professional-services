@@ -30,6 +30,7 @@ The tools folder contains utilities which can assist with a variaty of tasks rel
 | [f5-waf-quick-view](tools/f5-waf-quick-view)| This reports on some settings across BIG-IP ASM policies  |
 | [f5-awaf-export-policies](tools/f5-awaf-export-policies)| A small script to export all AWAF policies from a BIG-IP device. |
 | [f5-xc-blindfold](tools/f5-xc-blindfold)| Bash script to blindfold the TLS private key prior to deployment to F5 XC config. |
+| [f5-xc-convert-eap-config](tools/f5-xc-convert-eap-config)| Bash script to convert EAP configuration in JSON format to a human-readable file. |
 
 ## Tips & Tricks
 The tip-and-tricks folder contains common commands used day to day in F5 technologies as well as cheatsheet and tips (!) on various ancialliary tools.
