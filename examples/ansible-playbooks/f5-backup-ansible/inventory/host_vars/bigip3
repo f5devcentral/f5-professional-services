@@ -1,0 +1,3 @@
+ansible_host: C.C.C.C
+ansible_user: admin 
+ansible_pass: admin
