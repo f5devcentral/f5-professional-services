@@ -1,4 +1,4 @@
-# f5-backup-ansible.sh
+# f5-backup-ansible.yaml
 ## Overview
 
 An Ansible Playbook to backup BIG-IP devices. 
