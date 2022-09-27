@@ -4,6 +4,7 @@ The provided Postman Collections are examples of how to accomplish the following
 * Deploy New Applications
 * Migrate Existing Applications
 * Retrieve Data from the XC Tenant (WAF Logs, Configuration, CNAMES, etc)
+* Deploy Brews Demo Application via vk8s cluster (can be via RE, CE, or RE+CE)
 * Delete Applications
 
 Additionally, there are associated Postman Environments that need to be downloaded and used along with the Postman Collections
@@ -44,6 +45,19 @@ Used to delete either individual HTTP LB+associated objects, or an entire namesp
 Collection contains subfolder with examples for the following tasks:
   * **Delete App (1 App)**
   * **Delete Namespace + WAAP Shared Objects (1 App)**  
+  
+### **F5-XC-vk8s-MCN-Brews-App-Demo_collection.json**
+Used to deploy Brews Demo Application using vk8s.  This is useful for showing off k8s and MCN functionality.  
+Please use the accompanying environment included in this repo.
+This collection is intended to be run in a single pass to deploy the demo application.  It may take 5-10 minutes after the collection is run for the site to be fully operational.  
+
+**Note:**  It's assumed that your cloud sites (CE) have been deployed prior to using this collection.  
+
+Collection contains subfolders with examples for the following deployment tasks:
+  * **Base Config  (namespace, labels, waf policy)**
+  * **vk8s&vsites**
+  * **Workloads **
+  * **LB + WAAP**
 
 # **Postman Environments**
 
