@@ -39,13 +39,6 @@ Used to migrate individual applications from one namespace to another.  Creates 
 Collection contains subfolder with examples for the following tasks:
   * **Migrate HTTP LB to new Namespace (1 App)**
 
-### **F5-XC-Delete_collection.json**
-Used to delete either individual HTTP LB+associated objects, or an entire namespace+associated shared objects
-
-Collection contains subfolder with examples for the following tasks:
-  * **Delete App (1 App)**
-  * **Delete Namespace + WAAP Shared Objects (1 App)**  
-  
 ### **F5-XC-vk8s-MCN-Brews-App-Demo_collection.json**
 Used to deploy Brews Demo Application using vk8s.  This is useful for showing off k8s and MCN functionality.  
 Please use the accompanying environment included in this repo.
@@ -56,8 +49,15 @@ This collection is intended to be run in a single pass to deploy the demo applic
 Collection contains subfolders with examples for the following deployment tasks:
   * **Base Config  (namespace, labels, waf policy)**
   * **vk8s&vsites**
-  * **Workloads **
+  * **Workloads**
   * **LB + WAAP**
+
+### **F5-XC-Delete_collection.json**
+Used to delete either individual HTTP LB+associated objects, or an entire namespace+associated shared objects
+
+Collection contains subfolder with examples for the following tasks:
+  * **Delete App (1 App)**
+  * **Delete Namespace + WAAP Shared Objects (1 App)**  
 
 # **Postman Environments**
 
