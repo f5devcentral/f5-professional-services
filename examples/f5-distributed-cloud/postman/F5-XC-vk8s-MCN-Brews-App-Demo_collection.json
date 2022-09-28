@@ -24,7 +24,7 @@
 							}
 						}
 					],
-					"_postman_id": "af3c8bee-5de7-47fe-a47b-ab3b0889e2a3",
+					"id": "af3c8bee-5de7-47fe-a47b-ab3b0889e2a3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -61,7 +61,7 @@
 							}
 						}
 					],
-					"_postman_id": "b8f06fb7-5dcf-430e-b1f1-91c16b0e0581",
+					"id": "b8f06fb7-5dcf-430e-b1f1-91c16b0e0581",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -98,7 +98,7 @@
 							}
 						}
 					],
-					"_postman_id": "047f976b-7d60-47a1-a62a-00895c4da2e3",
+					"id": "047f976b-7d60-47a1-a62a-00895c4da2e3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -135,7 +135,7 @@
 							}
 						}
 					],
-					"_postman_id": "1bd3e354-a305-4278-bb8f-638c6a7716b1",
+					"id": "1bd3e354-a305-4278-bb8f-638c6a7716b1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -172,7 +172,7 @@
 							}
 						}
 					],
-					"_postman_id": "e9310ee7-93e1-4ed2-917a-2421443bf97e",
+					"id": "e9310ee7-93e1-4ed2-917a-2421443bf97e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -209,7 +209,7 @@
 							}
 						}
 					],
-					"_postman_id": "cbe8dadf-f6ad-4915-bf66-b2f36d31fe02",
+					"id": "cbe8dadf-f6ad-4915-bf66-b2f36d31fe02",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -231,7 +231,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "87ead85b-621c-4663-90f4-00a4a679a209"
+			"id": "87ead85b-621c-4663-90f4-00a4a679a209"
 		},
 		{
 			"name": "vk8s & vsites",
@@ -252,7 +252,7 @@
 							}
 						}
 					],
-					"_postman_id": "b7292614-d3ef-4f31-a2be-461bc0687583",
+					"id": "b7292614-d3ef-4f31-a2be-461bc0687583",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -289,7 +289,7 @@
 							}
 						}
 					],
-					"_postman_id": "1df78f59-3177-4400-99a1-da0196b51964",
+					"id": "1df78f59-3177-4400-99a1-da0196b51964",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -326,7 +326,7 @@
 							}
 						}
 					],
-					"_postman_id": "038f1b46-6535-4a84-8d55-33a933beb728",
+					"id": "038f1b46-6535-4a84-8d55-33a933beb728",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -363,7 +363,7 @@
 							}
 						}
 					],
-					"_postman_id": "75e07a31-55ac-4075-9c2a-0013a848a28f",
+					"id": "75e07a31-55ac-4075-9c2a-0013a848a28f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -400,7 +400,7 @@
 							}
 						}
 					],
-					"_postman_id": "932b581c-2f01-40c2-8a62-8434c5cd19c7",
+					"id": "932b581c-2f01-40c2-8a62-8434c5cd19c7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -437,7 +437,7 @@
 							}
 						}
 					],
-					"_postman_id": "40a06572-2bf1-406d-946b-23b8bdb5d3fd",
+					"id": "40a06572-2bf1-406d-946b-23b8bdb5d3fd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -474,7 +474,7 @@
 							}
 						}
 					],
-					"_postman_id": "ed0e2edf-7255-4313-b3c3-67ca423cfe0a",
+					"id": "ed0e2edf-7255-4313-b3c3-67ca423cfe0a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -486,7 +486,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "31d5a61f-e7f7-467e-aeea-88c02b0746bb"
+			"id": "31d5a61f-e7f7-467e-aeea-88c02b0746bb"
 		},
 		{
 			"name": "Workloads",
@@ -507,7 +507,7 @@
 							}
 						}
 					],
-					"_postman_id": "8d92e277-8bc1-4e2c-8b52-e3461a057ce2",
+					"id": "8d92e277-8bc1-4e2c-8b52-e3461a057ce2",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -544,7 +544,7 @@
 							}
 						}
 					],
-					"_postman_id": "82b67bae-2efd-4b97-8750-5d0f51e3c6f3",
+					"id": "82b67bae-2efd-4b97-8750-5d0f51e3c6f3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -553,7 +553,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"mongo\",\n          \"image\": {\n            \"name\": \"public.ecr.aws/o2z6z0t3/friday:demo\",\n            \"public\": {},\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [\n          {\n            \"env_var\": {\n              \"name\": \"SEED_FILE\",\n              \"value\": \"beerProducts.json\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-gcp-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 27017,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"mongo\",\n          \"image\": {\n            \"name\": \"public.ecr.aws/o2z6z0t3/friday:demo\",\n            \"public\": {},\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [\n          {\n            \"env_var\": {\n              \"name\": \"SEED_FILE\",\n              \"value\": \"beerProducts.json\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{gcp-site-name}}-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 27017,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -581,7 +581,7 @@
 							}
 						}
 					],
-					"_postman_id": "dbd5e97d-f330-44a4-a834-d9e2f58c0ce2",
+					"id": "dbd5e97d-f330-44a4-a834-d9e2f58c0ce2",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -590,7 +590,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-api\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-api\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/api\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [\n          {\n            \"env_var\": {\n              \"name\": \"MONGO_URL\",\n              \"value\": \"mongodb.brews.local\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-aws-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 8000,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-api\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-api\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/api\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [\n          {\n            \"env_var\": {\n              \"name\": \"MONGO_URL\",\n              \"value\": \"mongodb.brews.local\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{aws-site-name}}-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 8000,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -618,7 +618,7 @@
 							}
 						}
 					],
-					"_postman_id": "6fe46a5f-5c0c-4b29-b00b-aea05602e6fb",
+					"id": "6fe46a5f-5c0c-4b29-b00b-aea05602e6fb",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -672,7 +672,7 @@
 							}
 						}
 					],
-					"_postman_id": "328da887-68f5-4457-82a3-77edd7fd266e",
+					"id": "328da887-68f5-4457-82a3-77edd7fd266e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -681,7 +681,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-inv\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/inv\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": null,\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-azure-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 8002,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-inv\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/inv\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": null,\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{azure-site-name}}-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 8002,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -719,7 +719,7 @@
 							}
 						}
 					],
-					"_postman_id": "5dda0008-3d7c-4cfc-b6c4-b45e0f2e4dbc",
+					"id": "5dda0008-3d7c-4cfc-b6c4-b45e0f2e4dbc",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -766,7 +766,7 @@
 							}
 						}
 					],
-					"_postman_id": "5a4b0569-f978-430f-b0ce-89ea00279749",
+					"id": "5a4b0569-f978-430f-b0ce-89ea00279749",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -788,7 +788,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "e629cea8-5967-47ae-aa98-ae49e1e0a6b4"
+			"id": "e629cea8-5967-47ae-aa98-ae49e1e0a6b4"
 		},
 		{
 			"name": "LB + WAAP",
@@ -809,7 +809,7 @@
 							}
 						}
 					],
-					"_postman_id": "e1b2831f-4631-42ab-9cc0-36c3fc640b9c",
+					"id": "e1b2831f-4631-42ab-9cc0-36c3fc640b9c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -846,7 +846,7 @@
 							}
 						}
 					],
-					"_postman_id": "fc87fe8f-969d-4eab-b06e-e103ed80e340",
+					"id": "fc87fe8f-969d-4eab-b06e-e103ed80e340",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -883,7 +883,7 @@
 							}
 						}
 					],
-					"_postman_id": "1395d839-6cf0-4710-adbf-f07106441745",
+					"id": "1395d839-6cf0-4710-adbf-f07106441745",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -920,7 +920,7 @@
 							}
 						}
 					],
-					"_postman_id": "0066d7fc-0659-4f60-96f3-a452a7d36f1e",
+					"id": "0066d7fc-0659-4f60-96f3-a452a7d36f1e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -967,7 +967,7 @@
 							}
 						}
 					],
-					"_postman_id": "5a33473c-9c12-4454-8a6b-d28a9b674e6b",
+					"id": "5a33473c-9c12-4454-8a6b-d28a9b674e6b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -976,7 +976,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"Brews MCN PoC\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-mongodb.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-gcp-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 27017,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-mongodb-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"Brews MCN PoC\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-mongodb.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{gcp-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 27017,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-mongodb-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1014,7 +1014,7 @@
 							}
 						}
 					],
-					"_postman_id": "937d2566-a095-4f6b-90d1-39310ba6b05f",
+					"id": "937d2566-a095-4f6b-90d1-39310ba6b05f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1023,7 +1023,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-api-pool\",\n    \"labels\": {},\n    \"description\": \"Brews MCN PoC\"\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-api.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-aws-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 8000,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-api-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-api-pool\",\n    \"labels\": {},\n    \"description\": \"Brews MCN PoC\"\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-api.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{aws-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 8000,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-api-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1061,7 +1061,7 @@
 							}
 						}
 					],
-					"_postman_id": "2636812b-c765-40a6-8d43-2d23f156808e",
+					"id": "2636812b-c765-40a6-8d43-2d23f156808e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1108,7 +1108,7 @@
 							}
 						}
 					],
-					"_postman_id": "a59340bb-7453-42f6-85ea-b43b2ac0f8a6",
+					"id": "a59340bb-7453-42f6-85ea-b43b2ac0f8a6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1117,7 +1117,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv-pool\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-inv.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-azure-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 8002,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-inv-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv-pool\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-inv.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{azure-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 8002,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-inv-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1155,7 +1155,7 @@
 							}
 						}
 					],
-					"_postman_id": "05d9e80c-849b-424c-887a-f889eaeb93f7",
+					"id": "05d9e80c-849b-424c-887a-f889eaeb93f7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1164,7 +1164,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-tcp-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"Brews MCN PoC\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-mongodb-domain}}\"\n    ],\n    \"listen_port\": 27017,\n    \"no_sni\": {},\n    \"dns_volterra_managed\": false,\n    \"origin_pools\": [],\n    \"origin_pools_weights\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-mongodb-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"advertise_custom\": {\n      \"advertise_where\": [\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{namespace_1}}-aws\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{namespace_1}}-azure\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-gcp\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        }\n      ]\n    },\n    \"hash_policy_choice_round_robin\": {},\n    \"idle_timeout\": 3600000,\n    \"retract_cluster\": {},\n    \"tcp\": {},\n    \"dns_info\": [],\n    \"downstream_tls_certificate_expiration_timestamps\": []\n  }\n}",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-tcp-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"Brews MCN PoC\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-mongodb-domain}}\"\n    ],\n    \"listen_port\": 27017,\n    \"no_sni\": {},\n    \"dns_volterra_managed\": false,\n    \"origin_pools\": [],\n    \"origin_pools_weights\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-mongodb-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"advertise_custom\": {\n      \"advertise_where\": [\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{aws-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{azure-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{gcp-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        }\n      ]\n    },\n    \"hash_policy_choice_round_robin\": {},\n    \"idle_timeout\": 3600000,\n    \"retract_cluster\": {},\n    \"tcp\": {},\n    \"dns_info\": [],\n    \"downstream_tls_certificate_expiration_timestamps\": []\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1209,7 +1209,7 @@
 							}
 						}
 					],
-					"_postman_id": "21eceb36-bb8f-46a9-8424-e5620c7fabfb",
+					"id": "21eceb36-bb8f-46a9-8424-e5620c7fabfb",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1218,7 +1218,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv-http-lb\",\n    \"labels\": {},\n    \"description\": \"Brews PoC MCN\"\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-inv-domain}}\"\n    ],\n    \"http\": {\n      \"dns_volterra_managed\": false,\n      \"port\": 80\n    },\n    \"advertise_custom\": {\n      \"advertise_where\": [\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{namespace_1}}-aws\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{namespace_1}}-azure\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        }\n      ]\n    },\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-inv-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": [],\n    \"disable_waf\": {},\n    \"add_location\": false,\n    \"no_challenge\": {},\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"waf_exclusion_rules\": [],\n    \"data_guard_rules\": [],\n    \"blocked_clients\": [],\n    \"trusted_clients\": [],\n    \"ddos_mitigation_rules\": [],\n    \"service_policies_from_namespace\": {},\n    \"cookie_stickiness\": {\n      \"name\": \"brews-inv\"\n    },\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"disable_api_definition\": {},\n    \"disable_ip_reputation\": {}\n  }\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv-http-lb\",\n    \"labels\": {},\n    \"description\": \"Brews PoC MCN\"\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-inv-domain}}\"\n    ],\n    \"http\": {\n      \"dns_volterra_managed\": false,\n      \"port\": 80\n    },\n    \"advertise_custom\": {\n      \"advertise_where\": [\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{aws-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{azure-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{gcp-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        }\n      ]\n    },\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-inv-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": [],\n    \"disable_waf\": {},\n    \"add_location\": false,\n    \"no_challenge\": {},\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"waf_exclusion_rules\": [],\n    \"data_guard_rules\": [],\n    \"blocked_clients\": [],\n    \"trusted_clients\": [],\n    \"ddos_mitigation_rules\": [],\n    \"service_policies_from_namespace\": {},\n    \"cookie_stickiness\": {\n      \"name\": \"brews-inv\"\n    },\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"disable_api_definition\": {},\n    \"disable_ip_reputation\": {}\n  }\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1256,7 +1256,7 @@
 							}
 						}
 					],
-					"_postman_id": "4a51c655-df4c-459e-93d3-0d01b15fa460",
+					"id": "4a51c655-df4c-459e-93d3-0d01b15fa460",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1293,7 +1293,7 @@
 							}
 						}
 					],
-					"_postman_id": "b33d68db-d5b3-4a4b-a2aa-e29da7e6f8cd",
+					"id": "b33d68db-d5b3-4a4b-a2aa-e29da7e6f8cd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1315,7 +1315,7 @@
 					"response": []
 				}
 			],
-			"_postman_id": "78829311-50a3-4116-87ca-2dee9ce793d8"
+			"id": "78829311-50a3-4116-87ca-2dee9ce793d8"
 		}
 	],
 	"auth": {
