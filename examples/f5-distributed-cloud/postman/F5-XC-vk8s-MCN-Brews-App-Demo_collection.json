@@ -6,6 +6,138 @@
 	},
 	"item": [
 		{
+			"name": "Cloud Site Status",
+			"item": [
+				{
+					"name": "AWS status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b74c8882-e275-477d-8f41-09ab6913dfc2",
+								"exec": [
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.spec.site_state;",
+									"console.log (jsonNamesData);",
+									"",
+									"if (jsonNamesData === \"ONLINE\"){",
+									"    pm.test(\"Site Status: ONLINE\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"}",
+									"else { ",
+									"    pm.test(\"Site Status: Not Ready\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"    postman.setNextRequest(\"null\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "bcbe2568-a2de-4f48-807e-16fcb0c064ac",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/aws_vpc_sites/{{aws-site-name}}"
+					},
+					"response": []
+				},
+				{
+					"name": "GCP status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b74c8882-e275-477d-8f41-09ab6913dfc2",
+								"exec": [
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.spec.site_state;",
+									"console.log (jsonNamesData);",
+									"",
+									"if (jsonNamesData === \"ONLINE\"){",
+									"    pm.test(\"Site Status: ONLINE\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"}",
+									"else { ",
+									"    pm.test(\"Site Status: Not Ready\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"    postman.setNextRequest(\"null\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c9bda081-a52a-4b20-8dcb-ad327ce19e23",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/gcp_vpc_sites/{{gcp-site-name}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Azure status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b74c8882-e275-477d-8f41-09ab6913dfc2",
+								"exec": [
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.spec.site_state;",
+									"console.log (jsonNamesData);",
+									"",
+									"if (jsonNamesData === \"ONLINE\"){",
+									"    pm.test(\"Site Status: ONLINE\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"}",
+									"else { ",
+									"    pm.test(\"Site Status: Not Ready\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"    postman.setNextRequest(\"null\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ae7827a0-51c1-448a-929a-fe82e6e89474",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/azure_vnet_sites/{{azure-site-name}}"
+					},
+					"response": []
+				}
+			],
+			"id": "a371a44a-60ea-47c3-9539-56db2fa2f7ba"
+		},
+		{
 			"name": "Base Config",
 			"item": [
 				{
@@ -459,29 +591,79 @@
 					"response": []
 				},
 				{
-					"name": "5s delay - allow vk8s deploy to finish",
+					"name": "vk8s cluster status",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "a1db1680-1c21-400c-8383-71ad4eadc630",
+								"id": "44f3b2cf-cec9-458b-b846-4190e6b37c40",
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.items[0].system_metadata.initializers.pending[0];",
+									"",
+									"if (jsonNamesData !== undefined){",
+									"    var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
+									"    if (vk8s_status !== undefined ) {",
+									"        console.log(\"vk8s creation in progress\");",
+									"        //postman.setNextRequest(\"vk8s cluster status\");",
+									"        setTimeout(() => {  postman.setNextRequest(\"vk8s cluster status\"); }, 10000);",
+									"    }",
+									"}",
+									"else { ",
+									"    console.log(\"vk8s cluster ready\")",
+									"    postman.setNextRequest(\"Create Container Registry - f5demos\");",
+									"}",
+									"",
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
 									"});"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
-					"id": "ed0e2edf-7255-4313-b3c3-67ca423cfe0a",
+					"id": "303ad84d-c115-40a6-a039-53272b6ecd26",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "https://postman-echo.com/delay/5"
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_k8ss?report_fields",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_k8ss"
+							],
+							"query": [
+								{
+									"key": "report_fields",
+									"value": null
+								}
+							]
+						},
+						"description": "Shared NamesSpace Sites"
 					},
 					"response": []
 				}
