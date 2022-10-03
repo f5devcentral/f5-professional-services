@@ -47,9 +47,11 @@ This collection is intended to be run in a single pass to deploy the demo applic
 **Note:**  It's assumed that your cloud sites (CE) have been deployed prior to using this collection.  
 
 Collection contains subfolders with examples for the following deployment tasks:
+  * **Cloud Sites Status**
   * **Base Config  (namespace, labels, waf policy)**
   * **vk8s&vsites**
   * **Workloads**
+  * **Deployments (API+SPA)**
   * **LB + WAAP**
 
 ### **F5-XC-Delete_collection.json**
