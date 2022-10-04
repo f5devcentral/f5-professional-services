@@ -328,7 +328,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "1faf833f-6a82-44b7-a2e8-b5342a2cc139",
+						"id": "9da5019f-3e5e-403b-ba0a-340baf62e0c6",
 						"type": "text/javascript",
 						"exec": [
 							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
@@ -385,7 +385,7 @@
 							"",
 							"//build APP FW Config",
 							"if (deployAppFW === \"yes\") {",
-							"    appFwConfig = \"\\\"app_firewall\\\": { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\",\\\"name\\\": \\\"\"+AppFwName+\"\\\"},\";",
+							"    appFwConfig = \"\\\"app_firewall\\\": { \\\"namespace\\\": \\\"shared\\\",\\\"name\\\": \\\"\"+AppFwName+\"\\\"},\";",
 							"}",
 							"else {",
 							"    appFwConfig = \"\\\"disable_waf\\\": {},\"",
@@ -408,7 +408,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "40554a87-5dc4-4838-9418-5f4d4d2d38de",
+						"id": "07b7fd76-91ff-4c72-b833-0cff663ade4b",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -777,27 +777,27 @@
 	],
 	"variable": [
 		{
-			"id": "a4bfd108-498f-4f43-8383-2bc880f66dc5",
+			"id": "5794dbb8-563f-4a0e-be3f-2190b2e3ff28",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "c3b3bd7e-2215-49ed-acec-d4841bb53672",
+			"id": "d9e8a2bb-e75c-4811-9305-4bbfe289c022",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "3b7b57b7-a847-43dd-9da4-538c7dfebb6d",
+			"id": "db65505d-488e-41ce-b7a5-a5782e607b3b",
 			"key": "poolConfig",
 			"value": ""
 		},
 		{
-			"id": "79baedb8-9ad0-4b5f-a484-2be1e4c0f27e",
+			"id": "1717653d-4a8f-4ebf-a94e-39e8736026e0",
 			"key": "appFwConfig",
 			"value": ""
 		},
 		{
-			"id": "ffbe6e60-15fa-444d-9ce2-0c78dd9e1b30",
+			"id": "3535171e-1832-476c-bb0c-6e6a4e6ae190",
 			"key": "svcPolConfig",
 			"value": ""
 		}
