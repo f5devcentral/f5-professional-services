@@ -637,7 +637,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"add_hsts\": true,\n      \"port\": 443,\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"no_mtls\": {},\n      \"default_header\": {},\n      \"enable_path_normalize\": {}\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": {\n      \"request_headers_to_add\": [\n        {\n          \"name\": \"wl-proxy-client-ip\",\n          \"value\": \"$[client_address]\",\n          \"append\": null\n        }\n      ],\n      \"request_headers_to_remove\": null,\n      \"response_headers_to_add\": null,\n      \"response_headers_to_remove\": null,\n      \"max_request_header_size\": 60,\n      \"buffer_policy\": null,\n      \"compression_params\": null,\n      \"custom_errors\": {},\n      \"javascript_info\": null,\n      \"jwt\": null,\n      \"idle_timeout\": 30000,\n      \"disable_default_error_pages\": null\n    },\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"add_hsts\": true,\n      \"port\": 443,\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"no_mtls\": {},\n      \"default_header\": {},\n      \"enable_path_normalize\": {}\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": {\n      \"request_headers_to_add\": [\n        {\n          \"name\": \"wl-proxy-client-ip\",\n          \"value\": \"$[client_address]\",\n          \"append\": null\n        }\n      ],\n      \"request_headers_to_remove\": null,\n      \"response_headers_to_add\": null,\n      \"response_headers_to_remove\": null,\n      \"max_request_header_size\": 60,\n      \"buffer_policy\": null,\n      \"compression_params\": null,\n      \"custom_errors\": {},\n      \"javascript_info\": null,\n      \"jwt\": null,\n      \"idle_timeout\": 30000,\n      \"disable_default_error_pages\": null\n    },\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -777,27 +777,27 @@
 	],
 	"variable": [
 		{
-			"id": "a1032ac2-8ea0-4da6-915e-30a2236970f8",
+			"id": "8c79a5b1-ce2b-4690-af9e-fc0fc49fbe4f",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "006f464c-aae4-4f96-9f09-aa3420aaf786",
+			"id": "6adf5dc7-0ec3-4443-b4fc-d48ac59b2853",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "4045b1f7-6767-49f9-bf47-2b1c0235a59a",
+			"id": "326c403c-36b1-41f3-8a9a-76f5561183fd",
 			"key": "poolConfig",
 			"value": ""
 		},
 		{
-			"id": "e2040cc5-8d12-48fc-be59-8475166be5f7",
+			"id": "5c62cfc6-7bfa-4860-b0ca-0a1f0d543e67",
 			"key": "appFwConfig",
 			"value": ""
 		},
 		{
-			"id": "4533fdc3-b7ac-45a4-810b-30c7717ff802",
+			"id": "acefaf55-9a55-4d8e-a149-cf121c6cfb6c",
 			"key": "svcPolConfig",
 			"value": ""
 		}
