@@ -328,7 +328,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "9da5019f-3e5e-403b-ba0a-340baf62e0c6",
+						"id": "66066e4a-4a79-46ea-a92c-a75e249ec5ad",
 						"type": "text/javascript",
 						"exec": [
 							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
@@ -392,7 +392,7 @@
 							"}",
 							"//Build Service Policy Config",
 							"if (deploySvcPol === \"yes\") {",
-							"    svcPolConfig = \"\\\"active_service_policies\\\": { \\\"policies\\\": [ { \\\"tenant\\\": \\\"\"+tenantID+\"\\\",\\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-block-countries\\\" }, { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-allowed-http-methods\\\" } ] },\";",
+							"    svcPolConfig = \"\\\"active_service_policies\\\": { \\\"policies\\\": [ { \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-block-countries\\\" }, { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-allowed-http-methods\\\" } ] },\";",
 							"}",
 							"else {",
 							"    svcPolConfig = \"\\\"service_policies_from_namespace\\\": {},\"",
@@ -408,7 +408,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "07b7fd76-91ff-4c72-b833-0cff663ade4b",
+						"id": "c8be8220-da32-43e2-abf5-9e349aa3cfe1",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -777,27 +777,27 @@
 	],
 	"variable": [
 		{
-			"id": "5794dbb8-563f-4a0e-be3f-2190b2e3ff28",
+			"id": "9c71879b-d72b-477b-aec6-ef2f048b315c",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "d9e8a2bb-e75c-4811-9305-4bbfe289c022",
+			"id": "c2249cdf-6de4-4e12-a659-de634062d21f",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "db65505d-488e-41ce-b7a5-a5782e607b3b",
+			"id": "7216803b-9e49-4a44-8de7-5b23fb23f005",
 			"key": "poolConfig",
 			"value": ""
 		},
 		{
-			"id": "1717653d-4a8f-4ebf-a94e-39e8736026e0",
+			"id": "08cb17ff-98ac-4dcf-9c84-2b75618931b0",
 			"key": "appFwConfig",
 			"value": ""
 		},
 		{
-			"id": "3535171e-1832-476c-bb0c-6e6a4e6ae190",
+			"id": "e1e4d5e6-828a-4ab1-aaf2-a4e6652844b8",
 			"key": "svcPolConfig",
 			"value": ""
 		}
