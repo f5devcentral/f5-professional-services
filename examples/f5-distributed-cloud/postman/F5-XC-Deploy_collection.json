@@ -328,7 +328,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "d336be42-8351-45c8-9b72-61f127cbe233",
+						"id": "1faf833f-6a82-44b7-a2e8-b5342a2cc139",
 						"type": "text/javascript",
 						"exec": [
 							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
@@ -377,7 +377,6 @@
 							"//Build WAF and Service Policy Configuration",
 							"let deployAppFW = pm.environment.get(\"apply_shared-appfw\")",
 							"let deploySvcPol = pm.environment.get(\"apply_shared-svcpol\")",
-							"let tenantID = pm.environment.get(\"tenant-id\")",
 							"let namespace1 = pm.environment.get(\"namespace_1\")",
 							"let appName1 = pm.environment.get(\"app_name_1\")",
 							"let AppFwName = pm.environment.get(\"shared-appfw-name\")",
@@ -409,7 +408,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "774a7a92-aa04-4863-be96-9f12e3d49f4b",
+						"id": "40554a87-5dc4-4838-9418-5f4d4d2d38de",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -778,27 +777,27 @@
 	],
 	"variable": [
 		{
-			"id": "a0c9473a-1868-4173-ab3d-c18a255a07da",
+			"id": "a4bfd108-498f-4f43-8383-2bc880f66dc5",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "b965e0b5-6a0e-47a0-8dde-592c64e9d879",
+			"id": "c3b3bd7e-2215-49ed-acec-d4841bb53672",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "0dc8329c-02bd-4e7c-8746-7fe883599770",
+			"id": "3b7b57b7-a847-43dd-9da4-538c7dfebb6d",
 			"key": "poolConfig",
 			"value": ""
 		},
 		{
-			"id": "85d3133a-277c-4db6-80da-96d638a05383",
+			"id": "79baedb8-9ad0-4b5f-a484-2be1e4c0f27e",
 			"key": "appFwConfig",
 			"value": ""
 		},
 		{
-			"id": "54164b1f-bd87-471f-881d-ea4df6d6abe3",
+			"id": "ffbe6e60-15fa-444d-9ce2-0c78dd9e1b30",
 			"key": "svcPolConfig",
 			"value": ""
 		}
