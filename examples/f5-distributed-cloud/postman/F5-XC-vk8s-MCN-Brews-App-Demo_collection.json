@@ -239,7 +239,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-spa-api-appwf\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_profile\": null,\n    \"mode\": \"BLOCK\",\n    \"disabled_detection_tags\": null\n  },\n  \"resource_version\": null\n}",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-spa-api-appwf\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"blocking\": {},\n    \"default_detection_settings\": {},\n    \"default_bot_setting\": {},\n    \"allow_all_response_codes\": {},\n    \"default_anonymization\": {},\n    \"use_default_blocking_page\": {}\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
