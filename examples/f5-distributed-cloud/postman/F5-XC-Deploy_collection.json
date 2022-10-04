@@ -13,7 +13,7 @@
 					"item": [
 						{
 							"name": "Create namespace1",
-							"_postman_id": "e3c462c9-aa47-457c-9155-670e3789700b",
+							"id": "e3c462c9-aa47-457c-9155-670e3789700b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -36,7 +36,7 @@
 						},
 						{
 							"name": "Create Shared App Firewall",
-							"_postman_id": "9d650be2-b700-4e19-b4b6-9145540bf5c2",
+							"id": "9d650be2-b700-4e19-b4b6-9145540bf5c2",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -59,7 +59,7 @@
 						},
 						{
 							"name": "Create Shared Service Policy- block-countries",
-							"_postman_id": "250b575e-7946-42a8-9c94-c561f44c06b0",
+							"id": "250b575e-7946-42a8-9c94-c561f44c06b0",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -82,7 +82,7 @@
 						},
 						{
 							"name": "Create Shared Service Policy - allowed-http-methods",
-							"_postman_id": "84bab523-aebb-49a8-834e-4d5cb4bbc98b",
+							"id": "84bab523-aebb-49a8-834e-4d5cb4bbc98b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -104,15 +104,14 @@
 							"response": []
 						}
 					],
-					"_postman_id": "c8b20e06-9df4-4b9c-89e3-4e38dd663f88",
-					"_postman_isSubFolder": true
+					"id": "c8b20e06-9df4-4b9c-89e3-4e38dd663f88"
 				},
 				{
 					"name": "Namespace1",
 					"item": [
 						{
 							"name": "Create Health Check",
-							"_postman_id": "7a774be3-df96-4b35-a4a3-d55a6338e506",
+							"id": "7a774be3-df96-4b35-a4a3-d55a6338e506",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -187,7 +186,7 @@
 									}
 								}
 							],
-							"_postman_id": "f7e589b2-0097-40cb-81b7-07a40d07540f",
+							"id": "f7e589b2-0097-40cb-81b7-07a40d07540f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -229,7 +228,7 @@
 									}
 								}
 							],
-							"_postman_id": "b35f8585-f4d3-4253-88ab-6a2fea2f30ee",
+							"id": "b35f8585-f4d3-4253-88ab-6a2fea2f30ee",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -264,7 +263,7 @@
 									}
 								}
 							],
-							"_postman_id": "d3d4143b-f7ed-4dd7-ac42-10a9ddd3b053",
+							"id": "d3d4143b-f7ed-4dd7-ac42-10a9ddd3b053",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -273,7 +272,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"blindfold_secret_info\": {\n                                \"location\": \"string:///{{namespace_1-key}}\",\n                                \"decryption_provider\": null,\n                                \"store_provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": null\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"blindfold_secret_info\": {\n                                \"location\": \"string:///{{namespace_1-key}}\",\n                                \"decryption_provider\": null,\n                                \"store_provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": null\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -299,7 +298,7 @@
 									}
 								}
 							],
-							"_postman_id": "91b7b0dd-b618-4233-910c-f98935a4e068",
+							"id": "91b7b0dd-b618-4233-910c-f98935a4e068",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -321,11 +320,10 @@
 							"response": []
 						}
 					],
-					"_postman_id": "eeac2b84-5dce-4252-915c-691e94009f16",
-					"_postman_isSubFolder": true
+					"id": "eeac2b84-5dce-4252-915c-691e94009f16"
 				}
 			],
-			"_postman_id": "68855377-2997-42c3-a68a-7695d1a91976",
+			"id": "68855377-2997-42c3-a68a-7695d1a91976",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -428,7 +426,7 @@
 					"item": [
 						{
 							"name": "Create namespace1",
-							"_postman_id": "e43b6447-7223-40d5-9bd5-ff7419cddc08",
+							"id": "e43b6447-7223-40d5-9bd5-ff7419cddc08",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -451,7 +449,7 @@
 						},
 						{
 							"name": "Create Shared App Firewall",
-							"_postman_id": "1f05778e-1855-40d5-9b66-92b6cb4fb470",
+							"id": "1f05778e-1855-40d5-9b66-92b6cb4fb470",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -474,7 +472,7 @@
 						},
 						{
 							"name": "Create Shared Service Policy- block-countries",
-							"_postman_id": "3e20a607-c756-4bda-9a5a-924e258787f7",
+							"id": "3e20a607-c756-4bda-9a5a-924e258787f7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -497,7 +495,7 @@
 						},
 						{
 							"name": "Create Shared Service Policy - allowed-http-methods",
-							"_postman_id": "e714fa64-bb62-410d-86ae-7b06d113ce61",
+							"id": "e714fa64-bb62-410d-86ae-7b06d113ce61",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -519,15 +517,14 @@
 							"response": []
 						}
 					],
-					"_postman_id": "5754b828-6e68-476e-adea-76f9725ad782",
-					"_postman_isSubFolder": true
+					"id": "5754b828-6e68-476e-adea-76f9725ad782"
 				},
 				{
 					"name": "Namespace1",
 					"item": [
 						{
 							"name": "Create Health Check",
-							"_postman_id": "86aabf73-a003-471c-bd36-b07cb3e4bf43",
+							"id": "86aabf73-a003-471c-bd36-b07cb3e4bf43",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -562,7 +559,7 @@
 									}
 								}
 							],
-							"_postman_id": "5bf19751-8a7b-4ead-9128-9b575f6ad13b",
+							"id": "5bf19751-8a7b-4ead-9128-9b575f6ad13b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -597,7 +594,7 @@
 									}
 								}
 							],
-							"_postman_id": "2a609fbb-4636-4320-8ce7-f2d92783eb3d",
+							"id": "2a609fbb-4636-4320-8ce7-f2d92783eb3d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -632,7 +629,7 @@
 									}
 								}
 							],
-							"_postman_id": "f0558b0b-d7bb-4ad9-88ee-91c5f04d144b",
+							"id": "f0558b0b-d7bb-4ad9-88ee-91c5f04d144b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -654,11 +651,10 @@
 							"response": []
 						}
 					],
-					"_postman_id": "d8f42641-3021-42e6-b9bd-c9109e7a4ba3",
-					"_postman_isSubFolder": true
+					"id": "d8f42641-3021-42e6-b9bd-c9109e7a4ba3"
 				}
 			],
-			"_postman_id": "cd6ddf23-e911-4306-b374-ddd3ca843a89",
+			"id": "cd6ddf23-e911-4306-b374-ddd3ca843a89",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -782,34 +778,29 @@
 	],
 	"variable": [
 		{
-			"id": "25b10524-fa07-4dd3-b392-539e2f7231a8",
+			"id": "192d8889-0f8b-435f-9e02-a3db682226ee",
 			"key": "base64EncodedCert",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
-			"id": "d0aa166c-bd52-42a1-8fb8-045f78377b8d",
+			"id": "0863fe68-a047-44e6-a492-446be0652001",
 			"key": "base64EncodedKey",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
-			"id": "1817d5b8-cf1a-4975-9bb2-46631cd7218e",
+			"id": "ec783286-72d5-461e-9873-91c099787d04",
 			"key": "poolConfig",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
-			"id": "ff350e37-0020-410f-8ca3-20fef9908301",
+			"id": "b1fcc1eb-2af1-448a-a427-b591cc9c19e2",
 			"key": "appFwConfig",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
-			"id": "edfb80a7-1bf4-4563-ad77-923a1e46bf7d",
+			"id": "bcea22cc-35ee-47bc-a62e-1732e92107eb",
 			"key": "svcPolConfig",
-			"value": "",
-			"type": "string"
+			"value": ""
 		}
 	]
 }
