@@ -777,27 +777,27 @@
 	],
 	"variable": [
 		{
-			"id": "9c71879b-d72b-477b-aec6-ef2f048b315c",
+			"id": "a1032ac2-8ea0-4da6-915e-30a2236970f8",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "c2249cdf-6de4-4e12-a659-de634062d21f",
+			"id": "006f464c-aae4-4f96-9f09-aa3420aaf786",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "7216803b-9e49-4a44-8de7-5b23fb23f005",
+			"id": "4045b1f7-6767-49f9-bf47-2b1c0235a59a",
 			"key": "poolConfig",
 			"value": ""
 		},
 		{
-			"id": "08cb17ff-98ac-4dcf-9c84-2b75618931b0",
+			"id": "e2040cc5-8d12-48fc-be59-8475166be5f7",
 			"key": "appFwConfig",
 			"value": ""
 		},
 		{
-			"id": "e1e4d5e6-828a-4ab1-aaf2-a4e6652844b8",
+			"id": "4533fdc3-b7ac-45a4-810b-30c7717ff802",
 			"key": "svcPolConfig",
 			"value": ""
 		}
