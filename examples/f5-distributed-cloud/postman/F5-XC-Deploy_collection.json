@@ -195,7 +195,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    {{poolConfig}},\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{app_name_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    {{poolConfig}},\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{app_name_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -777,27 +777,27 @@
 	],
 	"variable": [
 		{
-			"id": "7145b1e3-89ae-469a-93eb-3fe6cfe1e9af",
+			"id": "fce5181b-14c3-4445-b087-b4bd33436dc0",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "11684dc4-c83d-49fb-9653-c3be6071f0b1",
+			"id": "f5b2435d-7d21-488e-96e5-ce850ed7b338",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "8f1f48ec-6321-44ea-a71d-1805d4558482",
+			"id": "b30d6ff4-f74f-4b2b-a6d3-cdd4e4111069",
 			"key": "poolConfig",
 			"value": ""
 		},
 		{
-			"id": "fbd3e079-2add-47bc-93d1-e6ad77b880d1",
+			"id": "9821ea10-6605-4f3e-8a98-665315820dcc",
 			"key": "appFwConfig",
 			"value": ""
 		},
 		{
-			"id": "d8a6d662-2496-4381-9375-1a20e9a14b0c",
+			"id": "b2cf3ed7-5be3-45c8-9e87-7b95c3ad860d",
 			"key": "svcPolConfig",
 			"value": ""
 		}
