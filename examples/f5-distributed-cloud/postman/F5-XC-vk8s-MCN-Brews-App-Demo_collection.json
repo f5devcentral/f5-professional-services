@@ -698,7 +698,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"f5demos\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"registry\": \"f5demos.azurecr.io\",\n    \"user_name\": \"1e21992e-4283-4afe-9a89-b3b314f1fd55\",\n    \"password\": {\n      \"blindfold_secret_info\": {\n        \"location\": \"string:///AAAAE2Y1LWNvbnN1bHQtcHJxbmthdG8AAAABAAAAAAAAAGUCAAAABQMNeoy9AAABAMGAoAmLy/oYvKy1kfy+zY47HncsgKO7CQU0UPHmNnB6dLZKehcjHYQiHbH/eci+49I8+eK86mkcpAoJxGGq4EzFYtAMfbpYedShz9NAWR+dwbchJQLQvBD5ZThI2FMMr6dSvCPlanbiGNe8WDEgvEct2X6lDyrrEPrdPkicFf1RCiooP2mZpxKMxK13pB2ojGX+Kl4T3LroY8u4O0oZdTG/mu7GKuvzugk9QyJQdQAE+LjZVKizI1+8jmXzNavHFLGuM7SPZlrfAWz34ETA+cj+20Zu0mlrthveO7VhvxOGRZyYwV7LjMq9244gAnwQScT3zhdkyZGRtAPCP39dl1UAAAEALw/jR92kt1RmZV8QILb6R3Un+W3XDTfIrmwpNFUDB48dZUFT/1VHrJvH4PPMYsU/mWs/aQiidy0xQGU6hfl33MZ2xR7dovqoLQohYNNaEbW3a9ts6816u8nDL4ht71bNgjjb79KVBeH5oOTdGT9sWWwpk3uK7j4nd/nWnUoCfxEDwY8f/JetjcX3UFjZadLDSlXbZKJvyIb6T4uTcytfqCX+QMH/AlHytFw/DUkUyF78hQUYiq0U1BeWOEiW46SaTH/69rbqbxkgUC2tfCWG5D8g/Uq0cBVK81tq0yIG3CwXrmVx42n34AJJcCJ10BZ9Dpwlgn2IAOLvZaRuDXSFlMCMs9Src0pZtyXxD9OVyLZZbdAk4UZRjQfl30yC1FXGLyd837N6WiOSQ7gLp0m/ypNZ\"\n      }\n    }\n  }\n}",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"f5demos\",\n    \"labels\": {}\n  },\n   \"spec\": {\n    \"registry\": \"f5demos.azurecr.io\",\n    \"user_name\": \"1e21992e-4283-4afe-9a89-b3b314f1fd55\",\n    \"password\": {\n      \"clear_secret_info\": {\n        \"url\": \"string:///TWVzekFUZ35VUzZRR3c1RzdTNzR+MGdYMmt5X1hDbGhIQg==\"\n      },\n      \"secret_encoding_type\": \"EncodingNone\"\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
