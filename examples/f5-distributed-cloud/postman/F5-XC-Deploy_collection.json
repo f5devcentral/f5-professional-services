@@ -307,7 +307,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"clear_secret_info\": {\n                                \"url\": \"string:///{{base64EncodedKey}}\",\n                                \"provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": \"EncodingNone\"\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"clear_secret_info\": {\n                                \"url\": \"string:///{{base64EncodedKey}}\",\n                                \"provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": \"EncodingNone\"\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -778,27 +778,27 @@
 	],
 	"variable": [
 		{
-			"id": "192d8889-0f8b-435f-9e02-a3db682226ee",
+			"id": "ffd3aee0-760e-433f-bc3e-670ba3837c43",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "0863fe68-a047-44e6-a492-446be0652001",
+			"id": "9c468a1a-eca9-4f6e-aede-de9b4106629c",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "ec783286-72d5-461e-9873-91c099787d04",
+			"id": "8ca968ed-f4a6-4c11-8e1e-625b34c641e4",
 			"key": "poolConfig",
 			"value": ""
 		},
 		{
-			"id": "b1fcc1eb-2af1-448a-a427-b591cc9c19e2",
+			"id": "36573e44-4f79-4eb7-a706-135939795a6e",
 			"key": "appFwConfig",
 			"value": ""
 		},
 		{
-			"id": "bcea22cc-35ee-47bc-a62e-1732e92107eb",
+			"id": "92b48deb-ceb2-4ad6-9774-451ec6056789",
 			"key": "svcPolConfig",
 			"value": ""
 		}
