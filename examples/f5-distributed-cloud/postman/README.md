@@ -54,6 +54,18 @@ Collection contains subfolders with examples for the following deployment tasks:
   * **Deployments** (API+SPA)
   * **LB + WAAP**
 
+### **F5-XC-vk8s-MCN-Brews-App-Demo_collection-Delete.json**
+Used to delete Brews Demo Application and its components without deleting namespace.
+  
+Collection contains subfolders with examples for the following delete tasks:
+  * **Delete HTTP and TCP Load Balancers**
+  * **Delete Health checks**
+  * **Origin Pools**
+  * **vk8s Workloads**
+  * **vk8s Cluster**
+  * **vSites**
+  * **Base Configs (WAF, Workload Flavour, MCN key, MCN label)**
+
 ### **F5-XC-Delete_collection.json**
 Used to delete either individual HTTP LB+associated objects, or an entire namespace+associated shared objects
 
