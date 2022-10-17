@@ -973,7 +973,7 @@
 			"id": "e629cea8-5967-47ae-aa98-ae49e1e0a6b4"
 		},
 		{
-			"name": "Deployments (SPA+API)",
+			"name": "Deployments",
 			"item": [
 				{
 					"name": "Delete Brews API deployment",
