@@ -116,7 +116,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{aws-site-name}}\",\n    \"namespace\": null,\n    \"labels\": {\n        \"{{app_name_1}}-sites\": \"all-sites\"\n    },\n    \"annotations\": {},\n    \"description\": \"Created by {{aws-site-name}} using API\",\n    \"disable\": null\n  },\n  \"spec\": {\n    \"vpc\": {\n      \"new_vpc\": {\n        \"name_tag\": \"{{aws-site-name}}-vpc\",\n        \"primary_ipv4\": \"{{aws-network}}\",\n        \"allocate_ipv6\": null\n      }\n    },\n    \"ingress_egress_gw\": {\n      \"az_nodes\": [\n        {\n          \"aws_az_name\": \"{{aws-az}}\",\n          \"inside_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{aws-inside-subnet}}\",\n              \"ipv6\": null\n            }\n          },\n          \"workload_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{aws-workload-subnet}}\",\n              \"ipv6\": null\n            }\n          },\n          \"outside_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{aws-outside-subnet}}\",\n              \"ipv6\": null\n            }\n          },\n          \"disk_size\": null\n        }\n      ],\n      \"no_network_policy\": {},\n      \"no_forward_proxy\": {},\n      \"aws_certified_hw\": \"aws-byol-multi-nic-voltmesh\",\n      \"no_inside_static_routes\": {},\n      \"no_outside_static_routes\": {},\n      \"no_global_network\": {},\n      \"allowed_vip_port\": {\n        \"use_http_https_port\": {}\n      },\n      \"allowed_vip_port_sli\": {\n        \"use_http_https_port\": {}\n      }\n    },\n    \"aws_cred\": {\n      \"tenant\": null,\n      \"namespace\": \"system\",\n      \"name\": \"{{aws-cloud-credential}}\"\n    },\n    \"instance_type\": \"t3.xlarge\",\n    \"disk_size\": null,\n    \"aws_region\": \"{{aws-region}}\",\n    \"ssh_key\": null,\n    \"address\": null,\n    \"coordinates\": null,\n    \"logs_streaming_disabled\": {},\n    \"sw\": {\n      \"default_sw_version\": {}\n    },\n    \"os\": {\n      \"default_os_version\": {}\n    },\n    \"no_worker_nodes\": {}\n  }\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{aws-site-name}}\",\n    \"namespace\": null,\n    \"labels\": {\n        \"ves.io/siteName\": \"{{aws-site-name}}\"\n        \"{{app_name_1}}-sites\": \"all-sites\"\n    },\n    \"annotations\": {},\n    \"description\": \"Created by {{aws-site-name}} using API\",\n    \"disable\": null\n  },\n  \"spec\": {\n    \"vpc\": {\n      \"new_vpc\": {\n        \"name_tag\": \"{{aws-site-name}}-vpc\",\n        \"primary_ipv4\": \"{{aws-network}}\",\n        \"allocate_ipv6\": null\n      }\n    },\n    \"ingress_egress_gw\": {\n      \"az_nodes\": [\n        {\n          \"aws_az_name\": \"{{aws-az}}\",\n          \"inside_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{aws-inside-subnet}}\",\n              \"ipv6\": null\n            }\n          },\n          \"workload_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{aws-workload-subnet}}\",\n              \"ipv6\": null\n            }\n          },\n          \"outside_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{aws-outside-subnet}}\",\n              \"ipv6\": null\n            }\n          },\n          \"disk_size\": null\n        }\n      ],\n      \"no_network_policy\": {},\n      \"no_forward_proxy\": {},\n      \"aws_certified_hw\": \"aws-byol-multi-nic-voltmesh\",\n      \"no_inside_static_routes\": {},\n      \"no_outside_static_routes\": {},\n      \"no_global_network\": {},\n      \"allowed_vip_port\": {\n        \"use_http_https_port\": {}\n      },\n      \"allowed_vip_port_sli\": {\n        \"use_http_https_port\": {}\n      }\n    },\n    \"aws_cred\": {\n      \"tenant\": null,\n      \"namespace\": \"system\",\n      \"name\": \"{{aws-cloud-credential}}\"\n    },\n    \"instance_type\": \"t3.xlarge\",\n    \"disk_size\": null,\n    \"aws_region\": \"{{aws-region}}\",\n    \"ssh_key\": null,\n    \"address\": null,\n    \"coordinates\": null,\n    \"logs_streaming_disabled\": {},\n    \"sw\": {\n      \"default_sw_version\": {}\n    },\n    \"os\": {\n      \"default_os_version\": {}\n    },\n    \"no_worker_nodes\": {}\n  }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -281,7 +281,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{azure-site-name}}\",\n    \"namespace\": null,\n    \"labels\": {\n        \"{{app_name_1}}-sites\": \"all-sites\"\n    },\n    \"annotations\": {},\n    \"description\": \"Created by {{azure-site-name}} using API\",\n    \"disable\": null\n  },\n  \"spec\": {\n    \"resource_group\": \"{{azure-resource-group}}\",\n    \"azure_region\": \"{{azure-region}}\",\n    \"vnet\": {\n      \"new_vnet\": {\n        \"autogenerate\": {},\n        \"primary_ipv4\": \"{{azure-network}}\"\n      }\n    },\n    \"ingress_egress_gw\": {\n      \"az_nodes\": [\n        {\n          \"azure_az\": \"{{azure-az}}\",\n          \"inside_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{azure-inside-subnet}}\",\n              \"ipv6\": null\n            }\n          },\n          \"disk_size\": null,\n          \"outside_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{azure-outside-subnet}}\",\n              \"ipv6\": null\n            }\n          }\n        }\n      ],\n      \"no_network_policy\": {},\n      \"no_forward_proxy\": {},\n      \"azure_certified_hw\": \"azure-byol-multi-nic-voltmesh\",\n      \"no_inside_static_routes\": {},\n      \"no_outside_static_routes\": {},\n      \"no_global_network\": {}\n    },\n    \"azure_cred\": {\n      \"namespace\": \"system\",\n      \"name\": \"{{azure-cloud-credential}}\"\n    },\n    \"machine_type\": \"Standard_D3_v2\",\n    \"disk_size\": null,\n    \"ssh_key\": null,\n    \"address\": null,\n    \"coordinates\": null,\n    \"logs_streaming_disabled\": {},\n    \"sw\": {\n      \"default_sw_version\": {}\n    },\n    \"os\": {\n      \"default_os_version\": {}\n    },\n    \"no_worker_nodes\": {}\n  }\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{azure-site-name}}\",\n    \"namespace\": null,\n    \"labels\": {\n        \"ves.io/siteName\": \"{{azure-site-name}}\"\n        \"{{app_name_1}}-sites\": \"all-sites\"\n    },\n    \"annotations\": {},\n    \"description\": \"Created by {{azure-site-name}} using API\",\n    \"disable\": null\n  },\n  \"spec\": {\n    \"resource_group\": \"{{azure-resource-group}}\",\n    \"azure_region\": \"{{azure-region}}\",\n    \"vnet\": {\n      \"new_vnet\": {\n        \"autogenerate\": {},\n        \"primary_ipv4\": \"{{azure-network}}\"\n      }\n    },\n    \"ingress_egress_gw\": {\n      \"az_nodes\": [\n        {\n          \"azure_az\": \"{{azure-az}}\",\n          \"inside_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{azure-inside-subnet}}\",\n              \"ipv6\": null\n            }\n          },\n          \"disk_size\": null,\n          \"outside_subnet\": {\n            \"subnet_param\": {\n              \"ipv4\": \"{{azure-outside-subnet}}\",\n              \"ipv6\": null\n            }\n          }\n        }\n      ],\n      \"no_network_policy\": {},\n      \"no_forward_proxy\": {},\n      \"azure_certified_hw\": \"azure-byol-multi-nic-voltmesh\",\n      \"no_inside_static_routes\": {},\n      \"no_outside_static_routes\": {},\n      \"no_global_network\": {}\n    },\n    \"azure_cred\": {\n      \"namespace\": \"system\",\n      \"name\": \"{{azure-cloud-credential}}\"\n    },\n    \"machine_type\": \"Standard_D3_v2\",\n    \"disk_size\": null,\n    \"ssh_key\": null,\n    \"address\": null,\n    \"coordinates\": null,\n    \"logs_streaming_disabled\": {},\n    \"sw\": {\n      \"default_sw_version\": {}\n    },\n    \"os\": {\n      \"default_os_version\": {}\n    },\n    \"no_worker_nodes\": {}\n  }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -446,7 +446,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{gcp-site-name}}\",\n    \"namespace\": null,\n    \"labels\": {\n        \"{{app_name_1}}-sites\": \"all-sites\"\n    },\n    \"annotations\": {},\n    \"description\": \"Created by {{gcp-site-name}} using API\",\n    \"disable\": null\n  },\n  \"spec\": {\n    \"gcp_region\": \"{{gcp-region}}\",\n    \"ingress_egress_gw\": {\n      \"gcp_certified_hw\": \"gcp-byol-multi-nic-voltmesh\",\n      \"gcp_zone_names\": [\n        \"{{gcp-az}}\"\n      ],\n      \"node_number\": 1,\n      \"inside_network\": {\n        \"new_network_autogenerate\": {\n          \"autogenerate\": null\n        }\n      },\n      \"inside_subnet\": {\n        \"new_subnet\": {\n          \"subnet_name\": \"{{gcp-site-name}}-inside-subnet\",\n          \"primary_ipv4\": \"{{gcp-inside-subnet}}\"\n        }\n      },\n      \"outside_network\": {\n        \"new_network_autogenerate\": {\n          \"autogenerate\": null\n        }\n      },\n      \"outside_subnet\": {\n        \"new_subnet\": {\n          \"subnet_name\": \"{{gcp-site-name}}-outside-subnet\",\n          \"primary_ipv4\": \"{{gcp-outside-subnet}}\"\n        }\n      },\n      \"no_network_policy\": {},\n      \"no_forward_proxy\": {},\n      \"no_global_network\": {},\n      \"no_inside_static_routes\": {},\n      \"no_outside_static_routes\": {}\n    },\n    \"cloud_credentials\": {\n      \"tenant\": null,\n      \"namespace\": \"system\",\n      \"name\": \"{{gcp-cloud-credential}}\"\n    },\n    \"instance_type\": \"n1-standard-4\",\n    \"nodes_per_az\": 0,\n    \"disk_size\": null,\n    \"ssh_key\": null,\n    \"address\": null,\n    \"coordinates\": null,\n    \"logs_streaming_disabled\": {},\n    \"sw\": {\n      \"default_sw_version\": {}\n    },\n    \"os\": {\n      \"default_os_version\": {}\n    }\n  }\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{gcp-site-name}}\",\n    \"namespace\": null,\n    \"labels\": {\n        \"ves.io/siteName\": \"{{gcp-site-name}}\"\n        \"{{app_name_1}}-sites\": \"all-sites\"\n    },\n    \"annotations\": {},\n    \"description\": \"Created by {{gcp-site-name}} using API\",\n    \"disable\": null\n  },\n  \"spec\": {\n    \"gcp_region\": \"{{gcp-region}}\",\n    \"ingress_egress_gw\": {\n      \"gcp_certified_hw\": \"gcp-byol-multi-nic-voltmesh\",\n      \"gcp_zone_names\": [\n        \"{{gcp-az}}\"\n      ],\n      \"node_number\": 1,\n      \"inside_network\": {\n        \"new_network_autogenerate\": {\n          \"autogenerate\": null\n        }\n      },\n      \"inside_subnet\": {\n        \"new_subnet\": {\n          \"subnet_name\": \"{{gcp-site-name}}-inside-subnet\",\n          \"primary_ipv4\": \"{{gcp-inside-subnet}}\"\n        }\n      },\n      \"outside_network\": {\n        \"new_network_autogenerate\": {\n          \"autogenerate\": null\n        }\n      },\n      \"outside_subnet\": {\n        \"new_subnet\": {\n          \"subnet_name\": \"{{gcp-site-name}}-outside-subnet\",\n          \"primary_ipv4\": \"{{gcp-outside-subnet}}\"\n        }\n      },\n      \"no_network_policy\": {},\n      \"no_forward_proxy\": {},\n      \"no_global_network\": {},\n      \"no_inside_static_routes\": {},\n      \"no_outside_static_routes\": {}\n    },\n    \"cloud_credentials\": {\n      \"tenant\": null,\n      \"namespace\": \"system\",\n      \"name\": \"{{gcp-cloud-credential}}\"\n    },\n    \"instance_type\": \"n1-standard-4\",\n    \"nodes_per_az\": 0,\n    \"disk_size\": null,\n    \"ssh_key\": null,\n    \"address\": null,\n    \"coordinates\": null,\n    \"logs_streaming_disabled\": {},\n    \"sw\": {\n      \"default_sw_version\": {}\n    },\n    \"os\": {\n      \"default_os_version\": {}\n    }\n  }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1132,37 +1132,37 @@
 	],
 	"variable": [
 		{
-			"id": "d12787c2-13a7-4cb0-8a4a-405a18ba6e17",
+			"id": "d46d03bd-026d-4765-a957-e44d66b0e159",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "398b58f6-adf1-4235-8573-7373dae638d3",
+			"id": "16ed69d0-8bc8-4203-9525-38b56de56997",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "b2fcd5a5-e3a0-4e8a-a702-6a3f2969a8ef",
+			"id": "a930aba7-8096-491c-9d5e-255c99a9b27b",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "0f1066df-c44d-4305-b742-9a65944ae187",
+			"id": "15f3b58d-f43b-4532-8362-2d31e6a5f210",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "53148d7f-93bb-4e3f-a797-7e4076cc2ea8",
+			"id": "91423422-b130-4073-82e8-f5c99ec1463c",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "9a519c6e-6ba8-422c-9ca7-55fb1a3d0fd7",
+			"id": "35705673-f697-4a38-b1e3-5d9766ee738d",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "876ce4a1-9ac2-4c88-ad83-3b3b4a61cbc9",
+			"id": "989c2138-7bf4-41c5-a0cf-67ebc97dfcef",
 			"key": "name",
 			"value": ""
 		}
