@@ -350,7 +350,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-large-flavor\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"disable\": false\n  },\n  \"spec\": {\n    \"memory\": \"512\",\n    \"vcpus\": 0.25,\n    \"ephemeral_storage\": \"500\"\n  }\n}",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-large-flavor\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"disable\": false\n  },\n  \"spec\": {\n    \"memory\": \"512\",\n    \"vcpus\": 0.25,\n    \"ephemeral_storage\": \"0\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
