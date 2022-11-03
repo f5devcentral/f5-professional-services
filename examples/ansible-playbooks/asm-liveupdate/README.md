@@ -1,0 +1,1 @@
+These two yaml files show different ways of updating the ASM / AWAF liveupdate settings. Given that there is no F5 module for this task, you can either use the builtin Ansible URI module to send the iControl commands, or use the F5 bigip_command module to send the tmsh equivalent commands.
