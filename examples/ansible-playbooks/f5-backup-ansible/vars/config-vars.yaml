@@ -1,0 +1,10 @@
+# The base directory in which the UCS archives will be stored. 
+# Inside this directory, you must create a directory for each 
+# BIG-IP device listed in your inventory. 
+ucs_basedir: "/tmp/f5-backup/backup"
+
+# The log file in which you can find which backup tasks failed. 
+logfile: "/tmp/f5-backup/logs/f5-backup-ansible.log"
+
+# A internal state file used to track if any backup task failed. 
+statefile: "/tmp/f5-backup/f5-backup-ansible.state"

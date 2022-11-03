@@ -1,0 +1,4 @@
+!.terraformignore
+terraform.*
+*.p12
+

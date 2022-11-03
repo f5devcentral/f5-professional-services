@@ -102,29 +102,6 @@
 								"description": "Shared NamesSpace Sites"
 							},
 							"response": []
-						},
-						{
-							"name": "Create namespace1 AI+ML Shared Namespace",
-							"id": "335bbd93-6e6c-44af-80a3-e32fa6a5a2cb",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
-								"description": "Shared NamesSpace Sites"
-							},
-							"response": []
 						}
 					],
 					"id": "c8b20e06-9df4-4b9c-89e3-4e38dd663f88"
@@ -132,29 +109,6 @@
 				{
 					"name": "Namespace1",
 					"item": [
-						{
-							"name": "Create AI+ML App Type",
-							"id": "3f0ebffa-45f1-4cbe-8478-123d121fd441",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-aset\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_1}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/app_settings",
-								"description": "Shared NamesSpace Sites"
-							},
-							"response": []
-						},
 						{
 							"name": "Create Health Check",
 							"id": "7a774be3-df96-4b35-a4a3-d55a6338e506",
@@ -241,7 +195,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    {{poolConfig}},\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{app_name_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    {{poolConfig}},\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{app_name_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -318,7 +272,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"blindfold_secret_info\": {\n                                \"location\": \"string:///{{namespace_1-key}}\",\n                                \"decryption_provider\": null,\n                                \"store_provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": null\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"blindfold_secret_info\": {\n                                \"location\": \"string:///{{namespace_1-key}}\",\n                                \"decryption_provider\": null,\n                                \"store_provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": null\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -353,7 +307,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"clear_secret_info\": {\n                                \"url\": \"string:///{{base64EncodedKey}}\",\n                                \"provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": \"EncodingNone\"\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https\": {\n            \"http_redirect\": null,\n            \"add_hsts\": null,\n            \"tls_parameters\": {\n                \"tls_config\": {\n                    \"default_security\": {}\n                },\n                \"tls_certificates\": [\n                    {\n                        \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                        \"private_key\": {\n                            \"clear_secret_info\": {\n                                \"url\": \"string:///{{base64EncodedKey}}\",\n                                \"provider\": null\n                            },\n                            \"blindfold_secret_info_internal\": null,\n                            \"secret_encoding_type\": \"EncodingNone\"\n                        },\n                        \"description\": null\n                    }\n                ],\n                \"no_mtls\": {}\n            },\n            \"default_header\": {}\n        },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -374,7 +328,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "d336be42-8351-45c8-9b72-61f127cbe233",
+						"id": "66066e4a-4a79-46ea-a92c-a75e249ec5ad",
 						"type": "text/javascript",
 						"exec": [
 							"pm.collectionVariables.set(\"base64EncodedCert\", btoa(pm.environment.get(\"namespace_1-cert\")));",
@@ -423,7 +377,6 @@
 							"//Build WAF and Service Policy Configuration",
 							"let deployAppFW = pm.environment.get(\"apply_shared-appfw\")",
 							"let deploySvcPol = pm.environment.get(\"apply_shared-svcpol\")",
-							"let tenantID = pm.environment.get(\"tenant-id\")",
 							"let namespace1 = pm.environment.get(\"namespace_1\")",
 							"let appName1 = pm.environment.get(\"app_name_1\")",
 							"let AppFwName = pm.environment.get(\"shared-appfw-name\")",
@@ -432,14 +385,14 @@
 							"",
 							"//build APP FW Config",
 							"if (deployAppFW === \"yes\") {",
-							"    appFwConfig = \"\\\"app_firewall\\\": { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\",\\\"name\\\": \\\"\"+AppFwName+\"\\\"},\";",
+							"    appFwConfig = \"\\\"app_firewall\\\": { \\\"namespace\\\": \\\"shared\\\",\\\"name\\\": \\\"\"+AppFwName+\"\\\"},\";",
 							"}",
 							"else {",
 							"    appFwConfig = \"\\\"disable_waf\\\": {},\"",
 							"}",
 							"//Build Service Policy Config",
 							"if (deploySvcPol === \"yes\") {",
-							"    svcPolConfig = \"\\\"active_service_policies\\\": { \\\"policies\\\": [ { \\\"tenant\\\": \\\"\"+tenantID+\"\\\",\\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-block-countries\\\" }, { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-allowed-http-methods\\\" } ] },\";",
+							"    svcPolConfig = \"\\\"active_service_policies\\\": { \\\"policies\\\": [ { \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-block-countries\\\" }, { \\\"tenant\\\": \\\"\"+tenantID+\"\\\", \\\"namespace\\\": \\\"shared\\\", \\\"name\\\": \\\"web-srvpolicy-allowed-http-methods\\\" } ] },\";",
 							"}",
 							"else {",
 							"    svcPolConfig = \"\\\"service_policies_from_namespace\\\": {},\"",
@@ -455,7 +408,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "774a7a92-aa04-4863-be96-9f12e3d49f4b",
+						"id": "c8be8220-da32-43e2-abf5-9e349aa3cfe1",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -561,29 +514,6 @@
 								"description": "Shared NamesSpace Sites"
 							},
 							"response": []
-						},
-						{
-							"name": "Create namespace1 AI+ML Shared Namespace",
-							"id": "a9bed696-23be-4c7c-8448-962e4838ed10",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"features\": [\n      {\n        \"type\": \"BUSINESS_LOGIC_MARKUP\"\n      },\n      {\n        \"type\": \"TIMESERIES_ANOMALY_DETECTION\"\n      },\n      {\n        \"type\": \"USER_BEHAVIOR_ANALYSIS\"\n      }\n    ],\n    \"business_logic_markup_setting\": {\n      \"enable\": {}\n    }\n  },\n  \"resource_version\": null\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/app_types",
-								"description": "Shared NamesSpace Sites"
-							},
-							"response": []
 						}
 					],
 					"id": "5754b828-6e68-476e-adea-76f9725ad782"
@@ -591,29 +521,6 @@
 				{
 					"name": "Namespace1",
 					"item": [
-						{
-							"name": "Create AI+ML App Type",
-							"id": "8007b2b1-9c63-47b7-a1e7-1ff27d5c2e3b",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-aset\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"app_type_refs\": null,\n    \"anomaly_types\": null,\n    \"app_type_settings\": [\n      {\n        \"app_type_ref\": [\n          {\n            \"kind\": \"app_type\",\n            \"uid\": null,\n            \"tenant\": \"{{tenant-id}}\",\n            \"namespace\": \"shared\",\n            \"name\": \"{{namespace_1}}\"\n          }\n        ],\n        \"timeseries_analyses_setting\": null,\n        \"business_logic_markup_setting\": {\n          \"enable\": {}\n        },\n        \"user_behavior_analysis_setting\": null\n      }\n    ]\n  },\n  \"resource_version\": null\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/app_settings",
-								"description": "Shared NamesSpace Sites"
-							},
-							"response": []
-						},
 						{
 							"name": "Create Health Check",
 							"id": "86aabf73-a003-471c-bd36-b07cb3e4bf43",
@@ -660,7 +567,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    {{poolConfig}},\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"tenant\": \"{{tenant-id}}\",\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{app_name_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    {{poolConfig}},\n    \"use_tls\": {\n      \"use_host_header_as_sni\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"volterra_trusted_ca\": {},\n      \"no_mtls\": {}\n    },\n    \"port\": 443,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{app_name_1}}-tcp-check\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\",\n    \"advanced_options\": null\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -730,7 +637,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {\n      \"ves.io/app_type\": \"{{app_name_1}}-aset\"\n    },\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"no_mtls\": {},\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"default_header\": {},\n      \"enable_path_normalize\": {},\n      \"port\": 443\n    },\n    \"downstream_tls_certificate_expiration_timestamps\": [],\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"tenant\": \"{{tenant-id}}\",\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": null,\n    \"user_identification\": null,\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-http-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{namespace_1-http-lb-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"add_hsts\": true,\n      \"port\": 443,\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"no_mtls\": {},\n      \"default_header\": {},\n      \"enable_path_normalize\": {}\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"{{app_name_1}}-pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": null,\n    \"cors_policy\": null,\n    {{appFwConfig}}\n    \"add_location\": null,\n    \"no_challenge\": {},\n    \"more_option\": {\n      \"request_headers_to_add\": [\n        {\n          \"name\": \"wl-proxy-client-ip\",\n          \"value\": \"$[client_address]\",\n          \"append\": null\n        }\n      ],\n      \"request_headers_to_remove\": null,\n      \"response_headers_to_add\": null,\n      \"response_headers_to_remove\": null,\n      \"max_request_header_size\": 60,\n      \"buffer_policy\": null,\n      \"compression_params\": null,\n      \"custom_errors\": {},\n      \"javascript_info\": null,\n      \"jwt\": null,\n      \"idle_timeout\": 30000,\n      \"disable_default_error_pages\": null\n    },\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"malicious_user_mitigation\": null,\n    \"waf_exclusion_rules\": null,\n    \"blocked_clients\": null,\n    \"trusted_clients\": null,\n    \"ddos_mitigation_rules\": null,\n    {{svcPolConfig}}\n    \"single_lb_app\": {\n      \"enable_discovery\": {\n        \"disable_learn_from_redirect_traffic\": {}\n      },\n      \"enable_ddos_detection\": {},\n      \"enable_malicious_user_detection\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"round_robin\": {}\n  },\n  \"resource_version\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -870,27 +777,27 @@
 	],
 	"variable": [
 		{
-			"id": "09125bb2-c312-421b-b264-b4c1b026902e",
+			"id": "d4c6e077-961b-44c9-aed7-63d9bb72a927",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "d9bd5f68-aee5-4f21-beb7-547bbf06d67f",
+			"id": "82e20f6e-b2c7-4954-b07a-5ec89883aa65",
 			"key": "base64EncodedKey",
 			"value": ""
 		},
 		{
-			"id": "1fdd2b4c-2125-4024-a049-b246af642ad3",
+			"id": "11fc34f3-8c7b-43a2-833a-5bebe2f17942",
 			"key": "poolConfig",
 			"value": ""
 		},
 		{
-			"id": "db3305b0-e5ba-4d32-aa38-42122ce95687",
+			"id": "05c3610f-5d37-404b-9221-e0687e558de8",
 			"key": "appFwConfig",
 			"value": ""
 		},
 		{
-			"id": "89e51e85-5110-485d-96c6-f7e035c733de",
+			"id": "0bc9fb2b-8759-44cf-85a7-131bac51f4d4",
 			"key": "svcPolConfig",
 			"value": ""
 		}

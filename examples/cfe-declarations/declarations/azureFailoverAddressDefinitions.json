@@ -1,0 +1,48 @@
+{
+   "class":"Cloud_Failover",
+   "environment":"azure",
+   "controls":{
+      "class":"Controls",
+      "logLevel":"silly"
+   },
+   "externalStorage":{
+      "scopingName": "myCloudFailoverStorage"
+   },
+   "failoverAddresses":{
+      "enabled":true,
+      "addressGroupDefinitions": [
+         {
+            "type": "networkInterfaceAddress",
+            "scopingAddress": "192.0.2.10"
+         },
+         {
+            "type": "publicIpAddress",
+            "scopingName": "ext-pip3",
+            "vipAddresses": [
+              "192.0.2.10",
+              "192.0.2.11"
+            ]
+         }
+      ]
+   },
+   "failoverRoutes":{
+      "enabled":true,
+      "routeGroupDefinitions":[
+         {
+            "scopingName":"myroutetable-1",
+            "scopingAddressRanges":[
+               {
+                  "range":"0.0.0.0/0"
+               }
+            ],
+            "defaultNextHopAddresses":{
+               "discoveryType":"static",
+               "items":[
+                  "10.0.13.11",
+                  "10.0.23.11"
+               ]
+            }
+         }
+      ]
+   }
+ }

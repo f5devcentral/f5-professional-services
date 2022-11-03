@@ -1,0 +1,902 @@
+{
+	"info": {
+		"_postman_id": "450c72b9-eeb3-432d-b81e-2a3ff4ac5cf9",
+		"name": "F5 XC vk8s MCN Demo Delete (Brews App)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6836446"
+	},
+	"item": [
+		{
+			"name": "Delete Load Balancers",
+			"item": [
+				{
+					"name": "Delete Inv HTTP LB",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers/brews-inv-http-lb",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"http_loadbalancers",
+								"brews-inv-http-lb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete SPA-API HTTP LB",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers/brews-shop-spa-http-lb",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"http_loadbalancers",
+								"brews-shop-spa-http-lb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Mongodb TCP LB",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/tcp_loadbalancers/brews-mongodb-tcp-lb",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"tcp_loadbalancers",
+								"brews-mongodb-tcp-lb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete Origin Pool",
+			"item": [
+				{
+					"name": "Delete Mongodb Origin pool",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools/brews-mongodb-pool",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"origin_pools",
+								"brews-mongodb-pool"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete API Origin pool",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools/brews-api-pool",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"origin_pools",
+								"brews-api-pool"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Inv Origin pool",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools/brews-inv-pool",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"origin_pools",
+								"brews-inv-pool"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete SPA Origin pool",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools/brews-spa-pool",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"origin_pools",
+								"brews-spa-pool"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete Health Checks",
+			"item": [
+				{
+					"name": "Delete brews-api-hc",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks/brews-api-hc",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"healthchecks",
+								"brews-api-hc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete brews-inv-hc",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks/brews-inv-hc",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"healthchecks",
+								"brews-inv-hc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete brews-mongodb-hc",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks/brews-mongodb-hc",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"healthchecks",
+								"brews-mongodb-hc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete brews-spa-hc",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks/brews-spa-hc",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"healthchecks",
+								"brews-spa-hc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete Workloads",
+			"item": [
+				{
+					"name": "Delete Mongodb vk8s deployment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads/brews-mongodb",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"workloads",
+								"brews-mongodb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete API vk8s deployment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads/brews-api",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"workloads",
+								"brews-api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Inv vk8s deployment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads/brews-inv",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"workloads",
+								"brews-inv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Recs vk8s deployment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads/brews-recs",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"workloads",
+								"brews-recs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete SPA vk8s deployment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads/brews-spa",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"workloads",
+								"brews-spa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Container Registry - F5 Demos",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/container_registrys/f5demos",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"container_registrys",
+								"f5demos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete vk8s",
+			"item": [
+				{
+					"name": "Delete vk8s cluster",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_k8ss/brews-vk8s",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_k8ss",
+								"brews-vk8s"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "vk8s cluster delete status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.items[0].system_metadata.initializers.pending[0];",
+									"",
+									"if (jsonNamesData !== undefined){",
+									"    var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
+									"    if (vk8s_status !== undefined ) {",
+									"        console.log(\"vk8s delete in progress\");",
+									"        //postman.setNextRequest(\"vk8s cluster status\");",
+									"        setTimeout(() => {  postman.setNextRequest(\"vk8s cluster delete status\"); }, 10000);",
+									"    }",
+									"}",
+									"else { ",
+									"    console.log(\"vk8s cluster delete complete\")",
+									"    postman.setNextRequest(\"Delete AWS vsite\");",
+									"}",
+									"",
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_k8ss?report_fields",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_k8ss"
+							],
+							"query": [
+								{
+									"key": "report_fields",
+									"value": null
+								}
+							]
+						},
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete vSites",
+			"item": [
+				{
+					"name": "Delete AWS vsite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites/{{aws-site-name}}-vsite",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_sites",
+								"{{aws-site-name}}-vsite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Azure vsite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites/{{azure-site-name}}-vsite",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_sites",
+								"{{azure-site-name}}-vsite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete GCP vsite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites/{{gcp-site-name}}-vsite",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_sites",
+								"{{gcp-site-name}}-vsite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete MCN vsite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites/{{namespace_1}}-mcn-vsite",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_sites",
+								"{{namespace_1}}-mcn-vsite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RE vsite",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites/{{namespace_1}}-re-vsite",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_sites",
+								"{{namespace_1}}-re-vsite"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete Base config",
+			"item": [
+				{
+					"name": "Delete SPA-API WAF",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/app_firewalls/brews-spa-api-appwf",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"app_firewalls",
+								"brews-spa-api-appwf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete workload flavour",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/workload_flavors/{{namespace_1}}-large-flavor",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"shared",
+								"workload_flavors",
+								"{{namespace_1}}-large-flavor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete MCN key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"{{app_name_1}}-sites\",\n    \"description\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/known_label_key/delete",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"shared",
+								"known_label_key",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete MCN label",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"namespace\": \"shared\",\n    \"key\": \"{{app_name_1}}-sites\",\n    \"value\": \"all-sites\",\n    \"description\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/known_label/delete",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"shared",
+								"known_label",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "APIToken {{api_credential}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

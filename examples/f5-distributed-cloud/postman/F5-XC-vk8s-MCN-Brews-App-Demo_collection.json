@@ -1,0 +1,1908 @@
+{
+	"info": {
+		"_postman_id": "2f7c7bf3-e8d1-4e98-8f3d-ea1ed2ce6994",
+		"name": "F5 XC vk8s MCN Demo (Brews App)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cloud Site Status",
+			"item": [
+				{
+					"name": "AWS status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b74c8882-e275-477d-8f41-09ab6913dfc2",
+								"exec": [
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.spec.site_state;",
+									"console.log (jsonNamesData);",
+									"",
+									"if (jsonNamesData === \"ONLINE\"){",
+									"    pm.test(\"Site Status: ONLINE\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"}",
+									"else { ",
+									"    pm.test(\"Site Status: Not Ready\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"    postman.setNextRequest(\"null\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "bcbe2568-a2de-4f48-807e-16fcb0c064ac",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/aws_vpc_sites/{{aws-site-name}}"
+					},
+					"response": []
+				},
+				{
+					"name": "GCP status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b74c8882-e275-477d-8f41-09ab6913dfc2",
+								"exec": [
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.spec.site_state;",
+									"console.log (jsonNamesData);",
+									"",
+									"if (jsonNamesData === \"ONLINE\"){",
+									"    pm.test(\"Site Status: ONLINE\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"}",
+									"else { ",
+									"    pm.test(\"Site Status: Not Ready\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"    postman.setNextRequest(\"null\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c9bda081-a52a-4b20-8dcb-ad327ce19e23",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/gcp_vpc_sites/{{gcp-site-name}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Azure status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b74c8882-e275-477d-8f41-09ab6913dfc2",
+								"exec": [
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.spec.site_state;",
+									"console.log (jsonNamesData);",
+									"",
+									"if (jsonNamesData === \"ONLINE\"){",
+									"    pm.test(\"Site Status: ONLINE\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"}",
+									"else { ",
+									"    pm.test(\"Site Status: Not Ready\" , function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"    });",
+									"    //console.log(\"Site Status: \"+jsonNamesData);",
+									"    postman.setNextRequest(\"null\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ae7827a0-51c1-448a-929a-fe82e6e89474",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/azure_vnet_sites/{{azure-site-name}}"
+					},
+					"response": []
+				}
+			],
+			"id": "a371a44a-60ea-47c3-9539-56db2fa2f7ba"
+		},
+		{
+			"name": "Base Config",
+			"item": [
+				{
+					"name": "Create namespace1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2ad15271-f246-4e9d-8ee9-e41396633266",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "af3c8bee-5de7-47fe-a47b-ab3b0889e2a3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"metadata\": {\n        \"name\": \"{{namespace_1}}\",\n        \"description\": \"\"\n    },\n    \"spec\": {}\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "5s delay - allow namespace deploy completion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b8f06fb7-5dcf-430e-b1f1-91c16b0e0581",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://postman-echo.com/delay/5"
+					},
+					"response": []
+				},
+				{
+					"name": "Create SPA-API WAF",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6ba44685-80e3-4e2e-bdbe-d106d7b7fcbf",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "04e3aae8-6e9a-4f02-aa00-f46bb494bd1b",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "047f976b-7d60-47a1-a62a-00895c4da2e3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-spa-api-appwf\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"blocking\": {},\n    \"default_detection_settings\": {},\n    \"default_bot_setting\": {},\n    \"allow_all_response_codes\": {},\n    \"default_anonymization\": {},\n    \"use_default_blocking_page\": {}\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/app_firewalls",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create MCN site grouping label key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ebc13062-1268-429d-a8c7-220487de3efe",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1bd3e354-a305-4278-bb8f-638c6a7716b1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"namespace\": \"shared\",\n    \"key\": \"{{app_name_1}}-sites\",\n    \"description\": null,\n    \"values\": [\n        \"all-sites\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/known_label_key/create",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create MCN site grouping label",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "796d2a28-0af2-4424-bcee-effdf55e42f2",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e9310ee7-93e1-4ed2-917a-2421443bf97e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"namespace\": \"shared\",\n    \"key\": \"{{app_name_1}}-sites\",\n    \"value\": \"all-sites\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/known_label/create",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Brews large workload flavor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "796d2a28-0af2-4424-bcee-effdf55e42f2",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "cbe8dadf-f6ad-4915-bf66-b2f36d31fe02",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-large-flavor\",\n    \"namespace\": \"shared\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"disable\": false\n  },\n  \"spec\": {\n    \"memory\": \"512\",\n    \"vcpus\": 0.25,\n    \"ephemeral_storage\": \"0\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/shared/workload_flavors",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				}
+			],
+			"id": "87ead85b-621c-4663-90f4-00a4a679a209"
+		},
+		{
+			"name": "vk8s & vsites",
+			"item": [
+				{
+					"name": "Create MCN vsite (AWS+GCP+Azure)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31b9edc5-8cb9-4aad-ad87-9ba71cd79eee",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b7292614-d3ef-4f31-a2be-461bc0687583",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-mcn-vsite\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"site_type\": \"CUSTOMER_EDGE\",\n    \"site_selector\": {\n      \"expressions\": [\n        \"{{app_name_1}}-sites in (all-sites)\"\n      ]\n    }\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create RE-only vsite (NYC+SEA)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00a7cf7d-b090-479b-a0b7-aba39b751e5b",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1df78f59-3177-4400-99a1-da0196b51964",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{namespace_1}}-re-vsite\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"site_type\": \"REGIONAL_EDGE\",\n    \"site_selector\": {\n      \"expressions\": [\n        \"ves.io/siteName in (ves-io-wes-sea, ves-io-ny8-nyc)\"\n      ]\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Azure vsite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ec06dd1-0460-4b31-b0e0-6f6e5d19e48d",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "038f1b46-6535-4a84-8d55-33a933beb728",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{azure-site-name}}-vsite\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"site_type\": \"CUSTOMER_EDGE\",\n    \"site_selector\": {\n      \"expressions\": [\n        \"ves.io/siteName in ({{azure-site-name}})\"\n      ]\n    }\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create AWS vsite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5fd1f179-f209-4188-98d2-e28f3ab4f293",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "75e07a31-55ac-4075-9c2a-0013a848a28f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{aws-site-name}}-vsite\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"site_type\": \"CUSTOMER_EDGE\",\n    \"site_selector\": {\n      \"expressions\": [\n        \"ves.io/siteName in ({{aws-site-name}})\"\n      ]\n    }\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create GCP vsite",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "752388b3-8db2-4da7-b2c7-8981e3de2cfe",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "932b581c-2f01-40c2-8a62-8434c5cd19c7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{gcp-site-name}}-vsite\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"site_type\": \"CUSTOMER_EDGE\",\n    \"site_selector\": {\n      \"expressions\": [\n        \"ves.io/siteName in ({{gcp-site-name}})\"\n      ]\n    }\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_sites",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create vk8s cluster",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "44f3b2cf-cec9-458b-b846-4190e6b37c40",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "40a06572-2bf1-406d-946b-23b8bdb5d3fd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"{{app_name_1}}-vk8s\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"disable\": false\n  },\n  \"spec\": {\n    \"vsite_refs\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"{{namespace_1}}-mcn-vsite\",\n        \"kind\": \"virtual_site\"\n      }\n    ],\n    \"disabled\": {},\n    \"default_flavor_ref\": {\n      \"namespace\": \"shared\",\n      \"name\": \"{{namespace_1}}-large-flavor\",\n      \"kind\": \"workload_flavor\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_k8ss",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "vk8s cluster status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "44f3b2cf-cec9-458b-b846-4190e6b37c40",
+								"exec": [
+									"//Get vk8s cluster build status from payload response",
+									"var jsonData = JSON.parse(responseBody);",
+									"var jsonNamesData = jsonData.items[0].system_metadata.initializers.pending[0];",
+									"",
+									"if (jsonNamesData !== undefined){",
+									"    var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
+									"    if (vk8s_status !== undefined ) {",
+									"        console.log(\"vk8s creation in progress\");",
+									"        //postman.setNextRequest(\"vk8s cluster status\");",
+									"        setTimeout(() => {  postman.setNextRequest(\"vk8s cluster status\"); }, 10000);",
+									"    }",
+									"}",
+									"else { ",
+									"    console.log(\"vk8s cluster ready\")",
+									"    postman.setNextRequest(\"Create Container Registry - f5demos\");",
+									"}",
+									"",
+									"pm.test(\"Successful GET request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "303ad84d-c115-40a6-a039-53272b6ecd26",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/virtual_k8ss?report_fields",
+							"protocol": "https",
+							"host": [
+								"{{voltconsole-host}}",
+								"console",
+								"ves",
+								"volterra",
+								"io"
+							],
+							"path": [
+								"api",
+								"config",
+								"namespaces",
+								"{{namespace_1}}",
+								"virtual_k8ss"
+							],
+							"query": [
+								{
+									"key": "report_fields",
+									"value": null
+								}
+							]
+						},
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				}
+			],
+			"id": "31d5a61f-e7f7-467e-aeea-88c02b0746bb"
+		},
+		{
+			"name": "Workloads",
+			"item": [
+				{
+					"name": "Create Container Registry - f5demos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "706f2058-79e8-4087-93b1-6836eebf8d57",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8d92e277-8bc1-4e2c-8b52-e3461a057ce2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"f5demos\",\n    \"labels\": {}\n  },\n   \"spec\": {\n    \"registry\": \"f5demos.azurecr.io\",\n    \"user_name\": \"1e21992e-4283-4afe-9a89-b3b314f1fd55\",\n    \"password\": {\n      \"clear_secret_info\": {\n        \"url\": \"string:///TWVzekFUZ35VUzZRR3c1RzdTNzR+MGdYMmt5X1hDbGhIQg==\"\n      },\n      \"secret_encoding_type\": \"EncodingNone\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/container_registrys",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews Mongodb",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0cb7f49-3d49-4be9-84e6-ab843f6e48f6",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "82b67bae-2efd-4b97-8750-5d0f51e3c6f3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"mongo\",\n          \"image\": {\n            \"name\": \"public.ecr.aws/o2z6z0t3/friday:demo\",\n            \"public\": {},\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [\n          {\n            \"env_var\": {\n              \"name\": \"SEED_FILE\",\n              \"value\": \"beerProducts.json\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{gcp-site-name}}-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 27017,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "dbd5e97d-f330-44a4-a834-d9e2f58c0ce2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-api\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-api\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/api\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [\n          {\n            \"env_var\": {\n              \"name\": \"MONGO_URL\",\n              \"value\": \"mongodb.brews.local\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{aws-site-name}}-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 8000,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews SPA",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6aba0e8-d666-45f0-8d3e-ab65542667a6",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6fe46a5f-5c0c-4b29-b00b-aea05602e6fb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-spa\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-spa\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/spa\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": null,\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-mcn-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 8081,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"target_port\": 80\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews Inventory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d7c70633-8b1a-45f4-86c4-febb8e36781b",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f101e847-bacc-4fee-8186-5ecb340aab89",
+								"exec": [
+									"//Determine Key Type ",
+									"var is_https = pm.environment.get(\"use_https\");",
+									"if (is_https === \"yes\") {",
+									"    postman.setNextRequest(\"Deploy Brews Recommendations + HTTPS LB\");",
+									"}",
+									"else {",
+									"    postman.setNextRequest(\"Deploy Brews Recommendations + HTTP LB\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "328da887-68f5-4457-82a3-77edd7fd266e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-inv\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/inv\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": null,\n      \"deploy_options\": {\n        \"deploy_ce_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{azure-site-name}}-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_in_cluster\": {\n          \"port\": {\n            \"info\": {\n              \"port\": 8002,\n              \"protocol\": \"PROTOCOL_TCP\",\n              \"same_as_port\": {}\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews Recommendations + HTTPS LB",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99fc6a96-2c3d-41c3-9dd7-33b87384dbe4",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca9c8ef7-70bb-4d12-99a8-36ccad7d418b",
+								"exec": [
+									"setTimeout(() => {  postman.setNextRequest(\"Delete Brews API deployment\"); }, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5dda0008-3d7c-4cfc-b6c4-b45e0f2e4dbc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-recs\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-recs\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/recs\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": null,\n      \"deploy_options\": {\n        \"deploy_re_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-re-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_on_public\": {\n          \"port\": {\n            \"port\": {\n              \"info\": {\n                \"port\": 8001,\n                \"protocol\": \"PROTOCOL_TCP\",\n                \"same_as_port\": {}\n              }\n            },\n            \"http_loadbalancer\": {\n              \"domains\": [\n                \"{{brews-recs-domain}}\"\n              ],\n              \"https_auto_cert\": {\n                \"http_redirect\": null,\n                \"add_hsts\": null,\n                \"port\": 443,\n                \"tls_config\": {\n                  \"default_security\": {}\n                },\n                \"no_mtls\": {},\n                \"default_header\": {},\n                \"enable_path_normalize\": {},\n                \"non_default_loadbalancer\": {}\n              },\n              \"default_route\": {\n                \"disable_host_rewrite\": {}\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews Recommendations + HTTP LB",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99fc6a96-2c3d-41c3-9dd7-33b87384dbe4",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fc273e77-ede3-450a-91df-9ce5a85410fb",
+								"exec": [
+									"setTimeout(() => {  postman.setNextRequest(\"Delete Brews API deployment\"); }, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5a4b0569-f978-430f-b0ce-89ea00279749",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-recs\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-recs\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/recs\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": null,\n      \"deploy_options\": {\n        \"deploy_re_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-re-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_on_public\": {\n          \"port\": {\n            \"port\": {\n              \"info\": {\n                \"port\": 8001,\n                \"protocol\": \"PROTOCOL_TCP\",\n                \"same_as_port\": {}\n              }\n            },\n            \"http_loadbalancer\": {\n              \"domains\": [\n                \"{{brews-recs-domain}}\"\n              ],\n              \"http\": {\n                \"dns_volterra_managed\": true,\n                \"port\": 80\n              },\n              \"default_route\": {\n                \"disable_host_rewrite\": {}\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				}
+			],
+			"id": "e629cea8-5967-47ae-aa98-ae49e1e0a6b4"
+		},
+		{
+			"name": "Deployments",
+			"item": [
+				{
+					"name": "Delete Brews API deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "17c3c912-8824-42f1-bf9a-598ec0f4eec8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments/brews-api",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Brews SPA deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b56dc043-e387-40b7-8dd0-b06b8c7ec9c8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments/brews-spa",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Brews Recommendations deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d0e7347f-fb09-4a55-8c2e-c168b56a212b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments/brews-recs",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Brews mongodb deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "18ef8ca6-0a1b-4052-a34a-e36770563c07",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments/brews-mongodb",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Brews Inventory deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7837d289-b361-4aa8-a149-c62cf02d0c37",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments/brews-inv",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews mongodb deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d1d9dd07-070e-4aae-8889-2bf84bb155f4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"kind\": \"Deployment\",\n  \"apiVersion\": \"apps/v1\",\n  \"metadata\": {\n    \"name\": \"brews-mongodb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"annotations\": {\n      \"ves.io/virtual-sites\": \"{{namespace_1}}/{{gcp-site-name}}-vsite\",\n      \"ves.io/workload-flavor-brews-api\": \"{{namespace_1}}-large-flavor\"\n    }\n  },\n  \"spec\": {\n    \"replicas\": 1,\n    \"selector\": {\n      \"matchLabels\": {\n        \"ves.io/workload\": \"brews-mongodb\"\n      }\n    },\n    \"template\": {\n      \"metadata\": {\n        \"labels\": {\n          \"ves.io/workload\": \"brews-mongodb\"\n        }\n      },\n      \"spec\": {\n        \"containers\": [\n          {\n            \"name\": \"brews-mongodb\",\n            \"image\": \"public.ecr.aws/o2z6z0t3/friday:demo\",\n            \"resources\": {},\n            \"terminationMessagePath\": \"/dev/termination-log\",\n            \"terminationMessagePolicy\": \"File\",\n            \"imagePullPolicy\": \"Always\"\n          }\n        ],\n        \"restartPolicy\": \"Always\",\n        \"terminationGracePeriodSeconds\": 30,\n        \"dnsPolicy\": \"ClusterFirst\",\n        \"securityContext\": {},\n        \"schedulerName\": \"default-scheduler\"\n      }\n    },\n    \"strategy\": {\n      \"type\": \"RollingUpdate\",\n      \"rollingUpdate\": {\n        \"maxUnavailable\": \"25%\",\n        \"maxSurge\": \"25%\"\n      }\n    },\n    \"revisionHistoryLimit\": 10,\n    \"progressDeadlineSeconds\": 600\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews API deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7147377e-8462-4574-97f0-1eb63c3f175e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"kind\": \"Deployment\",\n  \"apiVersion\": \"apps/v1\",\n  \"metadata\": {\n    \"name\": \"brews-api\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"annotations\": {\n      \"deployment.kubernetes.io/revision\": \"1\",\n      \"ves.io/virtual-sites\": \"{{namespace_1}}/{{aws-site-name}}-vsite\",\n      \"ves.io/workload-flavor-brews-api\": \"{{namespace_1}}-large-flavor\"\n    },\n    \"managedFields\": [\n      {\n        \"manager\": \"Mozilla\",\n        \"operation\": \"Update\",\n        \"apiVersion\": \"apps/v1\",\n        \"fieldsType\": \"FieldsV1\",\n        \"fieldsV1\": {\n          \"f:metadata\": {\n            \"f:annotations\": {\n              \".\": {},\n              \"f:deployment.kubernetes.io/revision\": {},\n              \"f:ves.io/virtual-sites\": {},\n              \"f:ves.io/workload-flavor-brews-api\": {}\n            }\n          },\n          \"f:spec\": {\n            \"f:progressDeadlineSeconds\": {},\n            \"f:replicas\": {},\n            \"f:revisionHistoryLimit\": {},\n            \"f:selector\": {},\n            \"f:strategy\": {\n              \"f:rollingUpdate\": {\n                \".\": {},\n                \"f:maxSurge\": {},\n                \"f:maxUnavailable\": {}\n              },\n              \"f:type\": {}\n            },\n            \"f:template\": {\n              \"f:metadata\": {\n                \"f:labels\": {\n                  \".\": {},\n                  \"f:ves.io/workload\": {}\n                }\n              },\n              \"f:spec\": {\n                \"f:containers\": {\n                  \"k:{\\\"name\\\":\\\"brews-api\\\"}\": {\n                    \".\": {},\n                    \"f:env\": {\n                      \".\": {},\n                      \"k:{\\\"name\\\":\\\"MONGO_URL\\\"}\": {\n                        \".\": {},\n                        \"f:name\": {},\n                        \"f:value\": {}\n                      }\n                    },\n                    \"f:image\": {},\n                    \"f:imagePullPolicy\": {},\n                    \"f:name\": {},\n                    \"f:resources\": {},\n                    \"f:terminationMessagePath\": {},\n                    \"f:terminationMessagePolicy\": {}\n                  }\n                },\n                \"f:dnsPolicy\": {},\n                \"f:imagePullSecrets\": {\n                  \".\": {},\n                  \"k:{\\\"name\\\":\\\"brews-api-f5demos\\\"}\": {\n                    \".\": {},\n                    \"f:name\": {}\n                  }\n                },\n                \"f:restartPolicy\": {},\n                \"f:schedulerName\": {},\n                \"f:securityContext\": {},\n                \"f:terminationGracePeriodSeconds\": {}\n              }\n            }\n          }\n        }\n      },\n      {\n        \"manager\": \"Go-http-client\",\n        \"operation\": \"Update\",\n        \"apiVersion\": \"apps/v1\",\n        \"fieldsType\": \"FieldsV1\",\n        \"fieldsV1\": {\n          \"f:status\": {\n            \"f:availableReplicas\": {},\n            \"f:collisionCount\": {},\n            \"f:conditions\": {\n              \".\": {},\n              \"k:{\\\"type\\\":\\\"Available\\\"}\": {\n                \".\": {},\n                \"f:lastTransitionTime\": {},\n                \"f:lastUpdateTime\": {},\n                \"f:message\": {},\n                \"f:reason\": {},\n                \"f:status\": {},\n                \"f:type\": {}\n              },\n              \"k:{\\\"type\\\":\\\"Progressing\\\"}\": {\n                \".\": {},\n                \"f:lastTransitionTime\": {},\n                \"f:lastUpdateTime\": {},\n                \"f:message\": {},\n                \"f:reason\": {},\n                \"f:status\": {},\n                \"f:type\": {}\n              }\n            },\n            \"f:observedGeneration\": {},\n            \"f:readyReplicas\": {},\n            \"f:replicas\": {},\n            \"f:updatedReplicas\": {}\n          }\n        }\n      }\n    ]\n  },\n  \"spec\": {\n    \"replicas\": 1,\n    \"selector\": {\n      \"matchLabels\": {\n        \"ves.io/workload\": \"brews-api\"\n      }\n    },\n    \"template\": {\n      \"metadata\": {\n        \"creationTimestamp\": null,\n        \"labels\": {\n          \"ves.io/workload\": \"brews-api\"\n        }\n      },\n      \"spec\": {\n        \"containers\": [\n          {\n            \"name\": \"brews-api\",\n            \"image\": \"f5demos.azurecr.io/api\",\n            \"env\": [\n              {\n                \"name\": \"MONGO_URL\",\n                \"value\": \"mongodb.brews.local\"\n              }\n            ],\n            \"resources\": {},\n            \"terminationMessagePath\": \"/dev/termination-log\",\n            \"terminationMessagePolicy\": \"File\",\n            \"imagePullPolicy\": \"Always\"\n          }\n        ],\n        \"restartPolicy\": \"Always\",\n        \"terminationGracePeriodSeconds\": 30,\n        \"dnsPolicy\": \"ClusterFirst\",\n        \"securityContext\": {},\n        \"imagePullSecrets\": [\n          {\n            \"name\": \"brews-api-f5demos\"\n          }\n        ],\n        \"schedulerName\": \"default-scheduler\"\n      }\n    },\n    \"strategy\": {\n      \"type\": \"RollingUpdate\",\n      \"rollingUpdate\": {\n        \"maxUnavailable\": \"25%\",\n        \"maxSurge\": \"25%\"\n      }\n    },\n    \"revisionHistoryLimit\": 10,\n    \"progressDeadlineSeconds\": 600\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews SPA deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "715579bb-70e0-4af7-87ac-c12d2f8be2f8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"kind\": \"Deployment\",\n  \"apiVersion\": \"apps/v1\",\n  \"metadata\": {\n    \"name\": \"brews-spa\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"annotations\": {\n      \"ves.io/virtual-sites\": \"{{namespace_1}}/{{namespace_1}}-mcn-vsite\",\n      \"ves.io/workload-flavor-brews-api\": \"{{namespace_1}}-large-flavor\"\n    }\n  },\n  \"spec\": {\n    \"replicas\": 1,\n    \"selector\": {\n      \"matchLabels\": {\n        \"ves.io/workload\": \"brews-spa\"\n      }\n    },\n    \"template\": {\n      \"metadata\": {\n        \"labels\": {\n          \"ves.io/workload\": \"brews-spa\"\n        }\n      },\n      \"spec\": {\n        \"containers\": [\n          {\n            \"name\": \"brews-spa\",\n            \"image\": \"f5demos.azurecr.io/spa\",\n            \"resources\": {},\n            \"terminationMessagePath\": \"/dev/termination-log\",\n            \"terminationMessagePolicy\": \"File\",\n            \"imagePullPolicy\": \"Always\"\n          }\n        ],\n        \"restartPolicy\": \"Always\",\n        \"terminationGracePeriodSeconds\": 30,\n        \"dnsPolicy\": \"ClusterFirst\",\n        \"securityContext\": {},\n        \"imagePullSecrets\": [\n          {\n            \"name\": \"brews-spa-f5demos\"\n          }\n        ],\n        \"schedulerName\": \"default-scheduler\"\n      }\n    },\n    \"strategy\": {\n      \"type\": \"RollingUpdate\",\n      \"rollingUpdate\": {\n        \"maxUnavailable\": \"25%\",\n        \"maxSurge\": \"25%\"\n      }\n    },\n    \"revisionHistoryLimit\": 10,\n    \"progressDeadlineSeconds\": 600\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews Inventory deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d4778a78-7ab1-4455-9cb1-ffa291116b31",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"kind\": \"Deployment\",\n  \"apiVersion\": \"apps/v1\",\n  \"metadata\": {\n    \"name\": \"brews-inv\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"annotations\": {\n      \"ves.io/virtual-sites\": \"{{namespace_1}}/{{azure-site-name}}-vsite\",\n      \"ves.io/workload-flavor-brews-api\": \"{{namespace_1}}-large-flavor\"\n    }\n  },\n  \"spec\": {\n    \"replicas\": 1,\n    \"selector\": {\n      \"matchLabels\": {\n        \"ves.io/workload\": \"brews-inv\"\n      }\n    },\n    \"template\": {\n      \"metadata\": {\n        \"labels\": {\n          \"ves.io/workload\": \"brews-inv\"\n        }\n      },\n      \"spec\": {\n        \"containers\": [\n          {\n            \"name\": \"brews-inv\",\n            \"image\": \"f5demos.azurecr.io/inv\",\n            \"resources\": {},\n            \"terminationMessagePath\": \"/dev/termination-log\",\n            \"terminationMessagePolicy\": \"File\",\n            \"imagePullPolicy\": \"Always\"\n          }\n        ],\n        \"restartPolicy\": \"Always\",\n        \"terminationGracePeriodSeconds\": 30,\n        \"dnsPolicy\": \"ClusterFirst\",\n        \"securityContext\": {},\n        \"imagePullSecrets\": [\n          {\n            \"name\": \"brews-inv-f5demos\"\n          }\n        ],\n        \"schedulerName\": \"default-scheduler\"\n      }\n    },\n    \"strategy\": {\n      \"type\": \"RollingUpdate\",\n      \"rollingUpdate\": {\n        \"maxUnavailable\": \"25%\",\n        \"maxSurge\": \"25%\"\n      }\n    },\n    \"revisionHistoryLimit\": 10,\n    \"progressDeadlineSeconds\": 600\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews Rrecommendations deployment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4526435-e1f0-4e41-b72f-cd25ddd5e143",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b78a23a9-7d93-4891-9353-4b8c415e7456",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"kind\": \"Deployment\",\n  \"apiVersion\": \"apps/v1\",\n  \"metadata\": {\n    \"name\": \"brews-recs\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"annotations\": {\n      \"ves.io/virtual-sites\": \"{{namespace_1}}/{{namespace_1}}-re-vsite\",\n      \"ves.io/workload-flavor-brews-api\": \"{{namespace_1}}-large-flavor\"\n    }\n  },\n  \"spec\": {\n    \"replicas\": 1,\n    \"selector\": {\n      \"matchLabels\": {\n        \"ves.io/workload\": \"brews-recs\"\n      }\n    },\n    \"template\": {\n      \"metadata\": {\n        \"labels\": {\n          \"ves.io/workload\": \"brews-recs\"\n        }\n      },\n      \"spec\": {\n        \"containers\": [\n          {\n            \"name\": \"brews-recs\",\n            \"image\": \"f5demos.azurecr.io/recs\",\n            \"resources\": {},\n            \"terminationMessagePath\": \"/dev/termination-log\",\n            \"terminationMessagePolicy\": \"File\",\n            \"imagePullPolicy\": \"Always\"\n          }\n        ],\n        \"restartPolicy\": \"Always\",\n        \"terminationGracePeriodSeconds\": 30,\n        \"dnsPolicy\": \"ClusterFirst\",\n        \"securityContext\": {},\n        \"imagePullSecrets\": [\n          {\n            \"name\": \"brews-recs-f5demos\"\n          }\n        ],\n        \"schedulerName\": \"default-scheduler\"\n      }\n    },\n    \"strategy\": {\n      \"type\": \"RollingUpdate\",\n      \"rollingUpdate\": {\n        \"maxUnavailable\": \"25%\",\n        \"maxSurge\": \"25%\"\n      }\n    },\n    \"revisionHistoryLimit\": 10,\n    \"progressDeadlineSeconds\": 600\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/vk8s/namespaces/{{namespace_1}}/{{app_name_1}}-vk8s/apis/apps/v1/namespaces/{{namespace_1}}/deployments",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				}
+			],
+			"id": "8411693f-b531-4da9-806a-646a663a1f5f"
+		},
+		{
+			"name": "LB + WAAP",
+			"item": [
+				{
+					"name": "Create Mongodb Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c906e050-8e50-4642-96f3-c368f1785529",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e1b2831f-4631-42ab-9cc0-36c3fc640b9c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-hc\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"tcp_health_check\": {\n      \"send_payload\": \"abc123\"\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  },\n  \"resource_version\": \"512132692\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create API Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c906e050-8e50-4642-96f3-c368f1785529",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "fc87fe8f-969d-4eab-b06e-e103ed80e340",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-api-hc\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"http_health_check\": {\n      \"use_origin_server_name\": {},\n      \"path\": \"/api/stats\",\n      \"use_http2\": false,\n      \"headers\": {},\n      \"request_headers_to_remove\": []\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create SPA Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c906e050-8e50-4642-96f3-c368f1785529",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1395d839-6cf0-4710-adbf-f07106441745",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-spa-hc\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"http_health_check\": {\n      \"use_origin_server_name\": {},\n      \"path\": \"/products\",\n      \"use_http2\": false,\n      \"headers\": {},\n      \"request_headers_to_remove\": []\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create INV Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c906e050-8e50-4642-96f3-c368f1785529",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "0066d7fc-0659-4f60-96f3-a452a7d36f1e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv-hc\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"http_health_check\": {\n      \"use_origin_server_name\": {},\n      \"path\": \"/api/stats\",\n      \"use_http2\": false,\n      \"headers\": {},\n      \"request_headers_to_remove\": []\n    },\n    \"timeout\": 3,\n    \"interval\": 15,\n    \"unhealthy_threshold\": 1,\n    \"healthy_threshold\": 3,\n    \"jitter_percent\": 30\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/healthchecks",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Mongodb Origin Pool",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "74447a93-8b40-465c-958c-afc49a7a3328",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1309eff6-de82-4c2b-882f-6261c12dee4d",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5a33473c-9c12-4454-8a6b-d28a9b674e6b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-pool\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"Brews MCN PoC\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-mongodb.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{gcp-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 27017,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-mongodb-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create API Origin Pool",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "74447a93-8b40-465c-958c-afc49a7a3328",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1309eff6-de82-4c2b-882f-6261c12dee4d",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "937d2566-a095-4f6b-90d1-39310ba6b05f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-api-pool\",\n    \"labels\": {},\n    \"description\": \"Brews MCN PoC\"\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-api.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{aws-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 8000,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-api-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create SPA Origin Pool",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "74447a93-8b40-465c-958c-afc49a7a3328",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1309eff6-de82-4c2b-882f-6261c12dee4d",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "2636812b-c765-40a6-8d43-2d23f156808e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-spa-pool\",\n    \"labels\": {},\n    \"description\": \"Brews MCN PoC\"\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-spa.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-mcn-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 8081,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-spa-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create INV Origin Pool",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "74447a93-8b40-465c-958c-afc49a7a3328",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1309eff6-de82-4c2b-882f-6261c12dee4d",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a59340bb-7453-42f6-85ea-b43b2ac0f8a6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv-pool\",\n    \"labels\": {}\n  },\n  \"spec\": {\n    \"origin_servers\": [\n      {\n        \"k8s_service\": {\n          \"service_name\": \"brews-inv.{{namespace_1}}\",\n          \"site_locator\": {\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{azure-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"vk8s_networks\": {}\n        },\n        \"labels\": {}\n      }\n    ],\n    \"no_tls\": {},\n    \"port\": 8002,\n    \"same_as_endpoint_port\": {},\n    \"healthcheck\": [\n      {\n        \"namespace\": \"{{namespace_1}}\",\n        \"name\": \"brews-inv-hc\",\n        \"kind\": \"healthcheck\"\n      }\n    ],\n    \"loadbalancer_algorithm\": \"LB_OVERRIDE\",\n    \"endpoint_selection\": \"LOCAL_PREFERRED\"\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/origin_pools",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Mongodb TCP LB (internal)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "74447a93-8b40-465c-958c-afc49a7a3328",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1309eff6-de82-4c2b-882f-6261c12dee4d",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "05d9e80c-849b-424c-887a-f889eaeb93f7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-tcp-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"Brews MCN PoC\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-mongodb-domain}}\"\n    ],\n    \"listen_port\": 27017,\n    \"no_sni\": {},\n    \"dns_volterra_managed\": false,\n    \"origin_pools\": [],\n    \"origin_pools_weights\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-mongodb-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"advertise_custom\": {\n      \"advertise_where\": [\n        {\n          \"virtual_site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{aws-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"virtual_site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{azure-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{gcp-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        }\n      ]\n    },\n    \"hash_policy_choice_round_robin\": {},\n    \"idle_timeout\": 3600000,\n    \"retract_cluster\": {},\n    \"tcp\": {},\n    \"dns_info\": [],\n    \"downstream_tls_certificate_expiration_timestamps\": []\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/tcp_loadbalancers",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create INV HTTP LB (internal)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b847ed7-2e7d-49de-9c43-c40b5a951a16",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "307813d3-a42c-4ba7-9505-acd489f83853",
+								"exec": [
+									"//Determine Key Type ",
+									"var is_https = pm.environment.get(\"use_https\");",
+									"if (is_https === \"yes\") {",
+									"    postman.setNextRequest(\"Create SPA-API HTTPS LB (public autocert)\");",
+									"}",
+									"else {",
+									"    postman.setNextRequest(\"Create SPA-API HTTP LB (public)\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "21eceb36-bb8f-46a9-8424-e5620c7fabfb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-inv-http-lb\",\n    \"labels\": {},\n    \"description\": \"Brews PoC MCN\"\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-inv-domain}}\"\n    ],\n    \"http\": {\n      \"dns_volterra_managed\": false,\n      \"port\": 80\n    },\n    \"advertise_custom\": {\n      \"advertise_where\": [\n        {\n          \"virtual_site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{aws-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"virtual_site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{azure-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"system\",\n              \"name\": \"{{gcp-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        }\n      ]\n    },\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-inv-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": [],\n    \"disable_waf\": {},\n    \"add_location\": false,\n    \"no_challenge\": {},\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"waf_exclusion_rules\": [],\n    \"data_guard_rules\": [],\n    \"blocked_clients\": [],\n    \"trusted_clients\": [],\n    \"ddos_mitigation_rules\": [],\n    \"service_policies_from_namespace\": {},\n    \"cookie_stickiness\": {\n      \"name\": \"brews-inv\"\n    },\n    \"multi_lb_app\": {},\n    \"disable_bot_defense\": {},\n    \"disable_api_definition\": {},\n    \"disable_ip_reputation\": {}\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create SPA-API HTTPS LB (public autocert)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b847ed7-2e7d-49de-9c43-c40b5a951a16",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "531a768f-ac1f-477c-8d97-2ddcd6e7675a",
+								"exec": [
+									"postman.setNextRequest(null);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "4a51c655-df4c-459e-93d3-0d01b15fa460",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-shop-spa-http-lb\",\n    \"labels\": {},\n    \"description\": \"brews MCN PoC\"\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-spa-domain}}\"\n    ],\n    \"https_auto_cert\": {\n      \"http_redirect\": true,\n      \"add_hsts\": true,\n      \"port\": 443,\n      \"tls_config\": {\n        \"default_security\": {}\n      },\n      \"no_mtls\": {},\n      \"default_header\": {},\n      \"enable_path_normalize\": {},\n      \"non_default_loadbalancer\": {}\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-spa-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": [\n      {\n        \"simple_route\": {\n          \"http_method\": \"ANY\",\n          \"path\": {\n            \"prefix\": \"/api/\"\n          },\n          \"origin_pools\": [\n            {\n              \"pool\": {\n                \"namespace\": \"{{namespace_1}}\",\n                \"name\": \"brews-api-pool\",\n                \"kind\": \"origin_pool\"\n              },\n              \"weight\": 1,\n              \"priority\": 1,\n              \"endpoint_subsets\": {}\n            }\n          ],\n          \"headers\": [],\n          \"auto_host_rewrite\": {}\n        }\n      },\n      {\n        \"simple_route\": {\n          \"http_method\": \"ANY\",\n          \"path\": {\n            \"prefix\": \"/images/\"\n          },\n          \"origin_pools\": [\n            {\n              \"pool\": {\n                \"namespace\": \"{{namespace_1}}\",\n                \"name\": \"brews-api-pool\",\n                \"kind\": \"origin_pool\"\n              },\n              \"weight\": 1,\n              \"priority\": 1,\n              \"endpoint_subsets\": {}\n            }\n          ],\n          \"headers\": [],\n          \"auto_host_rewrite\": {}\n        }\n      }\n    ],\n    \"app_firewall\": {\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"brews-spa-api-appwf\",\n      \"kind\": \"app_firewall\"\n    },\n    \"add_location\": true,\n    \"no_challenge\": {},\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"waf_exclusion_rules\": [],\n    \"data_guard_rules\": [],\n    \"blocked_clients\": [],\n    \"trusted_clients\": [],\n    \"ddos_mitigation_rules\": [],\n    \"service_policies_from_namespace\": {},\n    \"round_robin\": {},\n    \"disable_trust_client_ip_headers\": {},\n    \"enable_ddos_detection\": {},\n    \"enable_malicious_user_detection\": {},\n    \"enable_api_discovery\": {\n      \"enable_learn_from_redirect_traffic\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"disable_api_definition\": {},\n    \"disable_ip_reputation\": {}\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Create SPA-API HTTP LB (public)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b847ed7-2e7d-49de-9c43-c40b5a951a16",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b33d68db-d5b3-4a4b-a2aa-e29da7e6f8cd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-shop-spa-http-lb\",\n    \"labels\": {},\n    \"description\": \"brews MCN PoC\"\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-spa-domain}}\"\n    ],\n    \"http\": {\n      \"dns_volterra_managed\": true,\n      \"port\": 80\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-spa-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": [\n      {\n        \"simple_route\": {\n          \"http_method\": \"ANY\",\n          \"path\": {\n            \"prefix\": \"/api/\"\n          },\n          \"origin_pools\": [\n            {\n              \"pool\": {\n                \"namespace\": \"{{namespace_1}}\",\n                \"name\": \"brews-api-pool\",\n                \"kind\": \"origin_pool\"\n              },\n              \"weight\": 1,\n              \"priority\": 1,\n              \"endpoint_subsets\": {}\n            }\n          ],\n          \"headers\": [],\n          \"auto_host_rewrite\": {}\n        }\n      },\n      {\n        \"simple_route\": {\n          \"http_method\": \"ANY\",\n          \"path\": {\n            \"prefix\": \"/images/\"\n          },\n          \"origin_pools\": [\n            {\n              \"pool\": {\n                \"namespace\": \"{{namespace_1}}\",\n                \"name\": \"brews-api-pool\",\n                \"kind\": \"origin_pool\"\n              },\n              \"weight\": 1,\n              \"priority\": 1,\n              \"endpoint_subsets\": {}\n            }\n          ],\n          \"headers\": [],\n          \"auto_host_rewrite\": {}\n        }\n      }\n    ],\n    \"app_firewall\": {\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"brews-spa-api-appwf\",\n      \"kind\": \"app_firewall\"\n    },\n    \"add_location\": true,\n    \"no_challenge\": {},\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"waf_exclusion_rules\": [],\n    \"data_guard_rules\": [],\n    \"blocked_clients\": [],\n    \"trusted_clients\": [],\n    \"ddos_mitigation_rules\": [],\n    \"service_policies_from_namespace\": {},\n    \"round_robin\": {},\n    \"disable_trust_client_ip_headers\": {},\n    \"enable_ddos_detection\": {},\n    \"enable_malicious_user_detection\": {},\n    \"enable_api_discovery\": {\n      \"enable_learn_from_redirect_traffic\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"disable_api_definition\": {},\n    \"disable_ip_reputation\": {}\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/http_loadbalancers",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				}
+			],
+			"id": "78829311-50a3-4116-87ca-2dee9ce793d8"
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"value": "APIToken {{api_credential}}",
+			"key": "Authorization"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0f205174-82e6-4494-985f-4dfa807da5e4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0b359c7a-55c3-4974-b86e-156cd7c55910",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

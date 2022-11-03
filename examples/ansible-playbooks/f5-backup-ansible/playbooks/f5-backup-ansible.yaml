@@ -1,0 +1,122 @@
+- name: F5 Backup - Preparing the environment
+  hosts: local
+
+  vars_files:
+    - ../vars/config-vars.yaml
+
+  tasks:
+
+  - name: Deleting any previous state file
+    file:
+      path: "{{ statefile }}"
+      state: absent
+
+  - name: Create a new state file
+    copy:
+      dest: "{{ statefile }}"
+      content: |
+        state=success
+
+  - name: Updating the log file
+    lineinfile:
+      path: "{{ logfile }}"
+      line: "{{ansible_date_time.iso8601_basic_short}} -- BACKUP STARTED"
+      create: yes
+
+- name: F5 Backup
+  hosts: bigips
+  serial: 1
+  ignore_unreachable: yes
+  connection: local
+
+  collections:
+    - f5networks.f5_modules
+
+  vars_files:
+    - ../vars/config-vars.yaml
+
+  vars:
+    provider:
+      password: "{{ansible_pass}}"
+      server: "{{ansible_host}}"
+      user: "{{ansible_user}}"
+      validate_certs: no
+      server_port: 443
+    ucs_src: "{{inventory_hostname}}-{{ansible_date_time.iso8601_basic_short}}.ucs"
+    ucs_dest: "{{ucs_basedir}}/{{inventory_hostname}}/{{ucs_src}}"
+
+  tasks:
+
+  - name: Create and download a UCS Archive
+    bigip_ucs_fetch:
+      src: "{{ucs_src}}"
+      dest: "{{ucs_dest}}"
+      provider: "{{provider}}"
+    ignore_errors: true
+    register: result
+
+  - name: Updating the state file
+    lineinfile:
+      path: "{{ statefile }}"
+      regexp: '^state='
+      line: 'state=failed'
+    when: result.failed == True
+
+  - name: Updating the log file
+    lineinfile:
+      path: "{{ logfile }}"
+      line: "{{ansible_date_time.iso8601_basic_short}} -- {{inventory_hostname}} -- bigip_ucs_fetch:{{ result }}"
+      create: yes
+    when: result.failed == True
+
+  - name: Remove the UCS archive
+    bigip_ucs:
+      ucs: "{{ucs_src}}"
+      state: absent
+      provider: "{{provider}}"
+    ignore_errors: true
+    register: result
+
+  - name: Updating the state file
+    lineinfile:
+      path: "{{ statefile }}"
+      regexp: '^state='
+      line: 'state=failed'
+    when: result.failed == True
+
+  - name: Updating the log file
+    lineinfile:
+      path: "{{ logfile }}"
+      line: "{{ansible_date_time.iso8601_basic_short}} -- {{inventory_hostname}} -- bigip_ucs:{{ result }}"
+      create: yes
+    when: result.failed == True
+
+- name: F5 Backup - Reporting
+  hosts: local
+
+  vars_files:
+    - ../vars/config-vars.yaml
+
+  vars:
+    state: "{{ lookup('file', statefile) }}"
+
+  tasks:
+
+  - name: Updating the log file
+    lineinfile:
+      path: "{{ logfile }}"
+      line: "{{ansible_date_time.iso8601_basic_short}} -- BACKUP ENDED (SUCCESS)"
+      create: yes
+    when: state == "state=success"
+
+  - name: Updating the log file
+    lineinfile:
+      path: "{{ logfile }}"
+      line: "{{ansible_date_time.iso8601_basic_short}} -- BACKUP ENDED (FAILED)"
+      create: yes
+    when: state == "state=failed"
+
+  - name: Checking if the backup was successfully
+    fail:
+      msg: "The backup failed. Check the log file ({{ logfile }})."
+    when: state == "state=failed"

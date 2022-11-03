@@ -1,15 +1,10 @@
 {
-	"id": "50cd6110-35c7-4edb-995f-d241fc3a935f",
-	"name": "XC WAAP Deployment (1 App)",
+	"id": "bc599c22-f7a4-43b4-8b27-7d51ae57c48a",
+	"name": "XC vks8 MCN Demo (Brews App)",
 	"values": [
 		{
 			"key": "voltconsole-host",
 			"value": "xc-console-host",
-			"enabled": true
-		},
-		{
-			"key": "tenant-id",
-			"value": "tenant-id",
 			"enabled": true
 		},
 		{
@@ -19,24 +14,26 @@
 			"enabled": true
 		},
 		{
-			"key": "namespace_1",
-			"value": "web-ps",
-			"enabled": true
-		},
-		{
-			"key": "app_name_1",
-			"value": "hipster-shop",
+			"key": "use_https",
+			"value": "no",
 			"type": "default",
 			"enabled": true
 		},
 		{
-			"key": "pool_1",
-			"value": "www.f5.com",
+			"key": "use_autocert",
+			"value": "yes",
+			"type": "default",
 			"enabled": true
 		},
 		{
-			"key": "namespace_1-http-lb-domain",
-			"value": "web.f5pslab.net",
+			"key": "namespace_1",
+			"value": "brews-app",
+			"enabled": true
+		},
+		{
+			"key": "app_name_1",
+			"value": "brews",
+			"type": "default",
 			"enabled": true
 		},
 		{
@@ -52,25 +49,48 @@
 			"enabled": true
 		},
 		{
-			"key": "apply_shared-svcpol",
-			"value": "yes",
+			"key": "aws-site-name",
+			"value": "ps-aws-site",
 			"type": "default",
 			"enabled": true
 		},
 		{
-			"key": "apply_shared-appfw",
-			"value": "yes",
+			"key": "gcp-site-name",
+			"value": "ps-gcp-site",
 			"type": "default",
 			"enabled": true
 		},
 		{
-			"key": "shared-appfw-name",
-			"value": "ps-shared-appfw",
+			"key": "azure-site-name",
+			"value": "ps-azure-site",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "brews-spa-domain",
+			"value": "brews.f5pslab.net",
+			"enabled": true
+		},
+		{
+			"key": "brews-recs-domain",
+			"value": "recs.brews.f5pslab.net",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "brews-inv-domain",
+			"value": "inventory.brews.local",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "brews-mongodb-domain",
+			"value": "mongodb.brews.local",
 			"type": "default",
 			"enabled": true
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2022-05-20T21:29:40.983Z",
-	"_postman_exported_using": "Postman/9.18.3"
+	"_postman_exported_at": "2022-10-03T23:13:10.809Z",
+	"_postman_exported_using": "Postman/9.31.15"
 }
