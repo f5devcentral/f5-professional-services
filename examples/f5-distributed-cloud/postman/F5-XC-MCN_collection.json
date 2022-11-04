@@ -1144,37 +1144,37 @@
 	],
 	"variable": [
 		{
-			"id": "c4f4a1fc-5323-4f46-b7c7-3b31868dd1c1",
+			"id": "df6bd5eb-4baf-4669-a84d-393023fb896a",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "253ab709-7220-4844-a7dd-c1f825be4bcf",
+			"id": "4fe0f7ce-25b5-4417-8c7d-54f03051074b",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "973a6395-edb1-48cc-8dcb-92c6affc4b7d",
+			"id": "402da890-9cb9-466f-b294-30712c60c339",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "e90bc278-db0e-4f3e-b0eb-4eacb6c95692",
+			"id": "24d71af8-9509-44f3-8183-cf33de3b0dd9",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "7a79d504-5c92-4a0c-a1d3-6d67e8bb61dd",
+			"id": "d7e5e638-588b-40da-9fa5-4703effe11f4",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "9a7f45de-4ebc-495e-98e9-d3ad8d9cb39e",
+			"id": "efb16355-be61-4515-af8a-2425a3a88b8d",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "1e4148a3-16a8-4b14-8ab2-50296b43c0db",
+			"id": "3acfe7ad-e015-4210-9d4b-2a125deb2ac5",
 			"key": "name",
 			"value": ""
 		}
