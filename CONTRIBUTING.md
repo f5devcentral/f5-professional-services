@@ -12,7 +12,7 @@ You can find beginner-friendly issues in this repository [here](https://github.c
 
 **Reporting an issue**
 
-If you believe that you have found a new bug or wants to suggest an enhancament, you should report it by creating a new issue in the [f5devcentral/f5-professional-services](https://github.com/f5devcentral/f5-professional-services/issues) issue tracker.
+If you believe that you have found a new bug or wants to suggest an enhancement, you should report it by creating a new issue in the [f5devcentral/f5-professional-services](https://github.com/f5devcentral/f5-professional-services/issues) issue tracker.
 
 ## Code reviews
 
