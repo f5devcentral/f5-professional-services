@@ -59,5 +59,4 @@ All solutions within this repository are provided under the [Apache 2.0](https:/
 This repository and its contents are not an official F5 product nor it is officialy supported by F5.
 
 ## Contact
-Questions, issues, and comments should be directed to
-[professional-services-oss@f5.com](mailto:professional-services-oss@f5.com).
+For questions, issues, and comments please refer to [Contributing](/CONTRIBUTING.md) section on this page. 
