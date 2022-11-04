@@ -519,6 +519,10 @@
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+jsonNamesData);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
+											"    if (jsonNamesData === \"APPLY_ERRORED\") {",
+											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+jsonNamesData);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
 											"    if (jsonNamesData !== \"APPLIED\" ) {",
 											"        console.log(\"Site status: \"+jsonNamesData);",
 											"        postman.setNextRequest(\"Apply Site GCP Status\");",
@@ -1140,37 +1144,37 @@
 	],
 	"variable": [
 		{
-			"id": "ade9afac-5ec3-4ad6-9dc9-56e5ff6d61fd",
+			"id": "c4f4a1fc-5323-4f46-b7c7-3b31868dd1c1",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "263994a5-18f7-469c-a099-07de4647508b",
+			"id": "253ab709-7220-4844-a7dd-c1f825be4bcf",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "0ddc7c4a-a97b-433e-aa71-c10120560021",
+			"id": "973a6395-edb1-48cc-8dcb-92c6affc4b7d",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "d9e42316-d7e7-457b-a0f5-a7aebac1c0ee",
+			"id": "e90bc278-db0e-4f3e-b0eb-4eacb6c95692",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "674fc4c7-536b-4955-a6bd-57465e6a40b5",
+			"id": "7a79d504-5c92-4a0c-a1d3-6d67e8bb61dd",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "c39563b0-c479-4905-bf9d-daa70d876a80",
+			"id": "9a7f45de-4ebc-495e-98e9-d3ad8d9cb39e",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "002ff2a6-f5d3-447a-a3ae-cfe848616dcf",
+			"id": "1e4148a3-16a8-4b14-8ab2-50296b43c0db",
 			"key": "name",
 			"value": ""
 		}
