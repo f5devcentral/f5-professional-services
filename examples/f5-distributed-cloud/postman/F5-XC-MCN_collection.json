@@ -178,7 +178,7 @@
 											"//console.log(\"Site status: \"+jsonNamesData);",
 											"",
 											"if (jsonNamesData != undefined){",
-											"    var TFerrorstatus = jsonData.status.apply_status.apply_state.error_output;",
+											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
 											"        site_status = \"failure\";",
@@ -190,7 +190,7 @@
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
-											"    else if (TFerrorstatus != null) {",
+											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
 											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
@@ -357,7 +357,7 @@
 											"//console.log(\"Site status: \"+jsonNamesData);",
 											"",
 											"if (jsonNamesData != undefined){",
-											"    var TFerrorstatus = jsonData.status.apply_status.apply_state.error_output;",
+											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
 											"        site_status = \"failure\";",
@@ -369,7 +369,7 @@
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
-											"    else if (TFerrorstatus != null) {",
+											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
 											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
@@ -536,7 +536,7 @@
 											"//console.log(\"Site status: \"+jsonNamesData);",
 											"",
 											"if (jsonNamesData != undefined){",
-											"    var TFerrorstatus = jsonData.status.apply_status.apply_state.error_output;",
+											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
 											"        site_status = \"failure\";",
@@ -548,7 +548,7 @@
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
-											"    else if (TFerrorstatus != null) {",
+											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
 											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
@@ -1174,37 +1174,37 @@
 	],
 	"variable": [
 		{
-			"id": "0cdc3ebd-fdd9-447b-951b-9c7b02407cda",
+			"id": "17e41b3a-3834-4918-92b7-04f49578a87d",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "9a2f6e14-0ac1-4496-9386-f00ebdb1b2fc",
+			"id": "582a6b0b-4f57-43c2-bd3b-c8fec708566b",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "484d8be9-bd8e-4f23-b822-92639a4932ec",
+			"id": "2d26035f-8574-42fd-8dc2-8d15c4922a52",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "060ee26f-4642-4224-91ad-df4e6a5423e4",
+			"id": "6e734941-5724-469c-86a1-ddb791ce7466",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "23617dae-f965-4379-ba62-55d1e89989b2",
+			"id": "d4f5d2c8-8fb4-43ea-91dc-4dd4d669e2b9",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "56956d71-5e72-4c07-8427-34388a741954",
+			"id": "b3642ce4-a45f-4249-8869-cd32afd1f6cd",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "5635adf6-c2d8-4d58-891a-b0c4ad9512bb",
+			"id": "93214fa0-a528-43f2-a356-4c1f7fef9968",
 			"key": "name",
 			"value": ""
 		}
