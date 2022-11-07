@@ -128,6 +128,33 @@
 							"response": []
 						},
 						{
+							"name": "5s delay - allow site create completion",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "c3d7aa4d-cbe2-4439-890f-e913a9f6a1fe",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://postman-echo.com/delay/5"
+							},
+							"response": []
+						},
+						{
 							"name": "Apply Site AWS",
 							"event": [
 								{
@@ -181,12 +208,10 @@
 											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
-											"        site_status = \"failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
-											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
@@ -307,6 +332,33 @@
 							"response": []
 						},
 						{
+							"name": "5s delay - allow site create completion",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "5fb134b4-54c4-4c72-986c-57b2c3d283ef",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://postman-echo.com/delay/5"
+							},
+							"response": []
+						},
+						{
 							"name": "Apply Site Azure",
 							"event": [
 								{
@@ -360,12 +412,10 @@
 											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
-											"        site_status = \"failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
-											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
@@ -486,6 +536,60 @@
 							"response": []
 						},
 						{
+							"name": "5s delay - allow site create completion",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "9303e0b7-4ecf-4c55-9855-d5ada347b3c6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://postman-echo.com/delay/5"
+							},
+							"response": []
+						},
+						{
+							"name": "5s delay - allow site create completion Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "8f962c17-7be0-43be-ab6e-8146d1e87139",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://postman-echo.com/delay/5"
+							},
+							"response": []
+						},
+						{
 							"name": "Apply Site GCP",
 							"event": [
 								{
@@ -539,12 +643,10 @@
 											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
-											"        site_status = \"failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
-											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
@@ -1174,37 +1276,37 @@
 	],
 	"variable": [
 		{
-			"id": "17e41b3a-3834-4918-92b7-04f49578a87d",
+			"id": "98badfc5-ecac-4086-bc93-c1f19df976f7",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "582a6b0b-4f57-43c2-bd3b-c8fec708566b",
+			"id": "3ff39d82-343a-474e-b2f9-cf0f562b6a4f",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "2d26035f-8574-42fd-8dc2-8d15c4922a52",
+			"id": "63eff156-2843-4ff7-b223-728868c88fe5",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "6e734941-5724-469c-86a1-ddb791ce7466",
+			"id": "dbbccc5a-9b24-4071-9fcc-7fb05dffdd9b",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "d4f5d2c8-8fb4-43ea-91dc-4dd4d669e2b9",
+			"id": "da7cb2da-3b5f-444b-9b65-34968f7c4425",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "b3642ce4-a45f-4249-8869-cd32afd1f6cd",
+			"id": "c1315296-e343-491c-829f-04213a2f0909",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "93214fa0-a528-43f2-a356-4c1f7fef9968",
+			"id": "1ec2521d-772f-4678-a0a9-19e4ee8aacd3",
 			"key": "name",
 			"value": ""
 		}
