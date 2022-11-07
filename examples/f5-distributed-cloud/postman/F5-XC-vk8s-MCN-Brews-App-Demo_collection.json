@@ -843,8 +843,18 @@
 								"exec": [
 									"//Determine Key Type ",
 									"var is_https = pm.environment.get(\"use_https\");",
-									"if (is_https === \"yes\") {",
-									"    postman.setNextRequest(\"Deploy Brews Recommendations + HTTPS LB\");",
+									"var is_autocert = pm.environment.get(\"use_autocert\");",
+									"if (is_https === \"yes\" && is_autocert === \"no\") {",
+									"    var TLSkey = pm.environment.get(\"namespace_1-key\");",
+									"    if (TLSkey.includes(\"-----BEGIN PRIVATE KEY-----\")) {",
+									"        postman.setNextRequest(\"Deploy Brews Recommendations + HTTPS LB (manual cert - cleartext)\");",
+									"    }",
+									"    else {",
+									"        postman.setNextRequest(\"Deploy Brews Recommendations + HTTPS LB (manual cert - blindfold)\");",
+									"    }",
+									"}",
+									"else if (is_https === \"yes\") {",
+									"    postman.setNextRequest(\"Deploy Brews Recommendations + HTTPS LB (auto cert)\");",
 									"}",
 									"else {",
 									"    postman.setNextRequest(\"Deploy Brews Recommendations + HTTP LB\");",
@@ -876,7 +886,54 @@
 					"response": []
 				},
 				{
-					"name": "Deploy Brews Recommendations + HTTPS LB",
+					"name": "Deploy Brews Recommendations + HTTPS LB (manual cert - cleartext)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99fc6a96-2c3d-41c3-9dd7-33b87384dbe4",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca9c8ef7-70bb-4d12-99a8-36ccad7d418b",
+								"exec": [
+									"setTimeout(() => {  postman.setNextRequest(\"Delete Brews Recommendations deployment\"); }, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "0d6fcd77-53f9-4f08-b526-8e2643aacecd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-recs\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-recs\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/recs\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [         \n          {\n            \"env_var\": {\n              \"name\": \"MONGO_URL\",\n              \"value\": \"{{brews-mongodb-domain}}\"\n            }\n          },\n          {\n            \"env_var\": {\n              \"name\": \"INVENTORY_URL\",\n              \"value\": \"http://{{brews-inv-domain}}\"\n            }\n          },\n          {\n            \"env_var\": {\n              \"name\": \"RECOMMENDATIONS_URL\",\n              \"value\": \"https://{{brews-recs-domain}}\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_re_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-re-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_on_public\": {\n          \"port\": {\n            \"port\": {\n              \"info\": {\n                \"port\": 8001,\n                \"protocol\": \"PROTOCOL_TCP\",\n                \"same_as_port\": {}\n              }\n            },\n            \"http_loadbalancer\": {\n              \"domains\": [\n                \"{{brews-recs-domain}}\"\n              ],\n              \"https\": {\n                \"http_redirect\": null,\n                \"add_hsts\": null,\n                \"tls_parameters\": {\n                    \"tls_config\": {\n                        \"default_security\": {}\n                    },\n                    \"tls_certificates\": [\n                        {\n                            \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                            \"private_key\": {\n                                \"clear_secret_info\": {\n                                    \"url\": \"string:///{{base64EncodedKey}}\",\n                                    \"provider\": null\n                                },\n                                \"blindfold_secret_info_internal\": null,\n                                \"secret_encoding_type\": \"EncodingNone\"\n                            },\n                            \"description\": null\n                        }\n                    ],\n                    \"no_mtls\": {}\n                },\n                \"default_header\": {}\n                },\n                \"default_route\": {\n                \"disable_host_rewrite\": {}\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews Recommendations + HTTPS LB (manual cert - blindfold)",
 					"event": [
 						{
 							"listen": "test",
@@ -896,6 +953,53 @@
 								"id": "ca9c8ef7-70bb-4d12-99a8-36ccad7d418b",
 								"exec": [
 									"setTimeout(() => {  postman.setNextRequest(\"Delete Brews API deployment\"); }, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "fcfed795-74a7-4089-8f94-e2f917230bd2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-recs\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-recs\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/recs\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [         \n          {\n            \"env_var\": {\n              \"name\": \"MONGO_URL\",\n              \"value\": \"{{brews-mongodb-domain}}\"\n            }\n          },\n          {\n            \"env_var\": {\n              \"name\": \"INVENTORY_URL\",\n              \"value\": \"http://{{brews-inv-domain}}\"\n            }\n          },\n          {\n            \"env_var\": {\n              \"name\": \"RECOMMENDATIONS_URL\",\n              \"value\": \"https://{{brews-recs-domain}}\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_re_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-re-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_on_public\": {\n          \"port\": {\n            \"port\": {\n              \"info\": {\n                \"port\": 8001,\n                \"protocol\": \"PROTOCOL_TCP\",\n                \"same_as_port\": {}\n              }\n            },\n            \"http_loadbalancer\": {\n              \"domains\": [\n                \"{{brews-recs-domain}}\"\n              ],\n            \"https\": {\n                \"http_redirect\": null,\n                \"add_hsts\": null,\n                \"tls_parameters\": {\n                    \"tls_config\": {\n                        \"default_security\": {}\n                        },\n                        \"tls_certificates\": [\n                            {\n                             \"certificate_url\": \"string:///{{base64EncodedCert}}\",\n                             \"private_key\": {\n                                 \"blindfold_secret_info\": {\n                                     \"location\": \"string:///{{namespace_1-key}}\",\n                                     \"decryption_provider\": null,\n                                     \"store_provider\": null\n                                 },\n                                 \"blindfold_secret_info_internal\": null,\n                                 \"secret_encoding_type\": null\n                             },\n                                \"description\": null\n                         }\n                        ],\n                        \"no_mtls\": {}\n                    },\n                    \"default_header\": {}\n                },\n              \"default_route\": {\n                \"disable_host_rewrite\": {}\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/{{namespace_1}}/workloads",
+						"description": "Shared NamesSpace Sites"
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Brews Recommendations + HTTPS LB (auto cert)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99fc6a96-2c3d-41c3-9dd7-33b87384dbe4",
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ca9c8ef7-70bb-4d12-99a8-36ccad7d418b",
+								"exec": [
+									"setTimeout(() => {  postman.setNextRequest(\"Delete Brews Recommendations deployment\"); }, 5000);"
 								],
 								"type": "text/javascript"
 							}
@@ -942,7 +1046,7 @@
 							"script": {
 								"id": "fc273e77-ede3-450a-91df-9ce5a85410fb",
 								"exec": [
-									"setTimeout(() => {  postman.setNextRequest(\"Delete Brews API deployment\"); }, 5000);"
+									"setTimeout(() => {  postman.setNextRequest(\"Delete Brews Recommendations deployment\"); }, 5000);"
 								],
 								"type": "text/javascript"
 							}
@@ -957,7 +1061,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-recs\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-recs\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/recs\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [         \n          {\n            \"env_var\": {\n              \"name\": \"MONGO_URL\",\n              \"value\": \"{{brews-mongodb-domain}}\"\n            }\n          },\n          {\n            \"env_var\": {\n              \"name\": \"INVENTORY_URL\",\n              \"value\": \"http://{{brews-inv-domain}}\"\n            }\n          },\n          {\n            \"env_var\": {\n              \"name\": \"RECOMMENDATIONS_URL\",\n              \"value\": \"https://{{brews-recs-domain}}\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_re_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-re-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_on_public\": {\n          \"port\": {\n            \"port\": {\n              \"info\": {\n                \"port\": 8001,\n                \"protocol\": \"PROTOCOL_TCP\",\n                \"same_as_port\": {}\n              }\n            },\n            \"http_loadbalancer\": {\n              \"domains\": [\n                \"{{brews-recs-domain}}\"\n              ],\n              \"http\": {\n                \"dns_volterra_managed\": true,\n                \"port\": 80\n              },\n              \"default_route\": {\n                \"disable_host_rewrite\": {}\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-recs\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": null,\n    \"disable\": null\n  },\n  \"spec\": {\n    \"service\": {\n      \"num_replicas\": 1,\n      \"containers\": [\n        {\n          \"name\": \"brews-recs\",\n          \"image\": {\n            \"name\": \"f5demos.azurecr.io/recs\",\n            \"container_registry\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"f5demos\"\n            },\n            \"pull_policy\": \"IMAGE_PULL_POLICY_ALWAYS\"\n          },\n          \"init_container\": null,\n          \"flavor\": \"CONTAINER_FLAVOR_TYPE_TINY\",\n          \"liveness_check\": null,\n          \"readiness_check\": null,\n          \"command\": null,\n          \"args\": null\n        }\n      ],\n      \"volumes\": null,\n      \"configuration\": {\n        \"parameters\": [         \n          {\n            \"env_var\": {\n              \"name\": \"MONGO_URL\",\n              \"value\": \"{{brews-mongodb-domain}}\"\n            }\n          },\n          {\n            \"env_var\": {\n              \"name\": \"INVENTORY_URL\",\n              \"value\": \"http://{{brews-inv-domain}}\"\n            }\n          },\n          {\n            \"env_var\": {\n              \"name\": \"RECOMMENDATIONS_URL\",\n              \"value\": \"https://{{brews-recs-domain}}\"\n            }\n          }\n        ]\n      },\n      \"deploy_options\": {\n        \"deploy_re_virtual_sites\": {\n          \"virtual_site\": [\n            {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{namespace_1}}-re-vsite\"\n            }\n          ]\n        }\n      },\n      \"advertise_options\": {\n        \"advertise_on_public\": {\n          \"port\": {\n            \"port\": {\n              \"info\": {\n                \"port\": 8001,\n                \"protocol\": \"PROTOCOL_TCP\",\n                \"same_as_port\": {}\n              }\n            },\n            \"http_loadbalancer\": {\n              \"domains\": [\n                \"{{brews-recs-domain}}\"\n              ],\n              \"http\": {\n                \"dns_volterra_managed\": false,\n                \"port\": 80\n              },\n              \"default_route\": {\n                \"disable_host_rewrite\": {}\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  \"resource_version\": null\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1865,7 +1969,11 @@
 							"script": {
 								"id": "531a768f-ac1f-477c-8d97-2ddcd6e7675a",
 								"exec": [
-									"postman.setNextRequest(null);"
+									"postman.setNextRequest(null);",
+									"",
+									"",
+									"",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1964,7 +2072,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-shop-spa-http-lb\",\n    \"labels\": {},\n    \"description\": \"brews MCN PoC\"\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-spa-domain}}\"\n    ],\n    \"http\": {\n      \"dns_volterra_managed\": true,\n      \"port\": 80\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-spa-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": [\n      {\n        \"simple_route\": {\n          \"http_method\": \"ANY\",\n          \"path\": {\n            \"prefix\": \"/api/\"\n          },\n          \"origin_pools\": [\n            {\n              \"pool\": {\n                \"namespace\": \"{{namespace_1}}\",\n                \"name\": \"brews-api-pool\",\n                \"kind\": \"origin_pool\"\n              },\n              \"weight\": 1,\n              \"priority\": 1,\n              \"endpoint_subsets\": {}\n            }\n          ],\n          \"headers\": [],\n          \"auto_host_rewrite\": {}\n        }\n      },\n      {\n        \"simple_route\": {\n          \"http_method\": \"ANY\",\n          \"path\": {\n            \"prefix\": \"/images/\"\n          },\n          \"origin_pools\": [\n            {\n              \"pool\": {\n                \"namespace\": \"{{namespace_1}}\",\n                \"name\": \"brews-api-pool\",\n                \"kind\": \"origin_pool\"\n              },\n              \"weight\": 1,\n              \"priority\": 1,\n              \"endpoint_subsets\": {}\n            }\n          ],\n          \"headers\": [],\n          \"auto_host_rewrite\": {}\n        }\n      }\n    ],\n    \"app_firewall\": {\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"brews-spa-api-appwf\",\n      \"kind\": \"app_firewall\"\n    },\n    \"add_location\": true,\n    \"no_challenge\": {},\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"waf_exclusion_rules\": [],\n    \"data_guard_rules\": [],\n    \"blocked_clients\": [],\n    \"trusted_clients\": [],\n    \"ddos_mitigation_rules\": [],\n    \"service_policies_from_namespace\": {},\n    \"round_robin\": {},\n    \"disable_trust_client_ip_headers\": {},\n    \"enable_ddos_detection\": {},\n    \"enable_malicious_user_detection\": {},\n    \"enable_api_discovery\": {\n      \"enable_learn_from_redirect_traffic\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"disable_api_definition\": {},\n    \"disable_ip_reputation\": {}\n  }\n}\n",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-shop-spa-http-lb\",\n    \"labels\": {},\n    \"description\": \"brews MCN PoC\"\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-spa-domain}}\"\n    ],\n    \"http\": {\n      \"dns_volterra_managed\": false,\n      \"port\": 80\n    },\n    \"advertise_on_public_default_vip\": {},\n    \"default_route_pools\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-spa-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"routes\": [\n      {\n        \"simple_route\": {\n          \"http_method\": \"ANY\",\n          \"path\": {\n            \"prefix\": \"/api/\"\n          },\n          \"origin_pools\": [\n            {\n              \"pool\": {\n                \"namespace\": \"{{namespace_1}}\",\n                \"name\": \"brews-api-pool\",\n                \"kind\": \"origin_pool\"\n              },\n              \"weight\": 1,\n              \"priority\": 1,\n              \"endpoint_subsets\": {}\n            }\n          ],\n          \"headers\": [],\n          \"auto_host_rewrite\": {}\n        }\n      },\n      {\n        \"simple_route\": {\n          \"http_method\": \"ANY\",\n          \"path\": {\n            \"prefix\": \"/images/\"\n          },\n          \"origin_pools\": [\n            {\n              \"pool\": {\n                \"namespace\": \"{{namespace_1}}\",\n                \"name\": \"brews-api-pool\",\n                \"kind\": \"origin_pool\"\n              },\n              \"weight\": 1,\n              \"priority\": 1,\n              \"endpoint_subsets\": {}\n            }\n          ],\n          \"headers\": [],\n          \"auto_host_rewrite\": {}\n        }\n      }\n    ],\n    \"app_firewall\": {\n      \"namespace\": \"{{namespace_1}}\",\n      \"name\": \"brews-spa-api-appwf\",\n      \"kind\": \"app_firewall\"\n    },\n    \"add_location\": true,\n    \"no_challenge\": {},\n    \"user_id_client_ip\": {},\n    \"disable_rate_limit\": {},\n    \"waf_exclusion_rules\": [],\n    \"data_guard_rules\": [],\n    \"blocked_clients\": [],\n    \"trusted_clients\": [],\n    \"ddos_mitigation_rules\": [],\n    \"service_policies_from_namespace\": {},\n    \"round_robin\": {},\n    \"disable_trust_client_ip_headers\": {},\n    \"enable_ddos_detection\": {},\n    \"enable_malicious_user_detection\": {},\n    \"enable_api_discovery\": {\n      \"enable_learn_from_redirect_traffic\": {}\n    },\n    \"disable_bot_defense\": {},\n    \"disable_api_definition\": {},\n    \"disable_ip_reputation\": {}\n  }\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2012,12 +2120,12 @@
 	],
 	"variable": [
 		{
-			"id": "35807e38-45c2-40d6-8e56-ece888e2fe43",
+			"id": "c215d550-c3a9-4e78-8bcd-63f439b4c560",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "658ab145-3377-480a-8a9b-ef661d932adc",
+			"id": "d76f2513-baa3-43fc-9a89-074fe5c29015",
 			"key": "base64EncodedKey",
 			"value": ""
 		}
