@@ -427,7 +427,7 @@
 											"    else if (jsonNamesData != \"APPLIED\" ) {",
 											"        console.log(\"Site status: \"+site_status);",
 											"        postman.setNextRequest(\"Apply Site Azure Status\");",
-											"        setTimeout(() => {  postman.setNextRequest(\"Apply Site GCP Status\"); }, 10000);",
+											"        setTimeout(() => {  postman.setNextRequest(\"Apply Site Azure Status\"); }, 10000);",
 											"    }",
 											"}",
 											"",
@@ -552,33 +552,6 @@
 								}
 							],
 							"id": "9303e0b7-4ecf-4c55-9855-d5ada347b3c6",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": "https://postman-echo.com/delay/5"
-							},
-							"response": []
-						},
-						{
-							"name": "5s delay - allow site create completion Copy",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"id": "8f962c17-7be0-43be-ab6e-8146d1e87139",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1276,37 +1249,37 @@
 	],
 	"variable": [
 		{
-			"id": "98badfc5-ecac-4086-bc93-c1f19df976f7",
+			"id": "83f8d962-f93a-4e68-aecc-90fbdee60787",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "3ff39d82-343a-474e-b2f9-cf0f562b6a4f",
+			"id": "65a9500f-0807-48ff-a472-2646281c81bd",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "63eff156-2843-4ff7-b223-728868c88fe5",
+			"id": "e6739112-18f2-450a-8b96-2a42e0caebc3",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "dbbccc5a-9b24-4071-9fcc-7fb05dffdd9b",
+			"id": "07db9229-79dc-4671-bb97-58aafeed648d",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "da7cb2da-3b5f-444b-9b65-34968f7c4425",
+			"id": "ec38ec74-0e8b-49bf-a25e-15846533dc2b",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "c1315296-e343-491c-829f-04213a2f0909",
+			"id": "e20d5145-be72-47fd-8d35-eeaf4a28701f",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "1ec2521d-772f-4678-a0a9-19e4ee8aacd3",
+			"id": "82345aef-d730-46da-954f-6cf65c0ad566",
 			"key": "name",
 			"value": ""
 		}
