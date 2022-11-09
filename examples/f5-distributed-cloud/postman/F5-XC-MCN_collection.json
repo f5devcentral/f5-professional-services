@@ -155,7 +155,97 @@
 							"response": []
 						},
 						{
-							"name": "Apply Site AWS",
+							"name": "Terraform Plan Site AWS",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "980e49fb-daf8-4303-8b55-ec038e43dbcd",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "7bc9b958-6ed3-4d71-b568-05140f197a3a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"action\": \"PLAN\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/terraform/namespaces/system/terraform/aws_vpc_site/{{aws-site-name}}/run"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Plan Site AWS Status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c96ee0bf-2d7b-4cca-8f13-a02726506f89",
+										"exec": [
+											"//Get site build status from payload response",
+											"var jsonData = JSON.parse(responseBody);",
+											"var jsonNamesData = jsonData.status.plan_status.plan_state;",
+											"",
+											"//console.log(\"Site status: \"+jsonNamesData);",
+											"",
+											"if (jsonNamesData != undefined){",
+											"    var TFerrorstatus = jsonData.status.plan_status.error_output;",
+											"    var site_status = jsonNamesData;",
+											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
+											"        console.log(\"Terraform Plan Failure. Site status: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
+											"        console.log(\"Terraform Plan Failure. Site status: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
+											"        console.log(\"Terraform Plan Failure. Site status error: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (jsonNamesData != \"HAS_CHANGES\" ) {",
+											"        console.log(\"Site status: \"+site_status);",
+											"        setTimeout(() => {  postman.setNextRequest(\"Terraform Plan Site AWS Status\"); }, 10000);",
+											"    }",
+											"}",
+											"",
+											"pm.test(\"Site Status: \"+site_status, function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "0ee1d29e-73ee-4ede-8af1-98ec056dd739",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/terraform_parameters/aws_vpc_site/{{aws-site-name}}/status"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Apply Site AWS",
 							"event": [
 								{
 									"listen": "test",
@@ -191,7 +281,34 @@
 							"response": []
 						},
 						{
-							"name": "Apply Site AWS Status",
+							"name": "5s delay - allow terraform apply",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "1b9cc69f-8792-41a0-92e4-3e19956d0e57",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://postman-echo.com/delay/5"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Apply Site AWS Status",
 							"event": [
 								{
 									"listen": "test",
@@ -208,22 +325,21 @@
 											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
-											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
-											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
 											"        site_status = \"Failure\";",
-											"        console.log(\"Terraform Apply Plan Failure. Site status error: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData != \"APPLIED\" ) {",
 											"        console.log(\"Site status: \"+site_status);",
-											"        postman.setNextRequest(\"Apply Site GCP Status\");",
-											"        setTimeout(() => {  postman.setNextRequest(\"Apply Site AWS Status\"); }, 10000);",
+											"        setTimeout(() => {  postman.setNextRequest(\"Terraform Apply Site AWS Status\"); }, 10000);",
 											"    }",
 											"}",
 											"",
@@ -359,7 +475,97 @@
 							"response": []
 						},
 						{
-							"name": "Apply Site Azure",
+							"name": "Terraform Plan Site Azure",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "58d04bd2-76c4-4264-bafc-e1114f0a68c3",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "aaa2c56b-15d7-4014-9eac-6e3ac4f90f00",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"action\": \"PLAN\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/terraform/namespaces/system/terraform/azure_vnet_site/{{azure-site-name}}/run"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Plan Site Azure Status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5eebd076-d63d-4fb0-ae18-62b3968bb00e",
+										"exec": [
+											"//Get site build status from payload response",
+											"var jsonData = JSON.parse(responseBody);",
+											"var jsonNamesData = jsonData.status.plan_status.plan_state;",
+											"",
+											"//console.log(\"Site status: \"+jsonNamesData);",
+											"",
+											"if (jsonNamesData != undefined){",
+											"    var TFerrorstatus = jsonData.status.plan_status.error_output;",
+											"    var site_status = jsonNamesData;",
+											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
+											"        console.log(\"Terraform Plan Failure. Site status: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
+											"        console.log(\"Terraform Plan Failure. Site status: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
+											"        console.log(\"Terraform Plan Failure. Site status error: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (jsonNamesData != \"HAS_CHANGES\" ) {",
+											"        console.log(\"Site status: \"+site_status);",
+											"        setTimeout(() => {  postman.setNextRequest(\"Terraform Plan Site Azure Status\"); }, 10000);",
+											"    }",
+											"}",
+											"",
+											"pm.test(\"Site Status: \"+site_status, function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "cfb8157f-fab8-4a40-84e4-80a0b296cd7a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/terraform_parameters/azure_vnet_site/{{azure-site-name}}/status"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Apply Site Azure",
 							"event": [
 								{
 									"listen": "test",
@@ -395,7 +601,34 @@
 							"response": []
 						},
 						{
-							"name": "Apply Site Azure Status",
+							"name": "5s delay - allow terraform apply",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "fcd131bf-a7a2-48a0-8b65-e2070a95699c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://postman-echo.com/delay/5"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Apply Site Azure Status",
 							"event": [
 								{
 									"listen": "test",
@@ -412,22 +645,21 @@
 											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
-											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
-											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
 											"        site_status = \"Failure\";",
-											"        console.log(\"Terraform Apply Plan Failure. Site status error: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData != \"APPLIED\" ) {",
 											"        console.log(\"Site status: \"+site_status);",
-											"        postman.setNextRequest(\"Apply Site Azure Status\");",
-											"        setTimeout(() => {  postman.setNextRequest(\"Apply Site Azure Status\"); }, 10000);",
+											"        setTimeout(() => {  postman.setNextRequest(\"Terraform Apply Site Azure Status\"); }, 10000);",
 											"    }",
 											"}",
 											"",
@@ -563,7 +795,97 @@
 							"response": []
 						},
 						{
-							"name": "Apply Site GCP",
+							"name": "Terraform Plan Site GCP",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "605cf6fa-e07a-43a2-b2a9-1815947464af",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "b9f8af23-b4a5-496d-94cc-de38916a3fcc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"action\": \"PLAN\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/terraform/namespaces/system/terraform/gcp_vpc_site/{{gcp-site-name}}/run"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Plan Site GCP Status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d77c60ad-614d-4e01-b4d6-0f51ca18a152",
+										"exec": [
+											"//Get site build status from payload response",
+											"var jsonData = JSON.parse(responseBody);",
+											"var jsonNamesData = jsonData.status.plan_status.plan_state;",
+											"",
+											"//console.log(\"Site status: \"+jsonNamesData);",
+											"",
+											"if (jsonNamesData != undefined){",
+											"    var TFerrorstatus = jsonData.status.plan_status.error_output;",
+											"    var site_status = jsonNamesData;",
+											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
+											"        console.log(\"Terraform Plan Failure. Site status: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
+											"        console.log(\"Terraform Plan Failure. Site status: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
+											"        console.log(\"Terraform Plan Failure. Site status error: \"+site_status);",
+											"        postman.setNextRequest(\"null\");",
+											"    }",
+											"    else if (jsonNamesData != \"HAS_CHANGES\" ) {",
+											"        console.log(\"Site status: \"+site_status);",
+											"        setTimeout(() => {  postman.setNextRequest(\"Terraform Plan Site GCP Status\"); }, 10000);",
+											"    }",
+											"}",
+											"",
+											"pm.test(\"Site Status: \"+site_status, function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,409]);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "c3626f8a-9b06-476a-a1cd-3902da74c13c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/terraform_parameters/gcp_vpc_site/{{gcp-site-name}}/status"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Apply Site GCP",
 							"event": [
 								{
 									"listen": "test",
@@ -599,7 +921,34 @@
 							"response": []
 						},
 						{
-							"name": "Apply Site GCP Status",
+							"name": "5s delay - allow terraform apply",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b058cc91-39a1-460d-a1e3-985d4581976d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "3c206f59-c1b7-48d8-b416-406cd50b1af7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "https://postman-echo.com/delay/5"
+							},
+							"response": []
+						},
+						{
+							"name": "Terraform Apply Site GCP Status",
 							"event": [
 								{
 									"listen": "test",
@@ -616,22 +965,21 @@
 											"    var TFerrorstatus = jsonData.status.apply_status.error_output;",
 											"    var site_status = jsonNamesData;",
 											"    if (jsonNamesData == \"APPLY_PLAN_ERRORED\") {",
-											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData == \"APPLY_ERRORED\") {",
-											"        console.log(\"Terraform Apply Plan Failure. Site status: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
 											"        site_status = \"Failure\";",
-											"        console.log(\"Terraform Apply Plan Failure. Site status error: \"+site_status);",
+											"        console.log(\"Terraform Apply Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
 											"    else if (jsonNamesData != \"APPLIED\" ) {",
 											"        console.log(\"Site status: \"+site_status);",
-											"        postman.setNextRequest(\"Apply Site GCP Status\");",
-											"        setTimeout(() => {  postman.setNextRequest(\"Apply Site GCP Status\"); }, 10000);",
+											"        setTimeout(() => {  postman.setNextRequest(\"Terraform Apply Site GCP Status\"); }, 10000);",
 											"    }",
 											"}",
 											"",
@@ -1249,37 +1597,37 @@
 	],
 	"variable": [
 		{
-			"id": "83f8d962-f93a-4e68-aecc-90fbdee60787",
+			"id": "90c88068-f235-4b91-90fa-e3dbe0beff17",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "65a9500f-0807-48ff-a472-2646281c81bd",
+			"id": "748046d5-9211-4812-ad04-f45346088d3e",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "e6739112-18f2-450a-8b96-2a42e0caebc3",
+			"id": "f23e284f-11e5-46d4-a003-0aff83cc9fba",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "07db9229-79dc-4671-bb97-58aafeed648d",
+			"id": "8dd6608d-aba5-47a0-8112-d30847275d5a",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "ec38ec74-0e8b-49bf-a25e-15846533dc2b",
+			"id": "f0e4abc0-f106-4f83-b4e8-cc20e7e4ed07",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "e20d5145-be72-47fd-8d35-eeaf4a28701f",
+			"id": "373072af-ac05-46e9-8c03-2106c3f335e2",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "82345aef-d730-46da-954f-6cf65c0ad566",
+			"id": "0f01e6f9-52bc-4760-bcca-498aea9070bf",
 			"key": "name",
 			"value": ""
 		}
