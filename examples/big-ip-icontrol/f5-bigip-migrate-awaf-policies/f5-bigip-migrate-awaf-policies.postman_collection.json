@@ -1,0 +1,835 @@
+{
+	"info": {
+		"_postman_id": "32980cfe-f134-441b-aad6-e0199e94e48f",
+		"name": "F5 BIG-IP - Migrate AWAF Policies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01 - Get Authentication Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"bigip1_token\", jsonData.token.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"{{bigip1_username}}\",\n    \"password\":\"{{bigip1_password}}\",\n    \"loginProviderName\":\"tmos\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip1}}/mgmt/shared/authn/login",
+					"protocol": "https",
+					"host": [
+						"{{bigip1}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"authn",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02 - Set Authentication Token Timeout",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip1_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"timeout\":\"36000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip1}}/mgmt/shared/authz/tokens/{{bigip1_token}}",
+					"protocol": "https",
+					"host": [
+						"{{bigip1}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"authz",
+						"tokens",
+						"{{bigip1_token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03 - Get Authentication Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"bigip2_token\", jsonData.token.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"{{bigip2_username}}\",\n    \"password\":\"{{bigip2_password}}\",\n    \"loginProviderName\":\"tmos\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip2}}/mgmt/shared/authn/login",
+					"protocol": "https",
+					"host": [
+						"{{bigip2}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"authn",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04 - Set Authentication Token Timeout",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip2_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"timeout\":\"36000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip2}}/mgmt/shared/authz/tokens/{{bigip2_token}}",
+					"protocol": "https",
+					"host": [
+						"{{bigip2}}"
+					],
+					"path": [
+						"mgmt",
+						"shared",
+						"authz",
+						"tokens",
+						"{{bigip2_token}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "05 - Get the list of WAF policies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"if ( jsonData.items.length == 0 ){",
+							"    console.log(\"No WAF policies found.\")",
+							"    postman.setNextRequest(null)",
+							"}",
+							"",
+							"var policy_ids = []",
+							"",
+							"for (let i = 0; i < jsonData.items.length; i++) {",
+							"    policy_ids.push(jsonData.items[i].id)",
+							"}",
+							"",
+							"postman.setEnvironmentVariable(\"policy_ids\",policy_ids);",
+							"",
+							"skipPolicies =  pm.environment.get(\"skipPolicies\");",
+							"if (!skipPolicies)",
+							"    postman.setEnvironmentVariable(\"count\",0);",
+							"else",
+							"    postman.setEnvironmentVariable(\"count\",skipPolicies);",
+							"",
+							"count =  pm.environment.get(\"count\");",
+							"",
+							"postman.setEnvironmentVariable(\"current_policy_id\",policy_ids[count]);",
+							"",
+							"var i = parseInt(policy_ids.length) - parseInt(count)",
+							"",
+							"console.log(\"WAF policies to be migrated: #\" + i)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip1_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip1}}/mgmt/tm/asm/policies/",
+					"protocol": "https",
+					"host": [
+						"{{bigip1}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"policies",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "06 - Get the current WAF policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"count = environment.count",
+							"",
+							"current_policy_name = jsonData.name",
+							"current_policy_fullpath = jsonData.fullPath",
+							"",
+							"postman.setEnvironmentVariable(\"current_policy_name\", current_policy_name);",
+							"postman.setEnvironmentVariable(\"current_policy_fullpath\", current_policy_fullpath);",
+							"",
+							"i = parseInt(count)+1",
+							"",
+							"console.log(\"Working on WAF policy: \" + current_policy_fullpath + \" (#\"+ i + \")\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip1_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip1}}/mgmt/tm/asm/policies/{{current_policy_id}}?$select=name,id,fullPath",
+					"protocol": "https",
+					"host": [
+						"{{bigip1}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"policies",
+						"{{current_policy_id}}"
+					],
+					"query": [
+						{
+							"key": "$select",
+							"value": "name,id,fullPath"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "07 - Export the current WAF policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"current_task_id = jsonData.id",
+							"",
+							"postman.setEnvironmentVariable(\"current_task_id\", current_task_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip1_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"filename\": \"{{current_policy_name}}.{{policy_format}}\",\n    \"format\": \"{{policy_format}}\",\n    \"policyReference\": { \n        \"link\": \"https://localhost/mgmt/tm/asm/policies/{{current_policy_id}}/\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip1}}/mgmt/tm/asm/tasks/export-policy",
+					"protocol": "https",
+					"host": [
+						"{{bigip1}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"tasks",
+						"export-policy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "08 - Check the export task state",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"status = jsonData.status",
+							"",
+							"if ( status != \"COMPLETED\") {",
+							"    postman.setNextRequest(\"08 - Check the export task state\")",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip1_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip1}}/mgmt/tm/asm/tasks/export-policy/{{current_task_id}}",
+					"protocol": "https",
+					"host": [
+						"{{bigip1}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"tasks",
+						"export-policy",
+						"{{current_task_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "09 - Download the exported policy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"postman.setEnvironmentVariable(\"current_exported_policy\", responseBody);",
+							"postman.setEnvironmentVariable(\"current_exported_policy_size\", responseBody.length);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip1_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip1}}/mgmt/tm/asm/file-transfer/downloads/{{current_policy_name}}.{{policy_format}}",
+					"protocol": "https",
+					"host": [
+						"{{bigip1}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"file-transfer",
+						"downloads",
+						"{{current_policy_name}}.{{policy_format}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 - Upload the policy to the new BIG-IP",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"size = environment.current_exported_policy_size",
+							"",
+							"var headerValue = \"0-\" + parseInt(size-1) + \"/\" + parseInt(size)",
+							"",
+							"pm.request.headers.add({key: \"Content-Range\", value: headerValue});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip2_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{current_exported_policy}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip2}}/mgmt/tm/asm/file-transfer/uploads/{{current_policy_name}}.{{policy_format}}",
+					"protocol": "https",
+					"host": [
+						"{{bigip2}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"file-transfer",
+						"uploads",
+						"{{current_policy_name}}.{{policy_format}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11 - Check if the WAF policy already exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var policy_already_exists = false;",
+							"var existing_policy_id;",
+							"",
+							"current_policy_fullpath = pm.environment.get(\"current_policy_fullpath\")",
+							"",
+							"for (let i = 0; i < jsonData.items.length; i++) {",
+							"    ",
+							"    if ( jsonData.items[i].fullPath == current_policy_fullpath) {",
+							"        policy_already_exists = true",
+							"        existing_policy_id = jsonData.items[i].id        ",
+							"        break;",
+							"    }",
+							"    ",
+							"}",
+							"",
+							"if (policy_already_exists) {",
+							"    console.log(\"Policy exists in the new device and will be replaced\")",
+							"    postman.setEnvironmentVariable(\"existing_policy_id\",existing_policy_id);",
+							"    postman.setNextRequest(\"13 -  Import the policy to the new BIG-IP (#2)\")",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip2_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip2}}/mgmt/tm/asm/policies/",
+					"protocol": "https",
+					"host": [
+						"{{bigip2}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"policies",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12 -  Import the policy to the new BIG-IP (#1)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"current_task_id = jsonData.id",
+							"",
+							"postman.setEnvironmentVariable(\"current_task_id\", current_task_id);",
+							"",
+							"postman.setNextRequest(\"14 - Check the import task state\")"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"size = environment.current_exported_policy_size",
+							"",
+							"var headerValue = \"0-\" + parseInt(size-1) + \"/\" + parseInt(size)",
+							"",
+							"pm.request.headers.add({key: \"Content-Range\", value: headerValue});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip2_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"filename\":\"{{current_policy_name}}.{{policy_format}}\",\n    \"fullPath\": \"{{current_policy_fullpath}}\",\n    \"getPolicyAttributesOnly\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip2}}/mgmt/tm/asm/tasks/import-policy/",
+					"protocol": "https",
+					"host": [
+						"{{bigip2}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"tasks",
+						"import-policy",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13 -  Import the policy to the new BIG-IP (#2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"current_task_id = jsonData.id",
+							"",
+							"postman.setEnvironmentVariable(\"current_task_id\", current_task_id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"size = environment.current_exported_policy_size",
+							"",
+							"var headerValue = \"0-\" + parseInt(size-1) + \"/\" + parseInt(size)",
+							"",
+							"pm.request.headers.add({key: \"Content-Range\", value: headerValue});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip2_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"filename\":\"{{current_policy_name}}.{{policy_format}}\",\n    \"policyReference\": {\n        \"link\": \"/mgmt/tm/asm/policies/{{existing_policy_id}}\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip2}}/mgmt/tm/asm/tasks/import-policy/",
+					"protocol": "https",
+					"host": [
+						"{{bigip2}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"tasks",
+						"import-policy",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14 - Check the import task state",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"status = jsonData.status",
+							"",
+							"if ( status != \"COMPLETED\") {",
+							"    postman.setNextRequest(\"14 - Check the import task state\")",
+							"}",
+							"else {",
+							"",
+							"    count = environment.count",
+							"    i = parseInt(count)+1",
+							"    console.log(\"WAF policy \" + environment.current_policy_fullpath + \"(#\" + i + \")\" + \" migrated successfully.\")",
+							"    ",
+							"    count++",
+							"    policy_ids = environment.policy_ids.split(\",\")",
+							"",
+							"    if(count == policy_ids.length) {",
+							"        pm.environment.unset(\"bigip1_token\")",
+							"        pm.environment.unset(\"bigip2_token\")",
+							"        pm.environment.unset(\"policy_ids\")",
+							"        pm.environment.unset(\"count\")",
+							"        pm.environment.unset(\"current_policy_id\")",
+							"        pm.environment.unset(\"current_policy_name\")",
+							"        pm.environment.unset(\"current_policy_fullpath\")",
+							"        pm.environment.unset(\"current_task_id\")",
+							"        pm.environment.unset(\"current_exported_policy\")",
+							"        pm.environment.unset(\"current_exported_policy_size\")",
+							"        pm.environment.unset(\"existing_policy_id\")",
+							"        console.log(\"Migration finished.\")",
+							"        postman.setNextRequest(null)",
+							"    } else {",
+							"        current_policy_id = policy_ids[count]",
+							"        postman.setEnvironmentVariable(\"count\", count);",
+							"        postman.setEnvironmentVariable(\"current_policy_id\", current_policy_id);",
+							"        postman.setNextRequest(\"06 - Get the current WAF policy\")",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-F5-Auth-Token",
+						"value": "{{bigip2_token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{bigip2}}/mgmt/tm/asm/tasks/import-policy/{{current_task_id}}",
+					"protocol": "https",
+					"host": [
+						"{{bigip2}}"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"asm",
+						"tasks",
+						"import-policy",
+						"{{current_task_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
