@@ -332,7 +332,7 @@
 											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
-											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
+											"    else if (TFerrorstatus.includes(\"billing\")) {",
 											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
@@ -652,7 +652,7 @@
 											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
-											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
+											"    else if (TFerrorstatus.includes(\"billing\")) {",
 											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
@@ -972,7 +972,7 @@
 											"        console.log(\"Terraform Apply Failure. Site status: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
 											"    }",
-											"    else if (TFerrorstatus != \"\" || TFerrorstatus != \"\") {",
+											"    else if (TFerrorstatus.includes(\"billing\")) {",
 											"        site_status = \"Failure\";",
 											"        console.log(\"Terraform Apply Failure. Site status error: \"+site_status);",
 											"        postman.setNextRequest(\"null\");",
@@ -1597,37 +1597,37 @@
 	],
 	"variable": [
 		{
-			"id": "90c88068-f235-4b91-90fa-e3dbe0beff17",
+			"id": "bbe91868-6e41-4ed1-b15c-34d555c57412",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "748046d5-9211-4812-ad04-f45346088d3e",
+			"id": "95c085ea-6aea-4064-a4fc-e523106184e2",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "f23e284f-11e5-46d4-a003-0aff83cc9fba",
+			"id": "f1b4629d-68c3-4697-a846-261493d08283",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "8dd6608d-aba5-47a0-8112-d30847275d5a",
+			"id": "4917f2ab-741f-4c76-96f4-70d9d5939875",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "f0e4abc0-f106-4f83-b4e8-cc20e7e4ed07",
+			"id": "65752689-ef11-4f1d-94c7-a7dd16cb13ee",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "373072af-ac05-46e9-8c03-2106c3f335e2",
+			"id": "803b975e-44e1-42e2-9ec5-407692cf7ccc",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "0f01e6f9-52bc-4760-bcca-498aea9070bf",
+			"id": "9249f52c-a676-46e1-86ca-773052b64747",
 			"key": "name",
 			"value": ""
 		}
