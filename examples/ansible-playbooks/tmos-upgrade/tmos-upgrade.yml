@@ -1,0 +1,127 @@
+---
+- name: Install Code on the remote device
+  #/////////////////////////////////////////////////////////////////
+  #Created by F5 Consultant S. Tariq Ali.
+  #Created on 20210331
+  #Based on the original work by Sebastian Maniak
+  #This script will perform following tasks
+  #saves the existing configurations
+  #uploads the latest OS
+  #installs it on a new partition
+  #copies the exiting configuration to the new parition and reboots the device
+  #prints out an output of when its complete
+  #/////////////////////////////////////////////////////////////////
+  #delete /sys disk application-volume HD1.2
+  #delete /sys software image BIGIP-15.1.2.1-0.0.10.iso
+  #/////////////////////////////////////////////////////////////////
+  hosts: my_dg2
+  connection: local
+  gather_facts: false
+  vars:
+    provider:
+      server: "{{private_ip}}"
+      user: "{{ansible_user}}"
+      password: "{{ansible_ssh_pass}}"
+      #server_port: 8443 #For AWS
+      server_port: 443 #For AWS
+      validate_certs: false
+
+  tasks:
+    - name: Task1 - Save the running configuration
+      bigip_config:
+        save: yes
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+
+  #  - name: Upload 15.1.2.1 image to the BIG-IP (MD5SUM - 12315d80945bed1023c6ea9916037040)
+  #    bigip_software_image:
+  #      image: TMOSCode/BIGIP-15.1.2.1-0.0.10.iso
+  #      provider:
+  #        server: "{{private_ip}}"
+  #        user: "{{ansible_user}}"
+  #        password: "{{ansible_ssh_pass}}"
+  #        server_port: 443
+  #        validate_certs: false
+  #    tags:
+  #      - upload_bigip
+  #
+  #  - name:  Task2 - Upload 15.1.2.1 image to the BIG-IP (15.1.2.1-MD5SUM - 12315d80945bed1023c6ea9916037040)(HF-MD5SUM - b2d73dadd29168c1ec38621e326d8dd6)
+  #    bigip_software_image:
+  #      image: TMOSCode/{{ item }}
+  #      provider:
+  #        server: "{{private_ip}}"
+  #        user: "{{ansible_user}}"
+  #        password: "{{ansible_ssh_pass}}"
+  #        server_port: 443
+  #        validate_certs: false
+  #    with_items:
+  #    - BIGIP-15.1.2.1-0.0.10.iso
+  #    - Hotfix-BIGIP-15.1.2.1.0.100.10-ENG.iso
+  #    tags:
+  #      - upload_bigip
+
+    - name:  Task3 - Install BIG-IP OS
+      bigip_software_install:
+        image: "{{ item }}"
+        volume: HD1.2
+        state: installed
+        #state: activated #Performs the same operation as installed, but the system is rebooted to the new software.
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      with_items:
+      - BIGIP-15.1.5.1-0.0.14.iso
+      #- Hotfix-BIGIP-15.1.2.1.0.100.10-ENG.iso
+      tags:
+        - install_bigip
+
+    - name:  Task4 - Verify the system was installed
+      bigip_device_info:
+        gather_subset: 
+          - software-volumes
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      register: bigip_software_install
+      tags:
+        - verify
+
+    - name:  Task5 - Display device volume info
+      debug:
+        var: bigip_software_install
+      tags:
+        - verify
+
+#      #If you dont want the device to boot just comment the following.
+#    - name:  Task6 - Copy the config from HD1.1 to HD1.2 cpcfg --source=HD1.1 --reboot HD1.2    
+#      raw: curl -u "{{ansible_gui}}":"{{ansible_gui_pass}}" -k https://"{{private_ip}}":443/mgmt/tm/util/bash  -H "Content-type:application/json" -d "{\"command\"
+:\"run\",\"utilCmdArgs\":\"-c 'cpcfg --source=HD1.1 --reboot HD1.2'\"}"
+#      ignore_errors: True
+#      register: cpcfg
+
+
+    - name:  Task7 - Verify the system was installed
+      bigip_command:
+        commands:
+          - show sys software status
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      register: software_status
+
+    - name:  Task8 - Display
+      debug:
+        var: software_status

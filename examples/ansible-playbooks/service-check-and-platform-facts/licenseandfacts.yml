@@ -1,0 +1,75 @@
+---
+- name: GATHER F5 FACTS
+  #/////////////////////////////////////////////////////////////////
+  #Created by F5 Consultant S. Tariq Ali.
+  #Created on 20210319
+  #Modified on 20220523
+  #/////////////////////////////////////////////////////////////////
+  hosts: dc2wpriv
+  connection: local
+  gather_facts: true
+
+
+  tasks:
+    - name: Task 1 - COLLECT BIG-IP FACTS
+      bigip_device_info:
+        gather_subset:
+          - system-info
+          - devices
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      register: device_facts
+
+#    - name: This can be used to print all facts
+#      debug:
+#        var: device_facts
+
+    - name: Task 2 - Display Device Type
+      debug:
+        var: device_facts['system_info']['marketing_name']
+
+    - name: Task 3 - Platform Name
+      debug:
+        var: device_facts['system_info']['platform']
+
+    - name: Task 4 - Display Chassis Serial
+      debug:
+        var: device_facts['system_info']['chassis_serial']
+
+    - name:  Task 5 - Display TMOS Version
+      debug:
+        var: device_facts['system_info']['product_version']
+
+    - name: Task 6 - Display Device FailoverStatus
+      bigip_command:
+        commands:
+          - tmsh show cm failover-status field-fmt | grep "status" | grep -v cmi
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      register: output
+
+    - debug:
+        var: output.stdout_lines
+
+    - name: Task 7 - Display Service Check Date
+      bigip_command:
+        commands:
+          - tmsh show sys license field-fmt | egrep "service"
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      register: output
+
+    - debug:
+        var: output.stdout_lines
