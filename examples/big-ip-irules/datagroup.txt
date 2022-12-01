@@ -1,0 +1,4 @@
+#Example datagroup file for DNSX_bypass_rule
+
+".int.customertest.local" := "",
+".int.customertest.com" := "",
