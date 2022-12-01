@@ -756,7 +756,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{gcp-site-name}}\",\n    \"namespace\": null,\n    \"labels\": {\n        \"ves.io/siteName\": \"{{gcp-site-name}}\",\n        \"{{app_name_1}}-sites\": \"all-sites\"\n    },\n    \"annotations\": {},\n    \"description\": \"Created by {{gcp-site-name}} using API\",\n    \"disable\": null\n  },\n  \"spec\": {\n    \"gcp_region\": \"{{gcp-region}}\",\n    \"ingress_egress_gw\": {\n      \"gcp_certified_hw\": \"gcp-byol-multi-nic-voltmesh\",\n      \"gcp_zone_names\": [\n        \"{{gcp-az}}\"\n      ],\n      \"node_number\": 1,\n      \"inside_network\": {\n        \"new_network_autogenerate\": {\n          \"autogenerate\": null\n        }\n      },\n      \"inside_subnet\": {\n        \"new_subnet\": {\n          \"subnet_name\": \"{{gcp-site-name}}-inside-subnet\",\n          \"primary_ipv4\": \"{{gcp-inside-subnet}}\"\n        }\n      },\n      \"outside_network\": {\n        \"new_network_autogenerate\": {\n          \"autogenerate\": null\n        }\n      },\n      \"outside_subnet\": {\n        \"new_subnet\": {\n          \"subnet_name\": \"{{gcp-site-name}}-outside-subnet\",\n          \"primary_ipv4\": \"{{gcp-outside-subnet}}\"\n        }\n      },\n      \"no_network_policy\": {},\n      \"no_forward_proxy\": {},\n      \"no_global_network\": {},\n      \"no_inside_static_routes\": {},\n      \"no_outside_static_routes\": {}\n    },\n    \"cloud_credentials\": {\n      \"tenant\": null,\n      \"namespace\": \"system\",\n      \"name\": \"{{gcp-cloud-credential}}\"\n    },\n    \"instance_type\": \"n1-standard-4\",\n    \"nodes_per_az\": 0,\n    \"disk_size\": null,\n    \"ssh_key\": null,\n    \"address\": null,\n    \"coordinates\": null,\n    \"logs_streaming_disabled\": {},\n    \"sw\": {\n      \"default_sw_version\": {}\n    },\n    \"os\": {\n      \"default_os_version\": {}\n    }\n  }\n}",
+									"raw": "{\n  \"metadata\": {\n    \"name\": \"{{gcp-site-name}}\",\n    \"namespace\": null,\n    \"labels\": {\n        \"ves.io/siteName\": \"{{gcp-site-name}}\",\n        \"{{app_name_1}}-sites\": \"all-sites\"\n    },\n    \"annotations\": {},\n    \"description\": \"Created by {{gcp-site-name}} using API\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"gcp_region\": \"{{gcp-region}}\",\n    \"ingress_egress_gw\": {\n      \"gcp_certified_hw\": \"gcp-byol-multi-nic-voltmesh\",\n      \"gcp_zone_names\": [\n        \"{{gcp-az}}\"\n      ],\n      \"node_number\": 1,\n      \"inside_network\": {\n        \"new_network_autogenerate\": {\n          \"autogenerate\": false\n        }\n      },\n      \"inside_subnet\": {\n        \"new_subnet\": {\n          \"subnet_name\": \"{{gcp-site-name}}-inside-subnet\",\n          \"primary_ipv4\": \"{{gcp-inside-subnet}}\"\n        }\n      },\n      \"outside_network\": {\n        \"new_network_autogenerate\": {\n          \"autogenerate\": false\n        }\n      },\n      \"outside_subnet\": {\n        \"new_subnet\": {\n          \"subnet_name\": \"{{gcp-site-name}}-outside-subnet\",\n          \"primary_ipv4\": \"{{gcp-outside-subnet}}\"\n        }\n      },\n      \"no_network_policy\": {},\n      \"no_forward_proxy\": {},\n      \"no_global_network\": {},\n      \"no_dc_cluster_group\": {},\n      \"sm_connection_public_ip\": {},\n      \"no_inside_static_routes\": {},\n      \"no_outside_static_routes\": {}\n    },\n    \"cloud_credentials\": {\n      \"namespace\": \"system\",\n      \"name\": \"{{gcp-cloud-credential}}\",\n      \"kind\": \"cloud_credentials\"\n    },\n    \"instance_type\": \"n1-standard-4\",\n    \"logs_streaming_disabled\": {},\n    \"sw\": {\n      \"default_sw_version\": {}\n    },\n    \"os\": {\n      \"default_os_version\": {}\n    },\n    \"gcp_labels\": {},\n    \"offline_survivability_mode\": {\n      \"no_offline_survivability_mode\": {}\n    },\n    \"default_blocked_services\": {}\n  }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1597,37 +1597,37 @@
 	],
 	"variable": [
 		{
-			"id": "bbe91868-6e41-4ed1-b15c-34d555c57412",
+			"id": "5bb8d8e2-c337-4154-b03e-4925cc688f2c",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "95c085ea-6aea-4064-a4fc-e523106184e2",
+			"id": "32485c54-7ea9-4713-84d2-d93fbe123d73",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "f1b4629d-68c3-4697-a846-261493d08283",
+			"id": "3cfa64a4-0709-44c6-bace-7be0389b78c3",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "4917f2ab-741f-4c76-96f4-70d9d5939875",
+			"id": "d53cfe1c-6351-4ab6-be21-96b7efe521a7",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "65752689-ef11-4f1d-94c7-a7dd16cb13ee",
+			"id": "540d7bad-69ea-45aa-ad18-4154df87daf5",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "803b975e-44e1-42e2-9ec5-407692cf7ccc",
+			"id": "c7d749fe-ad53-49ac-a5a3-53219f249220",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "9249f52c-a676-46e1-86ca-773052b64747",
+			"id": "c7d79341-faa0-4ac4-8d01-c557e623f2ba",
 			"key": "name",
 			"value": ""
 		}
