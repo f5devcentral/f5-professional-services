@@ -9,7 +9,7 @@
 # RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
 #     ansible-galaxy collection install f5networks.f5os
 #
-# REFERRENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
+# REFERENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
 # https://clouddocs.f5.com/training/community/rseries-training/html/introduction.html
 #
 # NOTE: For any API calls to the rSeries F5OS layer it is important to include the header Content-Type application/yang-data+json and use port 8888 
