@@ -1,0 +1,322 @@
+################################################################################################
+# CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL (s.meisenzahl@f5.com) 11/19/2022
+#
+# THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
+# 
+# INSTALL F5OS COLLECTION FOR ANSIBLE USING THE FOLLOWING LINK 
+#     "https://galaxy.ansible.com/f5networks/f5os"
+# 
+# RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
+#     ansible-galaxy collection install f5networks.f5os
+#
+# REFERRENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
+# https://clouddocs.f5.com/training/community/rseries-training/html/introduction.html
+#
+# NOTE: For any API calls to the rSeries F5OS layer it is important to include the header Content-Type application/yang-data+json and use port 8888 
+#
+# Usage: sensible-playbook -vvv rseries-base-build.yaml
+#
+################################################################################################
+
+
+  - hosts: rseries
+    connection: local
+    gather_facts: false
+    vars:
+      provider:
+        server: "{{mgmt_ip}}"
+        user: "{{f5admin}}"
+        password: "{{f5admin_pass}}"
+        validate_certs: no
+
+    collections:
+      - f5networks.f5_bigip
+
+    tasks:
+      - name: Modify Hostname and Banners
+        uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/
+          user: "{{ f5admin }}"
+          password: "{{f5admin_pass}}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/banner.json') }}"
+        register: Banner
+
+      - name: Modify DNS Config
+        uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/openconfig-system:system/dns
+          user: "{{ f5admin }}"
+          password: "{{f5admin_pass}}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/dns-config.json') }}"
+        register: DNS_Config
+
+      - name: Modify NTP Config
+        uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/
+          user: "{{ f5admin }}"
+          password: "{{f5admin_pass}}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/ntp-config.json') }}"
+        register: NTP_Config
+
+      - name: Modify Remote Logging Config
+        uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/
+          user: "{{ f5admin }}"
+          password: "{{f5admin_pass}}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/remote-logging.json') }}"
+        register: Remote_Logging
+
+      #- name: Modify Portgroups
+        #ansible.builtin.uri:
+        # url: https://{{mgmt_ip}}:8888/restconf/data/f5-portgroup:portgroups
+        # user: "{{ f5admin }}"
+        # password: "{{ f5admin_pass }}"
+        # method: PATCH
+        # headers:
+        #   Content-Type: application/yang-data+json
+        #   Accept: application/yang-data+json
+        # force_basic_auth: yes
+        # force: yes
+        # status_code: 200
+        # return_content: true
+        # validate_certs: no
+        # body_format: json
+        # body: "{{ lookup('ansible.builtin.file','json/portgroup-speed.json') }}"
+      # register: Portgroups
+
+      - name: Configure VLANS
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/create-vlans.json') }}"
+        register: Vlan_Config
+
+     # - name: Configure Interfaces on VLANS
+       # ansible.builtin.uri:
+        # url: https://{{mgmt_ip}}:8888/restconf/data/openconfig-interfaces:interfaces
+        # user: "{{ f5admin }}"
+        # password: "{{ f5admin_pass }}"
+        # method: PATCH
+        # headers:
+        #   Content-Type: application/yang-data+json
+        #   Accept: application/yang-data+json
+        # force_basic_auth: yes
+        # force: yes
+        # status_code: 200,204
+        # return_content: true
+        # validate_certs: no
+        # body_format: json
+        # body: "{{ lookup('ansible.builtin.file','json/assign-vlans-to-interfaces.json') }}"
+        # register: Interfaces_Vlans
+        #
+      - name: Configure LAGS
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/create-lags.json') }}"
+        register: LAGs_Config
+
+      - name: Configure LAGS with Interfaces
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/add-interfaces-to-lags.json') }}"
+        register: LAGs_Interfaces
+
+      - name: Configure LACP on LAGS
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/add-lacp-to-lags.json') }}"
+        register: LACP_LAGs
+
+      - name: Configure SNMP Allowed IPs
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/openconfig-system:system/f5-allowed-ips:allowed-ips
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: POST
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 201
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/snmp-allowed-ips.json') }}"
+        register: SNMP_Allowlist
+
+      - name: Configure SNMP Location
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/SNMPv2-MIB:SNMPv2-MIB/system/sysContact
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/snmp-location.json') }}"
+        register: SNMP_Location
+
+      - name: Configure SNMP Community
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/snmp-community.json') }}"
+        register: SNMP_Community
+
+      - name: Configure SNMP Security View
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/SNMP-VIEW-BASED-ACM-MIB:SNMP-VIEW-BASED-ACM-MIB
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/snmp-view.json') }}"
+        register: SNMP_Security_View
+
+      - name: Configure SNMP Traps
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/SNMP-NOTIFICATION-MIB:SNMP-NOTIFICATION-MIB
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/snmp-traps.json') }}"
+        register: SNMP_Traps
+
+      - name: Configure SNMP Target
+        ansible.builtin.uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/SNMP-TARGET-MIB:SNMP-TARGET-MIB
+          user: "{{ f5admin }}"
+          password: "{{ f5admin_pass }}"
+          method: PATCH
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/snmp-target.json') }}"
+        register: SNMP_Target
