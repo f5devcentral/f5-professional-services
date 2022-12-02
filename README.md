@@ -33,12 +33,12 @@ The tools folder contains utilities which can assist with a variaty of tasks rel
 | [f5-xc-convert-eap-config](tools/f5-xc-convert-eap-config)| Bash script to convert EAP configuration in JSON format to a human-readable file. |
 
 ## Tips & Tricks
-The tip-and-tricks folder contains common commands used day to day in F5 technologies as well as cheatsheet and tips (!) on various ancialliary tools.
+The tip-and-tricks folder contains common commands used day to day in F5 technologies as well as cheatsheets and tips on various ancillary tools.
 
 | tips-and-tricks                                         | Description |
 | ----------------------------------------------- | ----------- |
-| [big-ip-common-commands](utils/big-ip-common-commands)| This contains a list of very useful BIG-IP commands  |
-| [traffic-generator-tools-cheatsheet](utils/traffic-generator-tools-cheatsheet)| This contains a list of traffic generator tools their cheatsheets |
+| [big-ip-common-commands](tips-and-tricks/big-ip-common-commands)| This contains a list of very useful BIG-IP commands  |
+| [traffic-generator-tools-cheatsheet](tips-and-tricks/traffic-generator-tools-cheatsheet)| This contains a list of traffic generator tools their cheatsheets |
 
 ## Support Information
 This repository is community-supported. Follow instructions below on how to raise issues.
@@ -59,5 +59,4 @@ All solutions within this repository are provided under the [Apache 2.0](https:/
 This repository and its contents are not an official F5 product nor it is officialy supported by F5.
 
 ## Contact
-Questions, issues, and comments should be directed to
-[professional-services-oss@f5.com](mailto:professional-services-oss@f5.com).
+For questions, issues, and comments please refer to [Contributing](/CONTRIBUTING.md) section on this page. 

@@ -1,0 +1,17 @@
+{
+    "schemaVersion": "1.33.0",
+    "class": "Device",
+    "async": true,
+    "label": "Configuring Geneve Tunnel via Declarative Onboarding",
+    "Common": {
+        "class": "Tenant",
+        "genevetunnel": {
+            "class": "Tunnel",
+            "description": "none",
+            "autoLasthop": "default",
+            "mtu": 0,
+            "tunnelType": "geneve",
+            "localAddress": "10.145.0.1"
+        }
+    }
+}

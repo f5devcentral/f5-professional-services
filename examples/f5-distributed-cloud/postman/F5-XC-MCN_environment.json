@@ -1,0 +1,164 @@
+{
+	"id": "9b563932-b9bf-417a-8bc4-1b55aaedb7af",
+	"name": "XC MCN Site Deploy",
+	"values": [
+		{
+			"key": "voltconsole-host",
+			"value": "xc-console-host",
+			"enabled": true
+		},
+		{
+			"key": "api_credential",
+			"value": "api_credential-for-user",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "app_name_1",
+			"value": "brews",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws-cloud-credential",
+			"value": "ps-test-aws-cc",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws-site-name",
+			"value": "ps-aws-site",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws-region",
+			"value": "us-west-2",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws-az",
+			"value": "us-west-2a",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws-network",
+			"value": "10.1.0.0/16",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws-inside-subnet",
+			"value": "10.1.0.0/24",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws-outside-subnet",
+			"value": "10.1.1.0/24",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "aws-workload-subnet",
+			"value": "10.1.2.0/24",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "azure-cloud-credential",
+			"value": "ps-test-azure-cc",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "azure-site-name",
+			"value": "ps-azure-site",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "azure-region",
+			"value": "eastus2",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "azure-az",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "azure-network",
+			"value": "10.2.0.0/16",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "azure-inside-subnet",
+			"value": "10.2.0.0/24",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "azure-outside-subnet",
+			"value": "10.2.1.0/24",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "azure-resource-group",
+			"value": "ps-test-azure-rg",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gcp-cloud-credential",
+			"value": "ps-test-gcp-cc",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gcp-site-name",
+			"value": "ps-gcp-site",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gcp-region",
+			"value": "us-east4",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gcp-az",
+			"value": "us-east4-a",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gcp-network",
+			"value": "10.3.0.0/16",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gcp-inside-subnet",
+			"value": "10.3.0.0/24",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "gcp-outside-subnet",
+			"value": "10.3.1.0/24",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-10-18T16:31:53.845Z",
+	"_postman_exported_using": "Postman/10.0.31"
+}

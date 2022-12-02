@@ -1,0 +1,31 @@
+---
+- name: Modify Banner name and color Pre and Post Change
+  #/////////////////////////////////////////////////////////////////
+  #Created by F5 Consultant S. Tariq Ali.
+  #Created on 20210323
+  #Modified on 20220523
+  #This playbook will perform following tasks
+  #Modify the device banner information
+  #/////////////////////////////////////////////////////////////////
+
+  hosts: corpwpriv
+  #connection: local
+  gather_facts: false
+
+  tasks:
+
+    - name: Task 1 - BIGIP Commands - Modify GUI Banner Name
+      bigip_command:
+        commands:
+          - modify sys db ui.advisory.text { value "${HOSTNAME}-Migrated-`date +%Y%m%d`"}
+          #- modify sys db ui.advisory.color { value "Green" }
+          - modify sys db ui.advisory.color { value "Blue" }
+          #- modify sys db ui.advisory.color { value "Red" }
+            #Green=prod/stable     Red=maintenance/warning     Blue=in deployment
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      delegate_to: localhost
