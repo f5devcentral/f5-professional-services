@@ -1,0 +1,49 @@
+---
+- name: Remove a new user and change the admin shell to advanced
+  #/////////////////////////////////////////////////////////////////
+  #Created by F5 Consultant S. Tariq Ali.
+  #Created on 20210420
+  #/////////////////////////////////////////////////////////////////
+  hosts: corpwpriv
+
+  gather_facts: false
+  remote_user: admin
+  #remote_user: root
+
+  tasks:
+    - name: Remove the user 'johnd' as an admin
+      no_log: true
+      bigip_user:
+        username_credential: johnd
+        password_credential: automate@dmin!@#$
+        full_name: John Doe
+        partition_access:
+          - all:admin
+        shell: bash
+        update_password: on_create
+        state: absent
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      register: device_facts
+      delegate_to: localhost
+
+    - name: Change the user "admin" role and shell
+      no_log: true
+      bigip_user:
+        username_credential: admin
+        partition_access:
+          - all:admin
+        shell: bash
+        state: present
+        provider:
+          server: "{{private_ip}}"
+          user: "{{ansible_user}}"
+          password: "{{ansible_ssh_pass}}"
+          server_port: 443
+          validate_certs: false
+      register: device_facts
+      delegate_to: localhost
