@@ -1,0 +1,31 @@
+{
+    "openconfig-interfaces:interfaces": {
+        "interface": [
+            {
+                "name": "6.0",
+                "openconfig-if-ethernet:ethernet": {
+                    "openconfig-vlan:switched-vlan": {
+                        "config": {
+                            "trunk-vlans": [
+                                500
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "name": "2.0",
+                "openconfig-if-ethernet:ethernet": {
+                    "openconfig-vlan:switched-vlan": {
+                        "config": {
+                            "trunk-vlans": [
+                                3010,
+                                3011
+                            ]
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
