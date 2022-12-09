@@ -1,9 +1,12 @@
-#F5 Distributed Cloud MCN applications deployment
-- it creates AWS, Azure and GCP site
+# F5 Distributed Cloud Multi-Cloud deployment
+
+## It creates following
+- AWS, Azure and GCP site
 - Virtual Network
 - Site mesh group (IPSec tunnels)
-- it uses 'count' to create multiple sites
+- it uses 'count' feature to create multiple sites
 
-#Usage:
+## Usage:
 - configure main.tf as required
+- configure backend.tf
 - pass your cloud credentials to TF_VARs
