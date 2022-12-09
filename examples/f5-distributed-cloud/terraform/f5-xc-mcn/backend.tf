@@ -4,7 +4,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     region = "eu-central-1"
-    bucket = "p-kuligowski-bucket"
-    key    = "p-kuligowski-bucket/tmobile.tfstate"
+    bucket = "s3-bucket"
+    key    = "s3-bucket/tmobile.tfstate"
   }
 }
