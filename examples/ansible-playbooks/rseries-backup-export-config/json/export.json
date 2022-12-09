@@ -1,0 +1,9 @@
+{
+    "f5-utils-file-transfer:insecure": "",
+    "f5-utils-file-transfer:protocol": "scp",
+    "f5-utils-file-transfer:username": "root",
+    "f5-utils-file-transfer:password": "default",
+    "f5-utils-file-transfer:remote-host": "10.155.127.202",
+    "f5-utils-file-transfer:remote-file": "/home/ansible/rseries/rseries_backup/export",
+    "f5-utils-file-transfer:local-file": "configs/F5OS-BACKUP-APPLIANCE1"
+}
