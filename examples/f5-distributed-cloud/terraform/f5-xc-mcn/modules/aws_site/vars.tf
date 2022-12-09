@@ -1,0 +1,10 @@
+variable "name" {}
+variable "aws_cred" {}
+variable "aws_az_name" {}
+variable "aws_inside_subnet" {}
+variable "aws_outside_subnet" {}
+variable "total_nodes" {}
+variable "aws_region" {}
+variable "vpc_cidr" {}
+variable "instance_type" {}
+variable "siteName" {}
