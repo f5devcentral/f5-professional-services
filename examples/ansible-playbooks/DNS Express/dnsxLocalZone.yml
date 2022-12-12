@@ -1,0 +1,46 @@
+#Playbook for creating DNS Express zone to pull from local bind on the GTM.  It will create the name server object to represent the local bind server if it does not exist in the config. 
+
+---
+- name: Creating DNS express zones for localhost (bind)
+  hosts: dns1
+  connection: local
+  gather_facts: yes
+    
+  vars_prompt:
+     name: zoneName
+     prompt: "What zone do you want to create?"
+     private: no
+  
+  tasks:
+    - name: Checking for locahost nameserver.... (will create if misssing)
+      bigip_dns_nameserver:
+        name: localhost_bind
+        address: 127.0.0.1
+        service_port: 53
+        state: present
+        provider: "{{ provider }}"
+        
+    - name: Creating requested zone...
+      bigip_dns_zone:
+        name: "{{ zoneName }}"
+        dns_express:
+          enabled: yes
+          server: localhost_bind
+          allow_notify_from:
+            - 127.0.0.1
+            - "::1"
+          notify_action: consume
+          verify_tsig: no
+          response_policy: no
+        provider: "{{ provider }}"
+        
+    - name: Checking newly created zone...
+      bigip_command:
+        commands: list ltm dns zone "{{ zoneName }}"
+        provider: "{{ provider }}"
+      register: result
+    - debug: var=result.stdout_lines 
+      
+  
+  
+  
