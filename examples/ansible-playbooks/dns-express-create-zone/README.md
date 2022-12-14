@@ -1,0 +1,1 @@
+This Playbook for creating DNS Express zone to pull from local bind on the GTM.  It will create the name server object to represent the local bind server if it does not exist in the config.
