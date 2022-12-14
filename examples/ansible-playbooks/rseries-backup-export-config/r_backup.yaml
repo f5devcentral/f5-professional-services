@@ -1,0 +1,73 @@
+################################################################################################
+# CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL 11/19/2022
+#
+# THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
+# 
+# INSTALL F5OS COLLECTION FOR ANSIBLE USING THE FOLLOWING LINK 
+#     "https://galaxy.ansible.com/f5networks/f5os"
+# 
+# RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
+#     ansible-galaxy collection install f5networks.f5os
+#
+# REFERRENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
+# https://clouddocs.f5.com/training/community/rseries-training/html/introduction.html
+#
+# NOTE: For any API calls to the rSeries F5OS layer it is important to include the header Content-Type application/yang-data+json and use port 8888 
+#
+################################################################################################
+
+
+  - hosts: rseries
+    connection: local
+    gather_facts: false
+    vars:
+      provider:
+        server: "{{mgmt_ip}}"
+        user: "{{f5admin}}"
+        password: "{{f5admin_pass}}"
+        validate_certs: no
+
+    collections:
+      - f5networks.f5_bigip
+
+    tasks:
+      - name: Create rSeries Backup
+        uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/openconfig-system:system/f5-database:database/f5-database:config-backup
+          user: "{{ f5admin }}"
+          password: "{{f5admin_pass}}"
+          method: POST
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/host_backup.json') }}"
+        register: rSeries_Backup
+
+      - name: Wait 30 seconds before exporting the backup
+        ansible.builtin.wait_for:
+          timeout: 30
+        delegate_to: localhost
+
+      - name: Export rSeries Backup to localhost
+        uri:
+          url: https://{{mgmt_ip}}:8888/restconf/data/f5-utils-file-transfer:file/export
+          user: "{{ f5admin }}"
+          password: "{{f5admin_pass}}"
+          method: POST
+          headers:
+            Content-Type: application/yang-data+json
+            Accept: application/yang-data+json
+          force_basic_auth: yes
+          force: yes
+          status_code: 200,204
+          return_content: true
+          validate_certs: no
+          body_format: json
+          body: "{{ lookup('ansible.builtin.file','json/export.json') }}"
+        register: rSeries_export_backup
