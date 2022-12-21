@@ -7,17 +7,17 @@ The examples folder has common examples and solutions for different products of 
 
 | Example                                         | Description |
 | ----------------------------------------------- | ----------- |
-| [ansible-playbooks](examples/ansible-playbooks)| This contains sample ansible playbooks   |
-| [as3-declarations](examples/as3-declarations)| This contains sample AS3 declarations  |
-| [big-ip-iapps](examples/big-ip-iapps)| This contains sample iApps |
-| [big-ip-icontrol](examples/big-ip-icontrol)| This contains sample iControl calls as well as postman collections |
-| [big-ip-irules](examples/big-ip-irules)| This contains various iRules samples |
-| [big-ip-irulesLX](examples/big-ip-irulesLX)| This contains various iRulesLX samples  |
-| [cfe-declarations](examples/cfe-declarations)| This contains various F5 Cloud Failover Extension related material |
-[do-declarations](examples/do-declarations)| This contains sample DO declarations |
-| [f5-distributed-cloud](examples/f5-distributed-cloud)| This contains F5 Distributed Cloud samples and Postman Collections |
-| [log-messages-samples](examples/log-messages-samples) | This contains sample log messages in BIG-IP |
-| [terraform-deployments](examples/terraform-deployments) | This contains sample Terraform deployments |
+| [ansible-playbooks](examples/ansible-playbooks)| This contains sample ansible playbooks.   |
+| [as3-declarations](examples/as3-declarations)| This contains sample AS3 declarations.  |
+| [big-ip-iapps](examples/big-ip-iapps)| This contains sample iApps. |
+| [big-ip-icontrol](examples/big-ip-icontrol)| This contains sample iControl calls as well as postman collections. |
+| [big-ip-irules](examples/big-ip-irules)| This contains various iRules samples. |
+| [big-ip-irulesLX](examples/big-ip-irulesLX)| This contains various iRulesLX samples.  |
+| [cfe-declarations](examples/cfe-declarations)| This contains various F5 Cloud Failover Extension related material. |
+[do-declarations](examples/do-declarations)| This contains sample DO declarations. |
+| [f5-distributed-cloud](examples/f5-distributed-cloud)| This contains F5 Distributed Cloud samples and Postman Collections. |
+| [log-messages-samples](examples/log-messages-samples) | This contains sample log messages in BIG-IP. |
+| [terraform-deployments](examples/terraform-deployments) | This contains sample Terraform deployments. |
 
 
 
@@ -26,9 +26,10 @@ The tools folder contains utilities which can assist with a variaty of tasks rel
 
 | Tool                                         | Description |
 | ----------------------------------------------- | ----------- |
-| [f5-waf-quick-patch-cve-2021-44228](tools/f5-waf-quick-patch-cve-2021-44228)| This patches various BIG-IP ASM policies for CVE-2021-44228  |
-| [f5-waf-quick-view](tools/f5-waf-quick-view)| This reports on some settings across BIG-IP ASM policies  |
+| [f5-waf-quick-patch-cve-2021-44228](tools/f5-waf-quick-patch-cve-2021-44228)| This patches various BIG-IP ASM policies for CVE-2021-44228.  |
+| [f5-waf-quick-view](tools/f5-waf-quick-view)| This reports on some settings across BIG-IP ASM policies.  |
 | [f5-awaf-export-policies](tools/f5-awaf-export-policies)| A small script to export all AWAF policies from a BIG-IP device. |
+| [f5-xc-backup](tools/f5-xc-backup)| A script to backup F5 XC configuration. |
 | [f5-xc-blindfold](tools/f5-xc-blindfold)| Bash script to blindfold the TLS private key prior to deployment to F5 XC config. |
 | [f5-xc-convert-eap-config](tools/f5-xc-convert-eap-config)| Bash script to convert EAP configuration in JSON format to a human-readable file. |
 
@@ -37,8 +38,8 @@ The tip-and-tricks folder contains common commands used day to day in F5 technol
 
 | tips-and-tricks                                         | Description |
 | ----------------------------------------------- | ----------- |
-| [big-ip-common-commands](tips-and-tricks/big-ip-common-commands)| This contains a list of very useful BIG-IP commands  |
-| [traffic-generator-tools-cheatsheet](tips-and-tricks/traffic-generator-tools-cheatsheet)| This contains a list of traffic generator tools their cheatsheets |
+| [big-ip-common-commands](tips-and-tricks/big-ip-common-commands)| This contains a list of very useful BIG-IP commands.  |
+| [traffic-generator-tools-cheatsheet](tips-and-tricks/traffic-generator-tools-cheatsheet)| This contains a list of traffic generator tools their cheatsheets. |
 
 ## Support Information
 This repository is community-supported. Follow instructions below on how to raise issues.
