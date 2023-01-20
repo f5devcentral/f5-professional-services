@@ -1,0 +1,1 @@
+This is an Ansible yml file that will create the GUI banner text including the Hostname and date of last edit, and then set that GUI banner background color to the color indicated in the second command, in this case blue. 
