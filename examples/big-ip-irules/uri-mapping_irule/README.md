@@ -2,3 +2,5 @@ When you want to enable/disable all of the logging statements in your iRule, cha
 You can add more logging statements throughout the iRule at different places following the following template: if { $static::debug } {log local0. "Message"}
 
 This iRule is for HTTPS VIPs with Serverside SSL enabled.
+
+Therefore, for any URI calls destined to HTTP pools, the serverside SSL needs to be disabled.
