@@ -1826,7 +1826,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-tcp-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"Brews MCN PoC\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-mongodb-domain}}\"\n    ],\n    \"listen_port\": 27017,\n    \"no_sni\": {},\n    \"dns_volterra_managed\": false,\n    \"origin_pools\": [],\n    \"origin_pools_weights\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-mongodb-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"advertise_custom\": {\n      \"advertise_where\": [\n        {\n          \"virtual_site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{aws-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"virtual_site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{azure-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_OUTSIDE\",\n            \"site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{gcp-site-name}}\",\n              \"kind\": \"site\"\n            }\n          },\n          \"use_default_port\": {}\n        }\n      ]\n    },\n    \"hash_policy_choice_round_robin\": {},\n    \"idle_timeout\": 3600000,\n    \"retract_cluster\": {},\n    \"tcp\": {},\n    \"dns_info\": [],\n    \"downstream_tls_certificate_expiration_timestamps\": []\n  }\n}",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"brews-mongodb-tcp-lb\",\n    \"namespace\": \"{{namespace_1}}\",\n    \"labels\": {},\n    \"annotations\": {},\n    \"description\": \"Brews MCN PoC\",\n    \"disable\": false\n  },\n  \"spec\": {\n    \"domains\": [\n      \"{{brews-mongodb-domain}}\"\n    ],\n    \"listen_port\": 27017,\n    \"no_sni\": {},\n    \"dns_volterra_managed\": false,\n    \"origin_pools\": [],\n    \"origin_pools_weights\": [\n      {\n        \"pool\": {\n          \"namespace\": \"{{namespace_1}}\",\n          \"name\": \"brews-mongodb-pool\",\n          \"kind\": \"origin_pool\"\n        },\n        \"weight\": 1,\n        \"priority\": 1,\n        \"endpoint_subsets\": {}\n      }\n    ],\n    \"advertise_custom\": {\n      \"advertise_where\": [\n        {\n          \"virtual_site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{aws-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"virtual_site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"virtual_site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{azure-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        },\n        {\n          \"site\": {\n            \"network\": \"SITE_NETWORK_SERVICE\",\n            \"site\": {\n              \"namespace\": \"{{namespace_1}}\",\n              \"name\": \"{{gcp-site-name}}-vsite\",\n              \"kind\": \"virtual_site\"\n            }\n          },\n          \"use_default_port\": {}\n        }\n      ]\n    },\n    \"hash_policy_choice_round_robin\": {},\n    \"idle_timeout\": 3600000,\n    \"retract_cluster\": {},\n    \"tcp\": {},\n    \"dns_info\": [],\n    \"downstream_tls_certificate_expiration_timestamps\": []\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2120,12 +2120,12 @@
 	],
 	"variable": [
 		{
-			"id": "c215d550-c3a9-4e78-8bcd-63f439b4c560",
+			"id": "c58d0b10-6d43-480c-b6e7-b6ecdd89e21e",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "d76f2513-baa3-43fc-9a89-074fe5c29015",
+			"id": "6f716489-bbef-4c4f-b29f-7281afad02d0",
 			"key": "base64EncodedKey",
 			"value": ""
 		}
