@@ -14,7 +14,7 @@
 # NOTE: THIS PLAYBOOK CONNECTS TO THE rSeries ON PORT "8888", YOU WILL NEED TO USE THE FOLLOWING PORT VARIABLE
 #    "ansible_httpapi_port: 8888" 
 #
-# NOTE: THIS PLAYBOOK BUILDS A NEW TENANT UTILIZING A SEPERATE INVENTORY FILE CALLED "tenant_vars.yaml
+# NOTE: THIS PLAYBOOK BUILDS A NEW TENANT UTILIZING A SEPARATE INVENTORY FILE CALLED "tenant_vars.yaml
 #  
 # Usage: ansible-playbook -vvv t-build-declarative.yaml -i /<path>/hosts -i /<path>/tenant_vars.yaml
 #
