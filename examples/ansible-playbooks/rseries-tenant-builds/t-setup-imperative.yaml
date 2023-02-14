@@ -6,7 +6,7 @@
 # 
 #
 # REFERENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
-# https://clouddocs.f5.com/products/orchestration/ansible/devel/f5_bigip/modules_2_0/module_index.html
+# https://clouddocs.f5.com/products/orchestration/ansible/devel/modules/module_index.html
 #
 # THIS PLAYBOOK USES THE "hosts" FILE ONLY AND NO OTHER VARIABLE FILE
 #
