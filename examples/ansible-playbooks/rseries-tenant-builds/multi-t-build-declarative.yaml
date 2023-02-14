@@ -9,7 +9,7 @@
 # RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
 #     ansible-galaxy collection install f5networks.f5os
 #
-# REFERRENCE PAGE FOR TASK IS "https://clouddocs.f5.com/products/orchestration/ansible/devel/f5_bigip/modules_2_0/module_index.html"
+# REFERENCE PAGE FOR TASK IS "https://clouddocs.f5.com/products/orchestration/ansible/devel/f5_bigip/modules_2_0/module_index.html"
 #
 # NOTE: THIS PLAYBOOK CONNECTS TO THE rSeries ON PORT "8888", YOU WILL NEED TO USE THE FOLLOWING PORT VARIABLE
 #    "ansible_httpapi_port: 8888" 
