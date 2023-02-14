@@ -15,7 +15,7 @@
 #    "ansible_httpapi_port: 8888" 
 #
 # NOTE: TO RUN THIS FILE USE THE FOLLOWING COMMAND FROM WITHIN THE PLAYBOOK LOCATION
-#       ansible-playbook -vvv tenant-image-httpapi2.yaml -i t_image.yaml
+#       ansible-playbook -vvv t-image-upload-declarative.yaml -i /<path>/hosts -i /<path>/t_image.yaml
 #
 #################################################################################################
 
@@ -33,8 +33,6 @@
       ansible_network_os: f5networks.f5os.f5os
       ansible_httpapi_use_ssl: yes
       ansible_httpapi_validate_certs: no
-      #vars_files:
-      # - /home/ansible/rserires/vars.yml
 
     tasks:
       - name: Import tenant image 'BIGIP-15.1.7-0.0.6.ALL-F5OS.qcow2.zip.bundle' onto the F5OS device
