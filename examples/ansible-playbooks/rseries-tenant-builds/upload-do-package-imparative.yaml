@@ -1,0 +1,32 @@
+---
+  - hosts: tenant1
+    connection: local
+    gather_facts: false
+    vars:
+      provider:
+        server: "{{ten1_ip}}"
+        user: "{{def_admin}}"
+        password: "{{new_admin_pass}}"
+        validate_certs: no
+        LEN: 1770532
+        FN: f5-declarative-onboarding-1.35.0-6.noarch.rpm
+
+    collections:
+      - f5networks.f5_bigip
+
+    tasks:
+      - name: Upload RPM file to Bigip
+        ansible.builtin.uri:
+          url: https://{{ten1_ip}}/mgmt/tm/util/bash
+          method: POST
+          user: "{{def_admin}}"
+          password: "{{new_admin_pass}}"
+          headers:
+            Content-Type: application/json
+          body_format: raw
+          body: "{\n\t\"command\": \"run\", \"utilCmdArgs\": \"-c \\\"cd /var/config/rest/downloads/ && curl -sk -LJO https://github.com/F5Networks/f5-declarative-onboarding/releases/download/v1.35.0/f5-declarative-onboarding-1.35.0-6.noarch.rpm\\\"\"\n}"
+          force_basic_auth: yes
+          timeout: 300
+          return_content: true
+          validate_certs: no
+        register: lx_upload
