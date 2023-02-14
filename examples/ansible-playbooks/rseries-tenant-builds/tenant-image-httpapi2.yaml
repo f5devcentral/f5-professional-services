@@ -15,7 +15,7 @@
 #    "ansible_httpapi_port: 8888" 
 #
 # NOTE: TO RUN THIS FILE USE THE FOLLOWING COMMAND FROM WITHIN THE PLAYBOOK LOCATION
-#       sensible-playbook -vvv tenant-image-httpapi2.yaml -i t_image.yaml
+#       ansible-playbook -vvv tenant-image-httpapi2.yaml -i t_image.yaml
 #
 #################################################################################################
 
