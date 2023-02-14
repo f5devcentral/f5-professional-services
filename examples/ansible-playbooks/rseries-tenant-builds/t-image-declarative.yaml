@@ -1,6 +1,8 @@
 ################################################################################################
 # CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL 11/19/2022
 #
+# THIS PLAYBOOK IS ANOTHER VERSION, ALSO DECLARATIVE, BUT DOES NOT USE A VARIABLE FILE FOR THE TASK.
+#
 # THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
 # 
 # INSTALL F5OS COLLECTION FOR ANSIBLE USING THE FOLLOWING LINK 
@@ -15,7 +17,7 @@
 #    "ansible_httpapi_port: 8888" 
 #
 # NOTE: TO RUN THIS FILE USE THE FOLLOWING COMMAND FROM WITHIN THE PLAYBOOK LOCATION
-#       sensible-playbook -vvv tenant-image-httpapi.yaml
+#       ansible-playbook -vvv t-image-declarative.yaml
 #
 ################################################################################################
 
