@@ -16,7 +16,7 @@
 #    big-ip-lab1 hostname=big-ip-lab1.f5net def_admin=admin def_root=root ten1_ip=10.154.85.124 def_admin_pass=admin def_root_pass=default new_root_pass=<NEW PASSWORD> new_admin_pass=<NEW PASSWORD>	
 #
 #
-# Usage: ansible-playbook -vvv t-setup-imparative.yaml 
+# Usage: ansible-playbook -vvv t-setup-imperative.yaml 
 #
 # NOTE: THIS PLAYBOOK CAN BE BUILD TO USE AN ANOTHER EXTERNAL VARIABLE FILE FOR ITEMS THAT ARE DIRECTLY CALLED OUT BELOW FOR EXAMPLE DNS AND NTP SERVICES.
 #
