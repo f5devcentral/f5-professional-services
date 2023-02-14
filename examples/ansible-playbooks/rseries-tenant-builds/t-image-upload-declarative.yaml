@@ -16,7 +16,7 @@
 #
 # NOTE: TO RUN THIS FILE USE THE FOLLOWING COMMAND FROM WITHIN THE PLAYBOOK LOCATION
 #  
-# Usage: ansible-playbook -vvv t-image-upload-declarative.yaml -i /<path>/hosts -i /<path>/t-image.yaml
+# Usage: ansible-playbook -vvv t-image-upload-declarative.yaml -i /<path>/hosts -i /<path>/t-image-vars.yaml
 #
 #################################################################################################
 
