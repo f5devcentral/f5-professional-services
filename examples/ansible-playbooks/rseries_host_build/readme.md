@@ -21,24 +21,24 @@ Usage: ansible-playbook -vvv rseries-base-build.yaml
 
 ####################################################
 
-The following is configured with this playbook
-  Hostname
-  Banner
-  MOTD
-  DNS
-  NTP
-  Remote Logging
-  Portgroup Speeds
-  Vlans
-  Interfaces to Vlans
-  LAGs
-  Interfaces to LAGs
-  LACP on LAGs
-  SNMP Allow List
-  SNMP Location
-  SNMP Community
-  SNMP Security View
-  SNMP Traps
-  SNMP Target
+The following is configured with this playbook,
+  Hostname,
+  Banner,
+  MOTD,
+  DNS,
+  NTP,
+  Remote Logging,
+  Portgroup Speeds,
+  Vlans,
+  Interfaces to Vlans,
+  LAGs,
+  Interfaces to LAGs,
+  LACP on LAGs,
+  SNMP Allow List,
+  SNMP Location,
+  SNMP Community,
+  SNMP Security View,
+  SNMP Traps,
+  SNMP Target,
   
   Modify json files with your site information and run the playbook
