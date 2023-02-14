@@ -18,7 +18,7 @@
 #
 # Usage: ansible-playbook -vvv t-setup-imperative.yaml 
 #
-# NOTE: THIS PLAYBOOK CAN BE BUILD TO USE AN ANOTHER EXTERNAL VARIABLE FILE FOR ITEMS THAT ARE DIRECTLY CALLED OUT BELOW FOR EXAMPLE DNS AND NTP SERVICES.
+# NOTE: THIS PLAYBOOK CAN USE AN EXTERNAL VARIABLE FILE FOR ITEMS THAT ARE DIRECTLY CALLED OUT BELOW, FOR EXAMPLE DNS, NTP, TIMEZONE, ETC.
 #
 ################################################################################################
 
