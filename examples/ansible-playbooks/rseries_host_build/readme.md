@@ -39,4 +39,4 @@ The following is configured with this playbook
   SNMP Traps
   SNMP Target
   
-  Modify json files with your sites information and run the playbook
+  Modify json files with your site information and run the playbook
