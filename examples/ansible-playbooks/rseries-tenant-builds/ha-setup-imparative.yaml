@@ -1,15 +1,15 @@
 ---
-##########################################################
+################################################################################################
+# CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL 2/8/2023
+#
+# THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
 # 
-# Created by Steven Meisenzahl, there is no support for this playbook.
+# REFERENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
+# https://clouddocs.f5.com/products/orchestration/ansible/devel/modules/module_index.html
 #
-# This Playbook has been tested with the following tasks working
+# Usage: ansible-playbook -vvv ha-setup.yaml -i /<path>/hosts -i /<path>/t-ha-vars.yaml
 #
-# This playbook uses the t-ha-vars.yaml file along with the hosts file, see ussage below;
-#
-#  ansible-playbook -vvv ha-setup.yaml -i /<path>/hosts -i /<path>/t-ha-vars.yaml
-#
-#########################################################
+################################################################################################
 - name: Set up a BIG-IP HA pair
   hosts: ha
   connection: local
