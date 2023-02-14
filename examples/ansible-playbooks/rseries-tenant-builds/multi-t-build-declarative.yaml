@@ -15,7 +15,7 @@
 #    "ansible_httpapi_port: 8888" 
 #
 # NOTE: THIS PLAYBOOK BUILDS MULTIPLE  NEW TENANTS UTILIZING A SEPERATE INVENTORY FILE CALLED "tenant_vars.yaml
-#  usage: ansible-playbook -vvv tenant-build-httpapi.yaml -i /<path>/hosts -i /<path>/multi-tenant-vars.yaml
+#  usage: ansible-playbook -vvv multi-t-build-declarative.yaml -i /<path>/hosts -i /<path>/multi-t-vars.yaml
 #
 #################################################################################################
 
