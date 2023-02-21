@@ -9,6 +9,9 @@
 #
 # Usage: ansible-playbook -vvv ha-setup.yaml -i /<path>/hosts -i /<path>/t-ha-vars.yaml
 #
+# NOTE: If there are any configured objects on the Active device before you run this playbook, they for some reason do not sync.  Any newly created objects after running this playbook will sync.
+# It is better to run this playbook before any objects are created, ie pools, monitors, virtual servers etc.
+#
 ################################################################################################
 - name: Set up a BIG-IP HA pair
   hosts: ha
