@@ -1,6 +1,6 @@
 variable "name" {
   type    = string
-  default = "t-mobile"
+  default = "acme"
 }
 
 variable "namespace" {
