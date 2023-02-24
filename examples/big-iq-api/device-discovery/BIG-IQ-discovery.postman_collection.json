@@ -1,0 +1,681 @@
+{
+	"info": {
+		"_postman_id": "012a869d-f7b8-42b2-affb-c55cb2acd141",
+		"name": "C2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17780611"
+	},
+	"item": [
+		{
+			"name": "ADC Core Discovery",
+			"item": [
+				{
+					"name": "Get BigIP DeviceID_Link",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"DeviceID_link\", jsonData.link.replace(\"localhost\",pm.environment.get('bigiq_a_mgmt')));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"address\": \"10.1.1.8\"\r\n        //\"hostname\": \"bigip-a.example.local\"\r\n        //\"module\": \"adc-core\"\r\n}"
+						},
+						"url": {
+							"raw": "https://{{bigiq_a_mgmt}}/mgmt/cm/shared/device-reference-query",
+							"protocol": "https",
+							"host": [
+								"{{bigiq_a_mgmt}}"
+							],
+							"path": [
+								"mgmt",
+								"cm",
+								"shared",
+								"device-reference-query"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get DeviceID Helper",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"DeviceID\", jsonData.machineId);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{DeviceID_link}}",
+							"host": [
+								"{{DeviceID_link}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Device Discovery Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"DiscoveryTaskID_link\", jsonData.selfLink);\r",
+									"    pm.environment.set(\"DiscoveryTaskID\", jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"discovery_10.255.85.1141\",\r\n    \"description\": null,\r\n    \"deviceReference\": {\r\n            \"link\": \"https://localhost/mgmt/cm/system/machineid-resolver/{{DeviceID}}\"\r\n    },\r\n    \"moduleList\": [{\r\n            \"module\": \"adc_core\"\r\n    }]\r\n}"
+						},
+						"url": {
+							"raw": "https://{{bigiq_a_mgmt}}/mgmt/cm/global/tasks/device-discovery",
+							"protocol": "https",
+							"host": [
+								"{{bigiq_a_mgmt}}"
+							],
+							"path": [
+								"mgmt",
+								"cm",
+								"global",
+								"tasks",
+								"device-discovery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Discovery Task Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"DeviceID_link\", jsonData.link);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{bigiq_a_mgmt}}/mgmt/cm/global/tasks/device-discovery/{{DiscoveryTaskID}}",
+							"protocol": "https",
+							"host": [
+								"{{bigiq_a_mgmt}}"
+							],
+							"path": [
+								"mgmt",
+								"cm",
+								"global",
+								"tasks",
+								"device-discovery",
+								"{{DiscoveryTaskID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Device Import Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"ImportTaskID_link\", jsonData.selfLink);\r",
+									"    pm.environment.set(\"ImportTaskID\", jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"deviceReference\":\r\n        {\r\n            \"link\": \"https://localhost/mgmt/shared/resolver/device-groups/cm-bigip-allBigIpDevices/devices/{{DeviceID}}\"\r\n        },\r\n        \"snapshotWorkingConfig\": \"no\",\r\n        \"useBigiqSync\": \"no\"\r\n}"
+						},
+						"url": {
+							"raw": "https://{{bigiq_a_mgmt}}/mgmt/cm/adc-core/tasks/declare-mgmt-authority",
+							"protocol": "https",
+							"host": [
+								"{{bigiq_a_mgmt}}"
+							],
+							"path": [
+								"mgmt",
+								"cm",
+								"adc-core",
+								"tasks",
+								"declare-mgmt-authority"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Import Task Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{bigiq_a_mgmt}}/mgmt/cm/adc-core/tasks/declare-mgmt-authority/{{ImportTaskID}}",
+							"protocol": "https",
+							"host": [
+								"{{bigiq_a_mgmt}}"
+							],
+							"path": [
+								"mgmt",
+								"cm",
+								"adc-core",
+								"tasks",
+								"declare-mgmt-authority",
+								"{{ImportTaskID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Device Import Conflict Resolution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"DeviceID_link\", jsonData.link);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"conflicts\": [\r\n        {\r\n            \"fromReference\": {\r\n                \"link\": \"https://localhost/mgmt/cm/adc-core/working-config/ltm/pool/c7d8ba90-14ff-35a8-927b-c1a3893f0cdd\"\r\n            },\r\n            \"resolution\": \"USE_BIGIP\",\r\n            \"toReference\": {\r\n                \"link\": \"https://localhost/mgmt/cm/adc-core/current-config/ltm/pool/c7d8ba90-14ff-35a8-927b-c1a3893f0cdd\"\r\n            }\r\n        }\r\n    ],\r\n    //\"status\": \"STARTED\"\r\n}"
+						},
+						"url": {
+							"raw": "https://{{bigiq_a_mgmt}}/mgmt/cm/adc-core/tasks/declare-mgmt-authority/6ec080b2-a244-4c12-ab09-9057e6b53244",
+							"protocol": "https",
+							"host": [
+								"{{bigiq_a_mgmt}}"
+							],
+							"path": [
+								"mgmt",
+								"cm",
+								"adc-core",
+								"tasks",
+								"declare-mgmt-authority",
+								"6ec080b2-a244-4c12-ab09-9057e6b53244"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Device Disc&Imp Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"DiscoveryTaskID_link\", jsonData.selfLink);\r",
+									"    pm.environment.set(\"DiscoveryTaskID\", jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"discovery_10.255.85.1141\",\r\n    \"deviceconflictPolicy\": \"USE_BIGIP\",\r\n    \"conflictPolicy\": \"USE_BIGIP\",\r\n    \"versionconflictPolicy\": \"USE_BIGIP\",\r\n    \"deviceDetails\": [{\r\n        //\"deviceReference\": {\r\n        //        \"link\": \"https://localhost/mgmt/cm/system/machineid-resolver/ba7382a4-7564-4647-b65d-17d6f2a73a16\"\r\n        //}, \r\n        \"deviceReference\": {\r\n                \"link\": \"https://localhost/mgmt/cm/system/machineid-resolver/{{DeviceID}}\"\r\n        }, \r\n        \"moduleList\": [{\r\n            \"module\": \"adc_core\"\r\n        }]\r\n    }],\r\n    \"snapshotWorkingConfig\": false\r\n}"
+						},
+						"url": {
+							"raw": "https://{{bigiq_a_mgmt}}/mgmt/cm/global/tasks/device-discovery-import-controller",
+							"protocol": "https",
+							"host": [
+								"{{bigiq_a_mgmt}}"
+							],
+							"path": [
+								"mgmt",
+								"cm",
+								"global",
+								"tasks",
+								"device-discovery-import-controller"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Disc&Imp Task Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful retrieval request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+									"});\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"DeviceID_link\", jsonData.link);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{pass}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{user}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "X-F5-Auth-Token",
+								"type": "text",
+								"value": "{{bigiq_a_auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{bigiq_a_mgmt}}/mgmt/cm/global/tasks/device-discovery-import-controller/{{DiscoveryTaskID}}",
+							"protocol": "https",
+							"host": [
+								"{{bigiq_a_mgmt}}"
+							],
+							"path": [
+								"mgmt",
+								"cm",
+								"global",
+								"tasks",
+								"device-discovery-import-controller",
+								"{{DiscoveryTaskID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{bigiq_a_auth_token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-F5-Auth-Token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const loginRequest = {",
+					"    url: 'https://' + pm.environment.get(\"bigiq_a_mgmt\") + '/mgmt/shared/authn/login',",
+					"    method: 'POST',",
+					"    header: 'Content-Type: application/json',",
+					"    body: {",
+					"        mode: 'application/json',",
+					"        raw: JSON.stringify({        ",
+					"            \"username\": pm.environment.get(\"user\"),",
+					"            \"password\": pm.environment.get(\"bigiq_pass\"),",
+					"            \"loginProviderName\":\"tmos\"",
+					"        })",
+					"    }",
+					"};",
+					"",
+					"",
+					"pm.sendRequest(loginRequest, function (err, response) {",
+					"    pm.environment.set(\"bigiq_a_auth_token\", response.json().token.token);",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "c34e11a4-d8cd-41cb-8d99-f06c7b441f83",
+			"value": ""
+		}
+	]
+}
