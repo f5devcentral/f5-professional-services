@@ -1,6 +1,8 @@
 ################################################################################################
 # CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL 11/19/2022
 #
+# THIS PLAYBOOK IS ANOTHER VERSION, ALSO DECLARATIVE, BUT DOES NOT USE A VARIABLE FILE FOR THE TASK.
+#
 # THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
 # 
 # INSTALL F5OS COLLECTION FOR ANSIBLE USING THE FOLLOWING LINK 
@@ -9,13 +11,13 @@
 # RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
 #     ansible-galaxy collection install f5networks.f5os
 #
-# REFERENCE PAGE FOR TASK IS "https://clouddocs.f5.com/products/orchestration/ansible/devel/f5os/modules_3_0/f5os_tenant_image_module.html#f5os-tenant-image-module-3"
+# REFERENCE PAGE FOR TASK IS "https://clouddocs.f5.com/products/orchestration/ansible/devel/f5_bigip/modules_2_0/module_index.html"
 #
 # NOTE: THIS PLAYBOOK CONNECTS TO THE rSeries ON PORT "8888", YOU WILL NEED TO USE THE FOLLOWING PORT VARIABLE
 #    "ansible_httpapi_port: 8888" 
 #
 # NOTE: TO RUN THIS FILE USE THE FOLLOWING COMMAND FROM WITHIN THE PLAYBOOK LOCATION
-#       sensible-playbook -vvv tenant-image-httpapi.yaml
+#       ansible-playbook -vvv t-image-upload-declarative-old.yaml
 #
 ################################################################################################
 
@@ -38,7 +40,7 @@
       - name: Import tenant image 'BIGIP-15.1.7-0.0.6.ALL-F5OS.qcow2.zip.bundle' onto the F5OS device
         f5os_tenant_image:
           image_name: BIGIP-15.1.7-0.0.6.ALL-F5OS.qcow2.zip.bundle
-          remote_host: "10.155.127.202"
+          remote_host: "192.168.1.10"
           remote_user: root
           remote_password: default
           remote_path: /home/ansible/rseries/post/uploads/
