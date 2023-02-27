@@ -1,0 +1,27 @@
+when ACCESS_SESSION_CLOSED {
+  set user_name [ACCESS::session data get "session.logon.last.username"]
+  set start_time [ACCESS::session data get "session.user.starttime"]
+  set now [clock seconds]
+  set no_epoch_start [clock format $start_time]
+  set no_epoch_close [clock format $now]
+  set difference_seconds [expr {${now} - $start_time} ]
+  set minutes [ expr {${difference_seconds} / 60} ]
+  set hours [ expr {${minutes} / 60} ]
+  set mod_minutes [expr {${difference_seconds} % 60} ]
+  set mod_hours [expr {${minutes} % 60}]
+  
+ log local0. "CLOSING SESSION: \n"
+ 
+ log local0. "Start Time of user $user_name is; $no_epoch_start" 
+ log local0. "End Time of user $user_name is; $no_epoch_close"
+ 
+   if { $minutes > 60 } then 
+    {
+        log local0. "The session duration for the user $user_name is; $hours hours:$mod_hours: minutes:$mod_minutes seconds"
+    }
+  else 
+  {
+    log local0. "The session duration for the user $user_name is; $minutes minutes: $mod_minutes seconds"
+    } 
+  
+ }

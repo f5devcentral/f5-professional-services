@@ -1,2 +1,13 @@
 [rseries]
-gslab1 f5admin=admin mgmt_ip=10.154.84.13 f5admin_pass=admin
+gslab1 f5admin=admin mgmt_ip=192.168.2.100 f5admin_pass=admin
+
+
+[tenant1]
+big-ip-lab1 hostname=big-ip-lab1.f5net def_admin=admin def_root=root ten1_ip=192.168.1.10 def_admin_pass=admin def_root_pass=default new_root_pass=pa$$word new_admin_pass=pa$$word
+
+[tenant2]
+big-ip-lab2 hostname=big-ip-lab2.f5net def_admin=admin def_root=root ten2_ip=192.168.1.11 def_admin_pass=admin def_root_pass=default new_root_pass=pa$$word new_admin_pass=pa$$word
+
+[ha]
+bigip-ha-bigip1.meisenzahl ha1=192.168.1.10 ha-admin-1=admin ha-pass-1=admin hostname1=bigip-ha-bigip1.meisenzahl
+bigip-ha-bigip2.meisenzahl ha2=192.168.1.11 ha-admin-2=admin ha-pass-2=admin hostname2=bigip-ha-bigip2.meisenzahl

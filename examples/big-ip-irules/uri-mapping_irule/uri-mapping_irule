@@ -1,0 +1,27 @@
+#When you want to enable/disable all of the logging statements in your iRule, change the value of static::debug to 1 to enable them and 0 to disable them.
+#You can add more logging statements throughout the iRule at different places following the following template: if { $static::debug } {log local0. "Message"}
+when RULE_INIT {
+	set static::debug 1
+}
+when HTTP_REQUEST {
+	switch -glob [string tolower [HTTP::uri]] {
+		"/xx/*" {
+			pool xx_443
+		}
+		"/uu/*" {
+			if { $static::debug } {log local0. "URI: [HTTP::uri] hitting the u logic"}
+			pool uu_443
+		}
+		"/tt/*" {
+			pool tt_443
+		}
+		"/qq/*" {
+			SSL::disable serverside
+			pool qq_80
+		}
+		default {
+			if { $static::debug } {log local0. "URI: [HTTP::uri] hitting the default"}
+			pool default_pool_443
+		}
+	}
+}
