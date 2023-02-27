@@ -1,2 +1,2 @@
 [rseries]
-gslab1 f5admin=admin mgmt_ip=10.154.84.13 f5admin_pass=admin
+gslab1 f5admin=admin mgmt_ip=192.168.2.20 f5admin_pass=admin

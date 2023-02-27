@@ -6,5 +6,5 @@ rseries:
     dest_path: "images/tenant"
     src_server_user: "root"
     src_server_pass: "default"
-    src_server: "10.155.127.202"
+    src_server: "192.168.2.10"
 ...

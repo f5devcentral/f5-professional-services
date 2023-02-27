@@ -2,17 +2,13 @@
 # CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL 11/19/2022
 #
 # THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
-# 
-# INSTALL F5OS COLLECTION FOR ANSIBLE USING THE FOLLOWING LINK 
-#     "https://galaxy.ansible.com/f5networks/f5os"
-# 
-# RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
-#     ansible-galaxy collection install f5networks.f5os
 #
 # REFERENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
-# https://clouddocs.f5.com/training/community/rseries-training/html/introduction.html
+# https://clouddocs.f5.com/products/orchestration/ansible/devel/modules/module_index.html
 #
 # NOTE: For any API calls to the rSeries F5OS layer it is important to include the header Content-Type application/yang-data+json and use port 8888 
+#
+# USAGE: ansible-playbook -vvv t-build-imperative.yaml
 #
 ################################################################################################
 
