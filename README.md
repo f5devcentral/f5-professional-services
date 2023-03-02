@@ -13,6 +13,7 @@ The examples folder has common examples and solutions for different products of 
 | [big-ip-icontrol](examples/big-ip-icontrol)| This contains sample iControl calls as well as postman collections. |
 | [big-ip-irules](examples/big-ip-irules)| This contains various iRules samples. |
 | [big-ip-irulesLX](examples/big-ip-irulesLX)| This contains various iRulesLX samples.  |
+| [big-iq-api](examples/big-iq-api)| This contains sample BIG-IQ API calls as well as postman collections. |
 | [cfe-declarations](examples/cfe-declarations)| This contains various F5 Cloud Failover Extension related material. |
 [do-declarations](examples/do-declarations)| This contains sample DO declarations. |
 | [f5-distributed-cloud](examples/f5-distributed-cloud)| This contains F5 Distributed Cloud samples and Postman Collections. |
