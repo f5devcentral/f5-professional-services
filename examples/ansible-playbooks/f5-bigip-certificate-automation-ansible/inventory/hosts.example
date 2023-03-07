@@ -1,0 +1,4 @@
+bigip1
+
+[local]
+localhost ansible_connection=local
