@@ -1,10 +1,7 @@
 #!/bin/bash
 #Script that will pull wide-ip names from a BIGIP-DNS device (using iControl Rest), the #perform a (dig) Lookup on each name.
 
-password="L4BP4ss!"
 results=""$1"_results_`date +%m%d%y`.txt"
-
-
  
 if [ "$#" -ne 3 ]
     then
