@@ -1,13 +1,13 @@
-#Function:
+# f5-bigip-dns-wideip-lookup:
 
 This script will pull A record wideip hostnames from a BIGIP-DNS device (using iControl Rest), then perform a dig request on each name.  Hostname that was requested and the IP address response will be sent to stdout and written to a file with at file name corresponding to the target hostname or IP address provided when running the command with the current date ending in results.txt e.g. <hostname>.results<date>.txt
 
 
-#Usage: 
+# Usage 
 
 wideipcheck.sh <GTM address> <Listener address> <Username>
 
-#Example: 
+# Example 
 
 ansible@raspi:~/scripts $ ./wideipcheck.sh dns.bigipdevices.local 10.0.0.253 admin
 Enter Password:
@@ -20,7 +20,7 @@ Lookups starting...
 Lookups complete.
 
 
-Results
+Sample Output
 
 algol.bigiplab.local  10.0.1.2
 altair.bigiplab.local  10.0.1.2
