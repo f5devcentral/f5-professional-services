@@ -19,8 +19,7 @@ Lookups starting...
 
 Lookups complete.
 
-
-Sample Output
+# Sample Output
 
 algol.bigiplab.local  10.0.1.2
 altair.bigiplab.local  10.0.1.2
