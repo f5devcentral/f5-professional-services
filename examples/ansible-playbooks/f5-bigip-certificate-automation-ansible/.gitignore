@@ -1,0 +1,6 @@
+virtualenv/
+inventory/hosts
+inventory/host_vars/bigip1
+vars/globalconfig/config.yaml
+vars/sslconfig/app1.yaml
+vars/sslconfig/app2.yaml

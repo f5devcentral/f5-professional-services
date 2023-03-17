@@ -1,0 +1,248 @@
+- name: F5 Certificate Automation
+  hosts: bigip1
+  ignore_unreachable: yes
+  connection: local
+
+  collections:
+    - f5networks.f5_modules
+
+  vars_files:
+    - ../vars/globalconfig/config.yaml
+
+  vars:
+    provider:
+      password: "{{ansible_pass}}"
+      server: "{{ansible_host}}"
+      user: "{{ansible_user}}"
+      validate_certs: no
+      server_port: 443
+    suffix: "{{ansible_date_time.iso8601_basic_short}}"
+
+  pre_tasks:
+
+  - name: Get info of the tmp dir 
+    stat:
+      path : "{{ globalconfig.tmp_dir }}"
+    register: tmpdir
+
+  - name: Checking if the tmp dir exits
+    fail:
+      msg: "The tmp dir {{ globalconfig.tmp_dir }} is missing."
+    when: tmpdir.stat.exists == False
+
+  - name: Get info of the certificates dir 
+    stat:
+      path : "{{ globalconfig.certificates_dir }}"
+    register: certificatesdir
+
+  - name: Checking if the certificates dir exits
+    fail:
+      msg: "The certificates dir {{ globalconfig.certificates_dir }} is missing."
+    when: certificatesdir.stat.exists == False
+
+  - name: Checking if the SSLCONFIG variable was specified
+    fail:
+      msg: "SSLCONFIG not specified."
+    when: (sslconfig is not defined)
+
+  - name: Checking if the SSLCONFIG mandatory fields were specified
+    fail:
+      msg: "SSLCONFIG mandatory fields (cert_key_chain_name,cert_url,key_url,clientssl) missing."
+    when: >
+      (sslconfig.cert_key_chain_name is not defined) or 
+      (sslconfig.cert_url is not defined) or
+      (sslconfig.key_url is not defined) or
+      (sslconfig.clientssl is not defined)
+
+  tasks:
+
+  - name: Delete previous downloaded SSL certificate file
+    file:
+      path: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.crt"
+      state: absent
+  
+  - name: Delete previous downloaded SSL key file
+    file:
+      path: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.key"
+      state: absent
+
+  - name: Delete previous downloaded SSL chain file
+    file:
+      path: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}-chain.key"
+      state: absent
+
+  - name: Download SSL certificate
+    get_url:
+      url: "{{ sslconfig.cert_url }}"
+      dest: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.crt"
+      mode: '0440'
+
+  - name: Download SSL key
+    get_url:
+      url: "{{ sslconfig.key_url }}"
+      dest: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.key"
+      mode: '0440'
+
+  - name: Download SSL chain
+    get_url:
+      url: "{{ sslconfig.chain_url }}"
+      dest: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}-chain.crt"
+      mode: '0440'
+    when: (sslconfig.chain_url is defined)
+
+  - name: Get info of the new certificate file
+    stat:
+      path : "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.crt"
+    register: newcertfile
+
+  - name: Get info of the new key file
+    stat:
+      path : "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.key"
+    register: newkeyfile
+
+  - name: Get info of the new chain file
+    stat:
+      path : "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}-chain.crt"
+    register: newchainfile
+
+  - name: Get info of the old certificate file
+    stat:
+      path : "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/{{ sslconfig.cert_key_chain_name }}.crt"
+    register: oldcertfile
+
+  - name: Get info of the old key file
+    stat:
+      path : "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/{{ sslconfig.cert_key_chain_name }}.key"
+    register: oldkeyfile
+
+  - name: Get info of the old chain file
+    stat:
+      path : "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/{{ sslconfig.cert_key_chain_name }}-chain.crt"
+    register: oldchainfile
+
+  - block:
+
+    - name: Import SSL certificate
+      bigip_ssl_certificate:
+        name: "{{ sslconfig.cert_key_chain_name }}-{{ suffix }}"
+        state: present
+        content: "{{ lookup('file', '{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.crt') }}"
+        provider: "{{provider}}"
+
+    - name: Import SSL key
+      bigip_ssl_key:
+        name: "{{ sslconfig.cert_key_chain_name }}-{{ suffix }}"
+        state: present
+        content: "{{ lookup('file', '{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.key') }}"
+        provider: "{{provider}}"
+
+    - name: Import SSL chain
+      bigip_ssl_certificate:
+        name: "{{ sslconfig.cert_key_chain_name }}-{{ suffix }}-chain"
+        state: present
+        content: "{{ lookup('file', '{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}-chain.crt') }}"
+        provider: "{{provider}}"
+      when: (sslconfig.chain_url is defined)
+
+    - name: Change ClientSSL profile (cert & key only)
+      bigip_command:
+        commands: "modify /ltm profile client-ssl {{ sslconfig.clientssl }} cert-key-chain replace-all-with { default { cert /Common/{{ sslconfig.cert_key_chain_name }}-{{ suffix }}.crt key /Common/{{ sslconfig.cert_key_chain_name }}-{{ suffix }}.key } }"
+        provider: "{{provider}}"
+        warn: false
+      when: >
+        (sslconfig.chain_url is not defined) and 
+        (((oldcertfile.stat.exists == False) or (newcertfile.stat.checksum != oldcertfile.stat.checksum)) or
+        ((oldchainfile.stat.exists == True) and (newchainfile.stat.exists == False)))
+
+      failed_when: result.stdout | length > 0
+      register: result
+
+    - name: Change ClientSSL profile (cert, key & chain)
+      bigip_command:
+        commands: "modify /ltm profile client-ssl {{ sslconfig.clientssl }} cert-key-chain replace-all-with { default { cert /Common/{{ sslconfig.cert_key_chain_name }}-{{ suffix }}.crt key /Common/{{ sslconfig.cert_key_chain_name }}-{{ suffix }}.key chain /Common/{{ sslconfig.cert_key_chain_name }}-{{ suffix }}-chain.crt } }"
+        provider: "{{provider}}"
+        warn: false
+      when: >
+        (sslconfig.chain_url is defined) and 
+        (((oldcertfile.stat.exists == False) or (newcertfile.stat.checksum != oldcertfile.stat.checksum)) or
+        ((oldchainfile.stat.exists == False) or (newchainfile.stat.checksum != oldchainfile.stat.checksum)))
+        
+      failed_when: result.stdout | length > 0
+      register: result
+
+    - name: Copy SSL certificate file
+      copy:
+        remote_src: true
+        src: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.crt"
+        dest: "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/{{ sslconfig.cert_key_chain_name }}.crt"
+
+    - name: Copy SSL key file
+      copy:
+        remote_src: true
+        src: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.key"
+        dest: "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/{{ sslconfig.cert_key_chain_name }}.key"
+
+    - name: Copy SSL chain file
+      copy:
+        remote_src: true
+        src: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}-chain.crt"
+        dest: "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/{{ sslconfig.cert_key_chain_name }}-chain.crt"
+      when: (sslconfig.chain_url is defined)
+
+    - name: Delete old SSL chain file
+      file:
+        path: "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/{{ sslconfig.cert_key_chain_name }}-chain.crt"
+        state: absent
+      when: (sslconfig.chain_url is not defined) and (oldchainfile.stat.exists==True) and (newchainfile.stat.exists==False)
+
+    - name: Get info of the currently assigned SSL cert/key/chain
+      stat:
+        path : "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/cert_key_currently_assigned.txt"
+      register: currentsslconfig
+
+    - name: Delete old SSL certificate
+      bigip_ssl_certificate:
+        name: "{{ lookup('file', '{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/currently_assigned.txt') }}"
+        state: absent
+        provider: "{{provider}}"
+      when: (oldcertfile.stat.exists == True) and (sslconfig.remove_old is not defined or sslconfig.remove_old == True)
+
+    - name: Delete old SSL key
+      bigip_ssl_key:
+        name: "{{ lookup('file', '{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/currently_assigned.txt') }}"
+        state: absent
+        provider: "{{provider}}"
+      when: (oldcertfile.stat.exists == True) and (sslconfig.remove_old is not defined or sslconfig.remove_old == True)
+
+    - name: Delete old SSL chain
+      bigip_ssl_certificate:
+        name: "{{ lookup('file', '{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/currently_assigned.txt') }}-chain"
+        state: absent
+        provider: "{{provider}}"
+      when: (oldchainfile.stat.exists == True) and (sslconfig.remove_old is not defined or sslconfig.remove_old == True)
+
+    - name: Save the currently assigned SSL cert/key/chain
+      copy:
+        dest: "{{ globalconfig.certificates_dir }}/{{ sslconfig.cert_key_chain_name }}/currently_assigned.txt"
+        content: |
+          {{ sslconfig.cert_key_chain_name }}-{{ suffix }}
+
+    when: >
+      ((oldcertfile.stat.exists == False) or (newcertfile.stat.checksum != oldcertfile.stat.checksum)) or
+      ((sslconfig.chain_url is defined) and ((oldchainfile.stat.exists == False) or (newchainfile.stat.checksum != oldchainfile.stat.checksum))) or 
+      (sslconfig.chain_url is not defined) and (oldchainfile.stat.exists == True) and (newchainfile.stat.exists == False)
+
+  - name: Delete downloaded SSL certificate file
+    file:
+      path: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.crt"
+      state: absent
+  
+  - name: Delete downloaded SSL key file
+    file:
+      path: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}.key"
+      state: absent
+
+  - name: Delete downloaded SSL chain file
+    file:
+      path: "{{ globalconfig.tmp_dir }}/{{ sslconfig.cert_key_chain_name }}-chain.crt"
+      state: absent

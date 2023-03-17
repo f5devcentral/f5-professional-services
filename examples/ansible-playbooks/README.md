@@ -20,4 +20,5 @@ This folder contains examples of Ansible Playbooks to perform various tasks rela
 | [service-check-and-platform-facts](/service-check-and-platform-facts/)| An Ansible Playbook to retrieve system information from BIG-IP devices. |
 | [tmos-upgrade](/tmos-upgrade/)| An Ansible Playbook to perform a simple BIG-IP upgrade. |
 | [user-role-and-shell](/user-role-and-shell)| An Ansible Playbook to add/remove users/roles from a BIG-IP device |
+| [f5-bigip-certificate-automation-ansible](/f5-bigip-certificate-automation-ansible)| An Ansible Playbook to automate certificate management on BIG-IP.  |
 
