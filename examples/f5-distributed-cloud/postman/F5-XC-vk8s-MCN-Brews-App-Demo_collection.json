@@ -698,7 +698,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"metadata\": {\n    \"name\": \"f5demos\",\n    \"labels\": {}\n  },\n   \"spec\": {\n    \"registry\": \"f5demos.azurecr.io\",\n    \"user_name\": \"1e21992e-4283-4afe-9a89-b3b314f1fd55\",\n    \"password\": {\n      \"clear_secret_info\": {\n        \"url\": \"string:///TWVzekFUZ35VUzZRR3c1RzdTNzR+MGdYMmt5X1hDbGhIQg==\"\n      },\n      \"secret_encoding_type\": \"EncodingNone\"\n    }\n  }\n}",
+							"raw": "{\n  \"metadata\": {\n    \"name\": \"f5demos\",\n    \"labels\": {}\n  },\n   \"spec\": {\n    \"registry\": \"f5demos.azurecr.io\",\n    \"user_name\": \"1e21992e-4283-4afe-9a89-b3b314f1fd55\",\n    \"password\": {\n      \"clear_secret_info\": {\n        \"url\": \"string:///dVUzOFF+SFZwS1RXYWU0eWVXYkxSblVwbHg2ZXprMm9xWmpNS2FWUg==\"\n      },\n      \"secret_encoding_type\": \"EncodingNone\"\n    }\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2120,12 +2120,12 @@
 	],
 	"variable": [
 		{
-			"id": "4d0a03f7-6f23-43b5-94e6-2db68092b7cc",
+			"id": "5b28d19a-3ab4-493f-8acc-dc364fb88c7d",
 			"key": "base64EncodedCert",
 			"value": ""
 		},
 		{
-			"id": "a5872e51-61de-4073-b4d9-40380b96b741",
+			"id": "651e151f-1fa2-40ad-b72f-d84f2daa2fa2",
 			"key": "base64EncodedKey",
 			"value": ""
 		}
