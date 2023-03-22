@@ -5,7 +5,7 @@
   #Created on 20210319
   #Modified on 20220523
   #/////////////////////////////////////////////////////////////////
-  hosts: dc2wpriv
+  hosts: bigips
   connection: local
   gather_facts: true
 
@@ -16,12 +16,7 @@
         gather_subset:
           - system-info
           - devices
-        provider:
-          server: "{{private_ip}}"
-          user: "{{ansible_user}}"
-          password: "{{ansible_ssh_pass}}"
-          server_port: 443
-          validate_certs: false
+        provider: "{{ providver }}"
       register: device_facts
 
 #    - name: This can be used to print all facts
@@ -48,12 +43,7 @@
       bigip_command:
         commands:
           - tmsh show cm failover-status field-fmt | grep "status" | grep -v cmi
-        provider:
-          server: "{{private_ip}}"
-          user: "{{ansible_user}}"
-          password: "{{ansible_ssh_pass}}"
-          server_port: 443
-          validate_certs: false
+        provider: "{{ providver }}"
       register: output
 
     - debug:
@@ -63,12 +53,7 @@
       bigip_command:
         commands:
           - tmsh show sys license field-fmt | egrep "service"
-        provider:
-          server: "{{private_ip}}"
-          user: "{{ansible_user}}"
-          password: "{{ansible_ssh_pass}}"
-          server_port: 443
-          validate_certs: false
+        provider: "{{ provider }}"
       register: output
 
     - debug:
