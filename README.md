@@ -27,13 +27,13 @@ The tools folder contains utilities which can assist with a variaty of tasks rel
 
 | Tool                                         | Description |
 | ----------------------------------------------- | ----------- |
+| [f5-awaf-export-policies](tools/f5-awaf-export-policies)| A small script to export all AWAF policies from a BIG-IP device. |
+| [f5-bigip-dns-wideip-lookup](tools/f5-bigipdns-wideip-lookup)| This script pulls wideip hostnames from a BIGIP-DNS device and make a DNS request using dig |
 | [f5-waf-quick-patch-cve-2021-44228](tools/f5-waf-quick-patch-cve-2021-44228)| This patches various BIG-IP ASM policies for CVE-2021-44228.  |
 | [f5-waf-quick-view](tools/f5-waf-quick-view)| This reports on some settings across BIG-IP ASM policies.  |
-| [f5-awaf-export-policies](tools/f5-awaf-export-policies)| A small script to export all AWAF policies from a BIG-IP device. |
 | [f5-xc-backup](tools/f5-xc-backup)| A script to backup F5 XC configuration. |
 | [f5-xc-blindfold](tools/f5-xc-blindfold)| Bash script to blindfold the TLS private key prior to deployment to F5 XC config. |
 | [f5-xc-convert-eap-config](tools/f5-xc-convert-eap-config)| Bash script to convert EAP configuration in JSON format to a human-readable file. |
-| [f5-bigip-dns-wideip-lookup](tools/f5-bigipdns-wideip-lookup)| This script pulls wideip hostnames from a BIGIP-DNS device and make a DNS request using dig |
 
 ## Tips & Tricks
 The tip-and-tricks folder contains common commands used day to day in F5 technologies as well as cheatsheets and tips on various ancillary tools.
