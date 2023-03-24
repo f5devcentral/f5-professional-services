@@ -100,8 +100,13 @@ Consider the following naming convention. If the iRule submitted also need data-
 *irule-dns-dynamic-response.tcl*  
 *irule-asm-custom-blocking-page.tcl*  
 
-## Code reviews
+## Code reviews and pull request
 
 All code submissions require review. GitHub Pull Requests are used for this purpose. Please, consult
 [GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
 information on it.
+
+Please, submit one pull request per major item and name it properly. Inform:
+
+Title with a short informative summary of the pull request - (e.g. Adding f5-big-ip-tool-xyz)
+Description: Add details explaining the PR for the reviewer
