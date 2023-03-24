@@ -108,5 +108,5 @@ information on it.
 
 Please, submit one pull request per major item and name it properly. Inform:
 
-Title with a short informative summary of the pull request - (e.g. Adding f5-big-ip-tool-xyz)
-Description: Add details explaining the PR for the reviewer
+Title with a short informative summary of the pull request - (e.g. Adding f5-big-ip-tool-xyz)  
+Description: Add details explaining the PR for the reviewer  
