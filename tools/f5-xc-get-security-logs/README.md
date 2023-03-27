@@ -1,8 +1,8 @@
 # xc_get_security_logs
 
-The goal of this *Python* script is to help to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file. T
-The scripts save F5 XC security events to a CSV file named: security_events-<TENANT>-<NAMESPACE>_<date>-<hour>.csv
-  
+The goal of this *Python* script is to help to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file.
+
+The scripts generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE\>_\<date\>-\<hour\>.csv
 ## Limitations
 
 1. This version does not export Security Event logs for specific load balancer.
