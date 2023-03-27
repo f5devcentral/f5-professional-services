@@ -49,7 +49,7 @@ The script generates a CSV file named as: xc-security_events-<TENANT>_<NAMESPACE
 ```
 python3.11 f5-xc_get_security_logs.py\
                --token "A1B2C3D4E5F6G7H8I9K0"\
-               --tenant "xc.tenant"\
+               --tenant "my-tenant"\
                --namespace "my-namespace"\
                --loadbalancer "my-loadbalancer"\
                --hours 24
