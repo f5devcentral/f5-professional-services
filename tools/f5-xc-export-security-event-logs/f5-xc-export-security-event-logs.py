@@ -33,7 +33,7 @@ def main():
     args = parser.parse_args()
 
     security_logs = get_securiy_logs(args.token,args.tenant,args.namespace,args.loadbalancer,args.hours)
-    security_logs.to_csv("xc-security_events-{}_{}-{}.csv".format(args.tenant,args.namespace,currentTime.strftime("%m-%d-%Y")), index = False, sep=',', encoding='utf-8')
+    security_logs.to_csv("f5-xc-security_events-{}_{}-{}.csv".format(args.tenant,args.namespace,currentTime.strftime("%m-%d-%Y")), index = False, sep=',', encoding='utf-8')
 
 
 if __name__ == "__main__":
