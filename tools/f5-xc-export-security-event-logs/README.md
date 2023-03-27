@@ -39,8 +39,8 @@ The script generates a CSV file named as: xc-security_events-<TENANT>_<NAMESPACE
 
 | Argument | Description | Required |
 |----------|-------------|----------|
-| --token | XC API Token | Yes | 
-| --tenant | F5 Distributed Cloud Tenant name | Yes |
+| --token | F5 XC API Token | Yes | 
+| --tenant | F5 XC Tenant name | Yes |
 | --namespace | Namespace name | Yes |
 | --loadbalancer | Load balancer name | Yes |
 | --hours | Time window in hours | Yes | 
