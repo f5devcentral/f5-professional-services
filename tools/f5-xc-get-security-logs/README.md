@@ -44,8 +44,8 @@ python xc_get_security_logs.py\
 ## Output - CSV file: 
 xc-security_events-\<TENANT\>_\<NAMESPACE\>-MM-DD-YYYY.csv
 
-| Time                     | Request ID                           | Event Type          | Source IP address | X-Forwarded-For | Country | City        | Browser        | Domain     | Method | Request Path         | Response Code |
-|--------------------------|--------------------------------------|---------------------|-------------------|-----------------|---------|-------------|----------------|------------|--------|----------------------|---------------|
-| 2023-03-27T18:45:29.881Z | be8c32c7-089f-43e8-9bcc-000000000000 | L7 Policy Violation | X.X.X.X           | X.X.X.X         | US      | Seattle     | curl           | exampe.com | DELETE | /                    | 403           |
-| 2023-03-27T14:21:03.955Z | 6f419d86-3ba6-4884-860a-000000000000 | WAF                 | X.X.X.X           | X.X.X.X         | US      | Santa Clara | HeadlessChrome | exampe.com | GET    | /js/bootstrap.min.js | 200           |
-| 2023-03-27T14:21:03.954Z | 9d331638-130a-4221-be04-000000000000 | WAF                 | X.X.X.X           | X.X.X.X         | US      | Santa Clara | HeadlessChrome | exampe.com | GET    | /appliance.ssvg      | 200           |
+| Time                | Request ID                           | Event Type          | Source IP address | X-Forwarded-For | Country | City        | Browser        | Domain     | Method | Request Path         | Response Code |
+|:-------------------:|:------------------------------------:|:-------------------:|:-----------------:|:---------------:|:-------:|:-----------:|:--------------:|:----------:|:------:|:--------------------:|:-------------:|
+| YYYY-MM-DDT00:00:01 | 00000000-0000-0000-0000-000000000000 | L7 Policy Violation | X.X.X.X           | X.X.X.X         | US      | Seattle     | curl           | exampe.com | DELETE | /                    | 403           |
+| YYYY-MM-DDT00:00:02 | 00000000-0000-0000-0000-000000000001 | WAF                 | X.X.X.X           | X.X.X.X         | US      | Santa Clara | HeadlessChrome | exampe.com | GET    | /js/bootstrap.min.js | 200           |
+| YYYY-MM-DDT00:00:03 | 00000000-0000-0000-0000-000000000002 | WAF                 | X.X.X.X           | X.X.X.X         | US      | Santa Clara | HeadlessChrome | exampe.com | GET    | /appliance.ssvg      | 200           |
