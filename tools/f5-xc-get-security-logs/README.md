@@ -15,7 +15,7 @@ The script generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE
 | --token | XC API Token | Yes | 
 | --tenant | F5 Distributed Cloud Tenant name | Yes |
 | --namespace | Namespace name | Yes |
-| --hours | Time in hours | Yes | 
+| --hours | Time window in hours | Yes | 
 
 ## Usage:
 ```
@@ -30,16 +30,15 @@ options:
   --namespace NAMESPACE
   --hours HOURS
 
-The script generates a CSV file named as: xc-security_events-<TENANT>/<NAMESPACE>_<date>.csv
+The script generates a CSV file named as: xc-security_events-<TENANT>_<NAMESPACE>-<date>.csv
 ```
 ### Example:
 ```
-python f5-xc-dns-create-zone-from-axfr.py\
-               --domain "mydomain.com"\
-               --nameserver "X.X.X.X"\
-               --tsig-key-name "tsig-key."\
-               --tsig-key-secret "UVXc0kf8FCPt4WVENnW6oMjpA/4tBHD25vXxYGd7uC6nD4xxyyxczucNEgalO3ZZk9LEqukeweZkZT3ajECIrg=="\
-               --tsig-key-algo="hmac-sha512"
+python xc_get_security_logs.py\
+               --token "A1B2C3D4E5F6G7H8I9K0"\
+               --tenant "xc.tenant"\
+               --namespace "my-namespace"\
+               --hours 24
 ```
 
 ## Output - CSV file:
