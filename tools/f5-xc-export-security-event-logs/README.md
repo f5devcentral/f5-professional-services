@@ -22,8 +22,8 @@ The host machine needs to have connection to the F5 Distribution Cloud Tenant.
 
 ## Usage:
 ```
-python3.11 f5-xc_get_security_logs.py [-h] --token TOKEN --tenant TENANT --namespace NAMESPACE --loadbalancer LOADBALANCER
-                                  --hours HOURS
+python3.11 f5-xc-export-security-event-logs.py [-h] --token TOKEN --tenant TENANT --namespace NAMESPACE --loadbalancer
+                                           LOADBALANCER --hours HOURS
 
 This *Python* script helps to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file.
 
