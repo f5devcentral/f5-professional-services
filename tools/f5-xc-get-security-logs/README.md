@@ -4,17 +4,21 @@ This *Python* script helps to export the Security Events logs from *F5 Distribut
 
 The script generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE\>_\<date\>-\<hour\>.csv
 
+# How it Works
 
+The script leverages the F5 XC API to retrieve security event logs for a specific HTTP load balancer protected by an App Policy.
 
-## Parameters
+# Installation
 
-| Argument | Description | Required |
-|----------|-------------|----------|
-| --token | XC API Token | Yes | 
-| --tenant | F5 Distributed Cloud Tenant name | Yes |
-| --namespace | Namespace name | Yes |
-| --loadbalancer | Load balancer name | Yes |
-| --hours | Time window in hours | Yes | 
+pip3 install -r requirements.txt
+
+## Prerequisites
+
+Python 3.7+
+
+Libraries in requirements.txt
+
+The host machine needs to have connection to the F5 XC Tenant. 
 
 ## Usage:
 ```
@@ -33,6 +37,16 @@ options:
 
 The script generates a CSV file named as: xc-security_events-<TENANT>_<NAMESPACE>-<date>.csv
 ```
+## Parameters
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| --token | XC API Token | Yes | 
+| --tenant | F5 Distributed Cloud Tenant name | Yes |
+| --namespace | Namespace name | Yes |
+| --loadbalancer | Load balancer name | Yes |
+| --hours | Time window in hours | Yes | 
+
 ### Example:
 ```
 python f5-xc_get_security_logs.py\
