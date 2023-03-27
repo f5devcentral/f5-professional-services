@@ -1,4 +1,3 @@
-#!/usr/local/bin/python3.11
 from datetime import datetime
 import argparse
 import json
@@ -26,7 +25,7 @@ def get_securiy_logs(token,tenant,namespace,hours):
 
 def main():
     currentTime = datetime.now()
-    parser = argparse.ArgumentParser(description = "Script to get F5 XC security events from the last X hours and export them to a CSV file", epilog='The scripts save F5 XC security events to a CSV file named: security_events-<TENANT>-<NAMESPACE>_<date>-<hour>')    
+    parser = argparse.ArgumentParser(description = "This *Python* script helps to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file.", epilog='The script generates a CSV file named as: xc-security_events-<TENANT>-<NAMESPACE>_<date>-<hour>.csv')    
     parser.add_argument('--token', type=str, required=True)
     parser.add_argument('--tenant', type=str, required=True)
     parser.add_argument('--namespace', type=str, required=True)
@@ -34,7 +33,7 @@ def main():
     args = parser.parse_args()
 
     security_logs = get_securiy_logs(args.token,args.tenant,args.namespace,args.hours)
-    security_logs.to_csv("security_events-{}-{}_{}.csv".format(args.tenant,args.namespace,currentTime.strftime("%m-%d-%Y_%H:%M")), index = False, sep=',', encoding='utf-8')
+    security_logs.to_csv("xc-security_events-{}-{}_{}.csv".format(args.tenant,args.namespace,currentTime.strftime("%m-%d-%Y_%H:%M")), index = False, sep=',', encoding='utf-8')
 
 
 if __name__ == "__main__":
