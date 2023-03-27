@@ -6,7 +6,7 @@ The script generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE
 
 ## Limitations
 
-1. This version does not export Security Event logs for specific load balancer.
+This version does not export Security Event logs for specific load balancer.
 
 ## Parameters
 
@@ -41,4 +41,5 @@ python xc_get_security_logs.py\
                --hours 24
 ```
 
-## Output - CSV file:
+## Output - CSV file: 
+xc-security_events-\<TENANT\>_\<NAMESPACE\>-MM-DD-YYYY.csv
