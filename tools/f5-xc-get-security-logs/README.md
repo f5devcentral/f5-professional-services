@@ -1,4 +1,4 @@
-# f5-xc_get_security_logs
+# f5-xc-export-security-logs
 
 This *Python* script helps to export the Security Events logs from *F5 Distributed Cloud* into a CSV file.
 
