@@ -1,25 +1,26 @@
 # xc_get_security_logs
 
-The goal of this *Python* script is to help to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file.
+This *Python* script helps to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file.
 
-The scripts generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE\>_\<date\>-\<hour\>.csv
+The script generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE\>_\<date\>-\<hour\>.csv
+
 ## Limitations
 
 1. This version does not export Security Event logs for specific load balancer.
 
 ## Parameters
 
-| Argument | Description | Required | Default |
-|----------|-------------|----------|---------|
-| --domain | DNS forward zone to be converted | Yes | No |
-| --nameserver | IP address of the NS server from which the zone transfer will be performed | Yes | No | 
-| --tsig-key-name | TSIG key name | Yes | No | 
-| --tsig-key-secret | TSIG key secret | Yes | No | 
-| --tsig-key-algo | TSIG key algorithm | Yes | No | 
+| Argument | Description | Required |
+|----------|-------------|----------|
+| --domain | DNS forward zone to be converted | Yes | 
+| --nameserver | IP address of the NS server from which the zone transfer will be performed | Yes |
+| --tsig-key-name | TSIG key name | Yes |
+| --tsig-key-secret | TSIG key secret | Yes | 
+| --tsig-key-algo | TSIG key algorithm | Yes | 
 
 ## Usage (examples)
 
-### Example 1
+### Example:
 ```
 python f5-xc-dns-create-zone-from-axfr.py\
                --domain "mydomain.com"\
