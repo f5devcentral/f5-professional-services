@@ -60,6 +60,6 @@ f5-xc-security_events-\<TENANT\>_\<NAMESPACE\>-MM-DD-YYYY.csv
 
 | Time                | Request ID                           | Event Type          | Source IP address | X-Forwarded-For | Country | City        | Browser        | Domain     | Method | Request Path         | Response Code |
 |:-------------------:|:------------------------------------:|:-------------------:|:-----------------:|:---------------:|:-------:|:-----------:|:--------------:|:----------:|:------:|:--------------------:|:-------------:|
-| YYYY-MM-DDT00:00:01 | 00000000-0000-0000-0000-000000000000 | L7 Policy Violation | X.X.X.X           | X.X.X.X         | US      | Seattle     | curl           | exampe.com | DELETE | /                    | 403           |
-| YYYY-MM-DDT00:00:02 | 00000000-0000-0000-0000-000000000001 | WAF                 | X.X.X.X           | X.X.X.X         | US      | Santa Clara | HeadlessChrome | exampe.com | GET    | /js/bootstrap.min.js | 200           |
-| YYYY-MM-DDT00:00:03 | 00000000-0000-0000-0000-000000000002 | WAF                 | X.X.X.X           | X.X.X.X         | US      | Santa Clara | HeadlessChrome | exampe.com | GET    | /appliance.ssvg      | 200           |
+| YYYY-MM-DDT00:00:01 | 00000000-0000-0000-0000-000000000000 | L7 Policy Violation | X.X.X.X           | X.X.X.X         | US      | Seattle     | curl           | example.com | DELETE | /                    | 403           |
+| YYYY-MM-DDT00:00:02 | 00000000-0000-0000-0000-000000000001 | WAF                 | X.X.X.X           | X.X.X.X         | US      | Santa Clara | HeadlessChrome | example.com | GET    | /js/bootstrap.min.js | 200           |
+| YYYY-MM-DDT00:00:03 | 00000000-0000-0000-0000-000000000002 | WAF                 | X.X.X.X           | X.X.X.X         | US      | Santa Clara | HeadlessChrome | example.com | GET    | /appliance.ssvg      | 200           |
