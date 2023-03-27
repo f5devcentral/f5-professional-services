@@ -28,7 +28,7 @@ Before submit your contribution, please make sure at mininum:
 
 **README files**
 
-Lots of sections in this repository require a README file, in special Ansible Playbooks, Terraform Plans, Tools written in different languages.  
+Lots of sections in this repository require a README file, particularly Ansible Playbooks, Terraform Plans, or other tools written in different languages.  
 
 Consider using this [sample](https://github.com/f5devcentral/f5-professional-services/blob/main/sample_readme.md) as a starting point for your README file. 
 
@@ -44,6 +44,10 @@ When writing your playbook, consider the following Ansible Playbooks Best Practi
 
 https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html  
 https://docs.ansible.com/ansible/2.9/user_guide/playbooks_best_practices.html  
+
+Please do not upload a hosts file.
+Ensure any provider information is generalized or variablized.
+If supporting JSON is required, ensure the contents are generalized, and that the file path for the JSON is relative. Ideally reference json in the same directory as the yaml to make reading the example in github easier.
 
 - Naming Convention
 
@@ -106,7 +110,8 @@ All code submissions require review. GitHub Pull Requests are used for this purp
 [GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
 information on it.
 
-Please, submit one pull request per major item and name it properly. Inform:
+Please, submit one pull request per major item and name it properly. 
 
+As an example:
 Title with a short informative summary of the pull request - (e.g. Adding f5-big-ip-tool-xyz)  
 Description: Add details explaining the PR for the reviewer  
