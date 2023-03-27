@@ -12,13 +12,24 @@ The script generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE
 
 | Argument | Description | Required |
 |----------|-------------|----------|
-| --domain | DNS forward zone to be converted | Yes | 
-| --nameserver | IP address of the NS server from which the zone transfer will be performed | Yes |
-| --tsig-key-name | TSIG key name | Yes |
-| --tsig-key-secret | TSIG key secret | Yes | 
-| --tsig-key-algo | TSIG key algorithm | Yes | 
+| --token | XC API Token | Yes | 
+| --tenant | F5 Distributed Cloud Tenant name | Yes |
+| --namespace | Namespace name | Yes |
+| --hours | Time in hours | Yes | 
 
-## Usage (examples)
+## Usage:
+xc_get_security_logs.py [-h] --token TOKEN --tenant TENANT --namespace NAMESPACE --hours HOURS
+
+This *Python* script helps to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file.
+
+options:
+  -h, --help            show this help message and exit
+  --token TOKEN
+  --tenant TENANT
+  --namespace NAMESPACE
+  --hours HOURS
+
+The script generates a CSV file named as: security_events-<TENANT>-<NAMESPACE>_<date>-<hour>.csv
 
 ### Example:
 ```
