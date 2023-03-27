@@ -4,14 +4,13 @@ import json
 import requests
 import pandas as pd 
 
-def get_securiy_logs(token,tenant,namespace,hours):
+def get_securiy_logs(token,tenant,namespace,loadbalancer,hours):
     currentTime = datetime.now()
     endTime = int(round(datetime.timestamp(currentTime)))
     startTime = endTime - (hours*3600)
     BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/app_security/events'.format(tenant,namespace)
     headers = {'Authorization': "APIToken {}".format(token)}
-    auth_response = requests.post(BASE_URL, data=json.dumps({"aggs": {}, "end_time": "{}".format(endTime), "limit": 0, "namespace": "m-alvarado", "query": "{vh_name=\"ves-io-http-loadbalancer-m-alvarado-lb\"}", "sort": "DESCENDING", "start_time": "{}".format(startTime) }), headers=headers)
-
+    auth_response = requests.post(BASE_URL, data=json.dumps({"aggs": {}, "end_time": "{}".format(endTime), "limit": 0, "namespace": "{}".format(namespace), "query": "{{vh_name=\"ves-io-http-loadbalancer-""{}""\"}}".format(loadbalancer), "sort": "DESCENDING", "start_time": "{}".format(startTime) }), headers=headers)
     securityLogs = auth_response.json()
     events = securityLogs['events']
     df = pd.DataFrame(columns = ['Time', 'Request ID', 'Event Type', 'Source IP address', 'X-Forwarded-For' ,'Country', 'City', 'Browser', 'Domain','Method', 'Request Path', 'Response Code'])
@@ -29,10 +28,11 @@ def main():
     parser.add_argument('--token', type=str, required=True)
     parser.add_argument('--tenant', type=str, required=True)
     parser.add_argument('--namespace', type=str, required=True)
+    parser.add_argument('--loadbalancer', type=str, required=True)
     parser.add_argument('--hours', type=int, required=True)
     args = parser.parse_args()
 
-    security_logs = get_securiy_logs(args.token,args.tenant,args.namespace,args.hours)
+    security_logs = get_securiy_logs(args.token,args.tenant,args.namespace,args.loadbalancer,args.hours)
     security_logs.to_csv("xc-security_events-{}_{}-{}.csv".format(args.tenant,args.namespace,currentTime.strftime("%m-%d-%Y")), index = False, sep=',', encoding='utf-8')
 
 
