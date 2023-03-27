@@ -1,0 +1,26 @@
+---
+- name: Create Qkview
+  gather_facts: yes
+  hosts: bigips
+  connection: local
+  
+  vars_prompt:
+    - name: caseNumber
+      prompt: What is your F5 case number?
+      private: false
+      
+  vars:
+      fileName: "{{ inventory_hostname }}.{{ caseNumber }}.{{ ansible_date_time.date }}.qkview"
+    
+      saveLoc: "/var/tmp/"
+  
+  tasks:
+  
+   - debug: 
+       msg: "creating qkview file {{ fileName }} in dir {{ saveLoc }}"
+   
+   - name: Generate and download qkview.
+     bigip_qkview:
+        asm_request_log: no
+        dest: "{{ saveLoc }}{{ fileName }}"
+        provider: "{{ provider }}"

@@ -1,5 +1,5 @@
-################################################################################################
-# CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL (s.meisenzahl@f5.com) 11/19/2022
+#################################################################################################
+# CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL 11/19/2022
 #
 # THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
 # 
@@ -9,15 +9,16 @@
 # RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
 #     ansible-galaxy collection install f5networks.f5os
 #
-# REFERENCE PAGE FOR TASK IS "https://clouddocs.f5.com/products/orchestration/ansible/devel/f5os/modules_3_0/f5os_tenant_image_module.html#f5os-tenant-image-module-3"
+# REFERENCE PAGE FOR TASK IS "https://clouddocs.f5.com/products/orchestration/ansible/devel/f5_bigip/modules_2_0/module_index.html"
 #
 # NOTE: THIS PLAYBOOK CONNECTS TO THE rSeries ON PORT "8888", YOU WILL NEED TO USE THE FOLLOWING PORT VARIABLE
 #    "ansible_httpapi_port: 8888" 
 #
 # NOTE: TO RUN THIS FILE USE THE FOLLOWING COMMAND FROM WITHIN THE PLAYBOOK LOCATION
-#       sensible-playbook -vvv tenant-image-httpapi.yaml
+#  
+# Usage: ansible-playbook -vvv t-image-upload-declarative.yaml -i /<path>/hosts -i /<path>/t-image-vars.yaml
 #
-################################################################################################
+#################################################################################################
 
 
   - hosts: rseries
@@ -37,11 +38,11 @@
     tasks:
       - name: Import tenant image 'BIGIP-15.1.7-0.0.6.ALL-F5OS.qcow2.zip.bundle' onto the F5OS device
         f5os_tenant_image:
-          image_name: BIGIP-15.1.7-0.0.6.ALL-F5OS.qcow2.zip.bundle
-          remote_host: "10.155.127.202"
-          remote_user: root
-          remote_password: default
-          remote_path: /home/ansible/rseries/post/uploads/
-          local_path: images/tenant
+          image_name: "{{t_image_15_1_7}}"
+          remote_host: "{{src_server}}"
+          remote_user: "{{src_server_user}}"
+          remote_password: "{{src_server_pass}}"
+          remote_path: "{{src_image_path}}"
+          local_path: "{{dest_path}}"
           state: import
 

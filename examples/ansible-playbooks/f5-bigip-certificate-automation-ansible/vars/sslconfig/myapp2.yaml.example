@@ -1,0 +1,5 @@
+sslconfig:
+  cert_key_chain_name: "myapp2"
+  cert_url: "https://webserver.f5trn.local/certificates/myapp2.crt"
+  key_url: "https://webserver.f5trn.local/certificates/myapp2.key"
+  clientssl: "/Common/clientssl_myapp2"

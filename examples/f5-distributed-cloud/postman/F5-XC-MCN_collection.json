@@ -1183,28 +1183,28 @@
 											"//Get site build status from payload response",
 											"var jsonData = JSON.parse(responseBody);",
 											"",
-											"if (jsonData.spec.site_state !== undefined) {",
-											"    var jsonNamesData = jsonData.spec.site_state;",
-											"    //console.log(\"Site status: \"+jsonNamesData);",
+											"if (jsonData.code == undefined) {",
+											"    if (jsonData.spec.site_state !== undefined) {",
+											"        var jsonNamesData = jsonData.spec.site_state;",
+											"        //console.log(\"Site status: \"+jsonNamesData);",
 											"",
-											"    if (jsonNamesData !== undefined){",
-											"        //var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
-											"        if (jsonNamesData !== \"ONLINE\" ) {",
-											"            console.log(\"Site status: \"+jsonNamesData);",
-											"            postman.setNextRequest(\"Verify Site Delete AWS\");",
-											"            setTimeout(() => {  postman.setNextRequest(\"Verify Site Delete AWS\"); }, 10000);",
+											"        if (jsonNamesData !== undefined){",
+											"            //var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
+											"            if (jsonNamesData !== \"ONLINE\" ) {",
+											"                console.log(\"Site status: \"+jsonNamesData);",
+											"                postman.setNextRequest(\"Verify Site Delete AWS\");",
+											"                setTimeout(() => {  postman.setNextRequest(\"Verify Site Delete AWS\"); }, 10000);",
+											"            }",
+											"        }",
+											"        else {",
+											"            jsonNamesData = \"Site Deleted\";",
+											"            console.log(\"Site Succesfully Deleted\");",
 											"        }",
 											"    }",
-											"    else {",
-											"        jsonNamesData = \"Site Deleted\";",
-											"        console.log(\"Site Succesfully Deleted\");",
-											"    }",
-											"",
-											"    pm.test(\"Site Status: \"+jsonNamesData, function () {",
-											"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
-											"    });",
 											"}",
-											""
+											"pm.test(\"Site Status: \"+jsonNamesData, function () {",
+											"        pm.expect(pm.response.code).to.be.oneOf([200,404,409]);",
+											"    });"
 										],
 										"type": "text/javascript"
 									}
@@ -1353,27 +1353,28 @@
 											"//Get site build status from payload response",
 											"var jsonData = JSON.parse(responseBody);",
 											"",
-											"if (jsonData.spec.site_state !== undefined) {",
-											"    var jsonNamesData = jsonData.spec.site_state;",
-											"    //console.log(\"Site status: \"+jsonNamesData);",
+											"if (jsonData.code == undefined) {",
+											"    if (jsonData.spec.site_state !== undefined) {",
+											"        var jsonNamesData = jsonData.spec.site_state;",
+											"        //console.log(\"Site status: \"+jsonNamesData);",
 											"",
-											"    if (jsonNamesData !== undefined){",
-											"        //var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
-											"        if (jsonNamesData !== \"ONLINE\" ) {",
-											"            console.log(\"Site status: \"+jsonNamesData);",
-											"            postman.setNextRequest(\"Verify Site Delete Azure\");",
-											"            setTimeout(() => {  postman.setNextRequest(\"Verify Site Delete Azure\"); }, 10000);",
+											"        if (jsonNamesData !== undefined){",
+											"            //var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
+											"            if (jsonNamesData !== \"ONLINE\" ) {",
+											"                console.log(\"Site status: \"+jsonNamesData);",
+											"                postman.setNextRequest(\"Verify Site Delete Azure\");",
+											"                setTimeout(() => {  postman.setNextRequest(\"Verify Site Delete Azure\"); }, 10000);",
+											"            }",
+											"        }",
+											"        else {",
+											"            jsonNamesData = \"Site Deleted\";",
+											"            console.log(\"Site Succesfully Deleted\");",
 											"        }",
 											"    }",
-											"    else {",
-											"        jsonNamesData = \"Site Deleted\";",
-											"        console.log(\"Site Succesfully Deleted\");",
-											"    }",
-											"",
-											"    pm.test(\"Site Status: \"+jsonNamesData, function () {",
-											"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
-											"    });",
-											"}"
+											"}",
+											"pm.test(\"Site Status: \"+jsonNamesData, function () {",
+											"        pm.expect(pm.response.code).to.be.oneOf([200,404,409]);",
+											"    });"
 										],
 										"type": "text/javascript"
 									}
@@ -1386,7 +1387,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/azure_vnet_site/{{azure-site-name}}"
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/azure_vnet_sites/{{azure-site-name}}"
 							},
 							"response": []
 						}
@@ -1522,27 +1523,28 @@
 											"//Get site build status from payload response",
 											"var jsonData = JSON.parse(responseBody);",
 											"",
-											"if (jsonData.spec.site_state !== undefined) {",
-											"    var jsonNamesData = jsonData.spec.site_state;",
-											"    //console.log(\"Site status: \"+jsonNamesData);",
+											"if (jsonData.code == undefined) {",
+											"    if (jsonData.spec.site_state !== undefined) {",
+											"        var jsonNamesData = jsonData.spec.site_state;",
+											"        //console.log(\"Site status: \"+jsonNamesData);",
 											"",
-											"    if (jsonNamesData !== undefined){",
-											"        //var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
-											"        if (jsonNamesData !== \"ONLINE\" ) {",
-											"            console.log(\"Site status: \"+jsonNamesData);",
-											"            postman.setNextRequest(\"Verify Site Delete GCP\");",
-											"            setTimeout(() => {  postman.setNextRequest(\"Verify Site Delete GCP\"); }, 10000);",
+											"        if (jsonNamesData !== undefined){",
+											"            //var vk8s_status = jsonData.items[0].system_metadata.initializers.pending[0].name;",
+											"            if (jsonNamesData !== \"ONLINE\" ) {",
+											"                console.log(\"Site status: \"+jsonNamesData);",
+											"                postman.setNextRequest(\"Verify Site Delete GCP\");",
+											"                setTimeout(() => {  postman.setNextRequest(\"Verify Site Delete GCP\"); }, 10000);",
+											"            }",
+											"        }",
+											"        else {",
+											"            jsonNamesData = \"Site Deleted\";",
+											"            console.log(\"Site Succesfully Deleted\");",
 											"        }",
 											"    }",
-											"    else {",
-											"        jsonNamesData = \"Site Deleted\";",
-											"        console.log(\"Site Succesfully Deleted\");",
-											"    }",
-											"",
-											"    pm.test(\"Site Status: \"+jsonNamesData, function () {",
-											"        pm.expect(pm.response.code).to.be.oneOf([200,409]);",
-											"    });",
-											"}"
+											"}",
+											"pm.test(\"Site Status: \"+jsonNamesData, function () {",
+											"        pm.expect(pm.response.code).to.be.oneOf([200,404,409]);",
+											"    });"
 										],
 										"type": "text/javascript"
 									}
@@ -1555,7 +1557,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/gcp_vpc_site/{{gcp-site-name}}"
+								"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/config/namespaces/system/gcp_vpc_sites/{{gcp-site-name}}"
 							},
 							"response": []
 						}
@@ -1597,37 +1599,37 @@
 	],
 	"variable": [
 		{
-			"id": "88be6f5b-3204-4708-a7c0-fdcd7d26089d",
+			"id": "37b8bf68-c690-44c1-a8cd-22c1d10a59f7",
 			"key": "api-token",
 			"value": ""
 		},
 		{
-			"id": "f2c36a3f-aede-4080-8653-c3699b8e1734",
+			"id": "92d2803c-aff4-4377-886f-552449b5ab97",
 			"key": "app-namespace",
 			"value": ""
 		},
 		{
-			"id": "ef8d9a1c-854b-4e97-a0e8-9e75c8bdcaad",
+			"id": "fb27f063-75d5-4c40-b1d2-24c07853382f",
 			"key": "tenant",
 			"value": ""
 		},
 		{
-			"id": "0049616e-9ff8-4e3f-96d2-23375ab48d4f",
+			"id": "866f4df2-595b-4dea-bc5e-930c437985eb",
 			"key": "domain",
 			"value": ""
 		},
 		{
-			"id": "c2236ea5-15ed-48bb-bc50-7b0032c329b3",
+			"id": "e014394f-c848-437f-9c85-5f2cf2d06f11",
 			"key": "site-name",
 			"value": ""
 		},
 		{
-			"id": "a3ed2352-5904-407a-b8bf-6a2cc528bc2c",
+			"id": "341c118a-7f44-4096-9762-1c4fa1b50b0e",
 			"key": "short-name",
 			"value": ""
 		},
 		{
-			"id": "1cd5a2a2-f95f-43e9-9883-6bb88b8667ba",
+			"id": "35ebf3a1-aaf0-43a3-9bcc-d435ccb433a9",
 			"key": "name",
 			"value": ""
 		}
