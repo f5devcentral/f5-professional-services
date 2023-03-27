@@ -18,6 +18,7 @@ The script generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE
 | --hours | Time in hours | Yes | 
 
 ## Usage:
+```
 python xc_get_security_logs.py [-h] --token TOKEN --tenant TENANT --namespace NAMESPACE --hours HOURS
 
 This *Python* script helps to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file.
@@ -30,7 +31,7 @@ options:
   --hours HOURS
 
 The script generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE\>_\<date\>-\<hour\>.csv
-
+```
 ### Example:
 ```
 python f5-xc-dns-create-zone-from-axfr.py\
