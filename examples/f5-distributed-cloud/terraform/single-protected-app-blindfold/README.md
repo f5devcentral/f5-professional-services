@@ -9,7 +9,7 @@ This Terraform example uses a bash script to create or update an HTTP Load Balan
     Health check
     Origin Pool  
     App Firewall  
-    HTTPS Load Balancer with Custom Certificate an encrypted private key using blindfold  
+    HTTPS Load Balancer with Custom Certificate and encrypted private key using blindfold  
 
 ## Environment praparation 
 
