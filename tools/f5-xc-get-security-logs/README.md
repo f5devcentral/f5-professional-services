@@ -18,7 +18,7 @@ Python 3.11+
 
 Libraries in requirements.txt
 
-The host machine needs to have connection to the F5 XC Tenant. 
+The host machine needs to have connection to the F5 Distribution Cloud Tenant. 
 
 ## Usage:
 ```
