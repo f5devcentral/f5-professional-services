@@ -56,7 +56,7 @@ python3.11 f5-xc_get_security_logs.py\
 ```
 
 ## Output - CSV file: 
-xc-security_events-\<TENANT\>_\<NAMESPACE\>-MM-DD-YYYY.csv
+f5-xc-security_events-\<TENANT\>_\<NAMESPACE\>-MM-DD-YYYY.csv
 
 | Time                | Request ID                           | Event Type          | Source IP address | X-Forwarded-For | Country | City        | Browser        | Domain     | Method | Request Path         | Response Code |
 |:-------------------:|:------------------------------------:|:-------------------:|:-----------------:|:---------------:|:-------:|:-----------:|:--------------:|:----------:|:------:|:--------------------:|:-------------:|
