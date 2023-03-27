@@ -14,11 +14,10 @@ pip3.11 install -r requirements.txt
 
 ## Prerequisites
 
-Python 3.11+
-
-Libraries in requirements.txt
-
-The host machine needs to have connection to the F5 Distribution Cloud Tenant. 
+* Python 3.11+
+* Libraries in requirements.txt
+* The host machine needs to have connection to the F5 Distribution Cloud Tenant. 
+* F5 XC API Token. Generate API Tokens: https://docs.cloud.f5.com/docs/how-to/user-mgmt/credentials#generate-api-tokens
 
 ## Usage:
 ```
