@@ -44,7 +44,8 @@ This Terraform example uses a bash script to create or update an HTTP Load Balan
 ## Usage   
 terraform init  
 terraform plan -var="lb_cert=./certs/<http load balancer certificate>" -var="lb_key=./certs/<http load balancer private key>" -var-file="secret.tfvars"  
-terraform apply -var="lb_cert=./certs/<http load balancer certificate>" -var="lb_key=./certs/<http load balancer private key>" -var-file="secret.tfvars" --auto-approve  terraform destroy -var="lb_cert=./certs/<http load balancer certificate>" -var="lb_key=./certs/<http load balancer private key>" -var-file="secret.tfvars" --auto-approve
+terraform apply -var="lb_cert=./certs/<http load balancer certificate>" -var="lb_key=./certs/<http load balancer private key>" -var-file="secret.tfvars" --auto-approve  
+terraform destroy -var="lb_cert=./certs/<http load balancer certificate>" -var="lb_key=./certs/<http load balancer private key>" -var-file="secret.tfvars" --auto-approve
 
 ## Notes  
 - Optionally, a secure remote location with encryption at rest and access control support can be used to store secret.tfvars and the Terraform state.  
