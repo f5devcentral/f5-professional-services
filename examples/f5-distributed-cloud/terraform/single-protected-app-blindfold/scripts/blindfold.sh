@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# This script uses the vescrl utility to return an encrypted Blindfold Secret of a Private Key and a
+# This script uses the vesctl utility to return an encrypted Blindfold Secret of a Private Key and a
 # Certificate in Base64 format to a Terraform configuration file to create a F5XC Load Balancer.
 
-# Defines iput variables from terraform
+# Defines input variables from terraform
 CERTIFICATE=$1
 PRIVATE_KEY=$2
 
@@ -25,13 +25,13 @@ if $EVAL_CERT -eq "true" && $EVAL_KEY -eq "true"; then
         MD5_KEY=$(openssl rsa -noout -modulus -in $PRIVATE_KEY | openssl md5)
 
 	if [[ "$MD5_CERT" == "$MD5_KEY" ]]; then # Verify if the Private Key matches the Certificate
-                # Obtain the F5XC public-key and stores the output to a temporary file
+                # Obtain the F5XC public-key and stores the output in a temporary file
 		vesctl request secrets get-public-key > $XC_PUBLIC_KEY
 
-		# Obtain the policy-document and stores the output to a temporary file.
+		# Obtain the policy-document and stores the output in a temporary file.
 		vesctl request secrets get-policy-document --namespace shared --name ves-io-allow-volterra > $XC_POLICY_DOCUMENT
 
-		# Obtains the path of the temporary file
+		# Obtains the path of the temporary files
 		XC_PUBLIC_KEY_PATH=$(realpath ${XC_PUBLIC_KEY})
                 XC_POLICY_DOCUMENT_PATH=$(realpath ${XC_POLICY_DOCUMENT})
 
@@ -55,11 +55,11 @@ if $EVAL_CERT -eq "true" && $EVAL_KEY -eq "true"; then
         fi
 else
         if [[ "$EVAL_CERT" == "false" ]]; then
-		# Write a message to stderr if the certificate is not in valid PEM format
+		# Write a message to stderr if the certificate is not in a valid PEM format
                 echo "$TIMESTAMP Could not read PEM certificate from $CERTIFICATE" >&2
 		exit 1
         else
-                # Write a message to stderr if the private key is not in valid PEM format
+                # Write a message to stderr if the private key is not in a valid PEM format
 		echo "$TIMESTAMP Could not read PEM private key from $PRIVATE_KEY" >&2
 		exit 1
 	fi
