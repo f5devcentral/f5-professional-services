@@ -21,7 +21,7 @@ pip3.11 install -r requirements.txt
 
 ## Usage:
 ```
-python3.11 f5-xc-export-security-event-logs.py [-h] --token TOKEN --tenant TENANT --namespace NAMESPACE --loadbalancer LOADBALANCER --hours HOURS
+python3.X f5-xc-export-security-event-logs.py [-h] --token TOKEN --tenant TENANT --namespace NAMESPACE --loadbalancer LOADBALANCER --hours HOURS
 
 This *Python* script helps to export the Security Events logs from *F5 Distributed Cloud* via the XC API into a CSV file.
 
@@ -47,7 +47,7 @@ The script generates a CSV file named as: xc-security_events-<TENANT>_<NAMESPACE
 
 ### Example:
 ```
-python3.11 f5-xc_get_security_logs.py\
+python3.X f5-xc_get_security_logs.py\
                --token "A1B2C3D4E5F6G7H8I9K0"\
                --tenant "my-tenant"\
                --namespace "my-namespace"\
