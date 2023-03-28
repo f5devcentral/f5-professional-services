@@ -15,37 +15,37 @@ Although this iRule can be used independently, it was originally create to autom
 
 1. Create an *LX Workspace* named **LetsEncrypt** ( *Local Traffic -> iRules -> LX Workspaces* ):
 
- ![LX Workskapce 1](/images/001.png)
+ ![LX Workskapce 1](/examples/big-ip-irules/f5-irule-letsencrypt/images/001.png)
 
- ![LX Workskapce 2](/images/002.png)
+ ![LX Workskapce 2](/examples/big-ip-irules/f5-irule-letsencrypt/images/002.png)
 
 2. Add an *Extension* named **letsencrypt_ext** (*Add Extension* button):
 
- ![LX Extension 1](/images/003.png)
+ ![LX Extension 1](/examples/big-ip-irules/f5-irule-letsencrypt/images/003.png)
 
- ![LX Extension 2](/images/004.png)
+ ![LX Extension 2](/examples/big-ip-irules/f5-irule-letsencrypt/images/004.png)
 
 3. Replace the content of the file *index.js* by the content of the file *letsencrypt.js* hosted on this repo (don't forget to click on *Save File*):
 
- ![LX Extension 3](/images/005.png)
+ ![LX Extension 3](/examples/big-ip-irules/f5-irule-letsencrypt/images/005.png)
 
 4. Create an *LX Plugin* named **letsencrypt_pl** and selects the *LX Workspace* named **LetsEncrypt** (*Local Traffic -> iRules -> LX Plugins*):
 
- ![LX Plugin 1](/images/006.png)
+ ![LX Plugin 1](/examples/big-ip-irules/f5-irule-letsencrypt/images/006.png)
 
- ![LX Plugin 2](/images/007.png)
+ ![LX Plugin 2](/examples/big-ip-irules/f5-irule-letsencrypt/images/007.png)
 
 5. Create a *Data Group* named **dg-letsencrypt-api-allowed-ips** and populates it with the IP addresses allowed to access the API endpoint **/api/letsencrypt**:
 
- ![Data Group](/images/008.png)
+ ![Data Group](/examples/big-ip-irules/f5-irule-letsencrypt/images/008.png)
 
 6. Create an *iRule* named **irule_letsencrypt** using the content of the file *irule_letsencrypt.tcl* hosted on this repo:
 
- ![iRule](/images/009.png)
+ ![iRule](/examples/big-ip-irules/f5-irule-letsencrypt/images/009.png)
 
 7. Apply the *iRule* to the *Virtual Server*:
 
- ![Virtual Server](/images/010.png)
+ ![Virtual Server](/examples/big-ip-irules/f5-irule-letsencrypt/images/010.png)
 
 ## Testing the iRule
 
@@ -67,9 +67,9 @@ uUrUgLtYtuX_-fWji1vHIicYfN_mVOT_r6tZAyZjm6I.xc1LuVlKDHQ77pXdV4CAF0PTZqyXAH4UZbHA
 
 1. Create a *Third Party CA Management* named **LetsEncrypt_PROD** using *Lets Encrypt* as the *CA Provider* ( *Configuration -> Certificate Management -> Third Party CA Management*):
 
- ![Third Party CA Management 1](/images/011.png)
+ ![Third Party CA Management 1](/examples/big-ip-irules/f5-irule-letsencrypt/images/011.png)
 
- ![Third Party CA Management 2](/images/012.png)
+ ![Third Party CA Management 2](/examples/big-ip-irules/f5-irule-letsencrypt/images/012.png)
 
  2. Add a *Domain Configuration* entry to the *Third Party CA Management* created previously. 
 
@@ -82,16 +82,16 @@ uUrUgLtYtuX_-fWji1vHIicYfN_mVOT_r6tZAyZjm6I.xc1LuVlKDHQ77pXdV4CAF0PTZqyXAH4UZbHA
 
 Then click on *Save* 
 
-![Third Party CA Management 3](/images/013.png)
+![Third Party CA Management 3](/examples/big-ip-irules/f5-irule-letsencrypt/images/013.png)
 
 Click on the *Domain Configuration* entry you added and then click on *Deploy & Test*:
 
-![Third Party CA Management 4](/images/014.png)
+![Third Party CA Management 4](/examples/big-ip-irules/f5-irule-letsencrypt/images/014.png)
 
 3. Generate the Lets Encrypt certificate ( *Configuration -> Certificate Management -> Certificate & Keys* ): 
 
-![Certificate & Key 1](/images/015.png)
+![Certificate & Key 1](/examples/big-ip-irules/f5-irule-letsencrypt/images/015.png)
 
-![Certificate & Key 2](/images/016.png)
+![Certificate & Key 2](/examples/big-ip-irules/f5-irule-letsencrypt/images/016.png)
 
-![Certificate & Key 3](/images/017.png)
+![Certificate & Key 3](/examples/big-ip-irules/f5-irule-letsencrypt/images/017.png)
