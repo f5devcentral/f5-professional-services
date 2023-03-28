@@ -10,11 +10,11 @@ The script leverages the F5 XC API to retrieve security event logs for a specifi
 
 # Installation
 
-pip3.11 install -r requirements.txt
+pip3.X install -r requirements.txt
 
 ## Prerequisites
 
-* Python 3.11+
+* Python 3.X+
 * Libraries in requirements.txt
 * The host machine needs to have connection to the F5 Distribution Cloud Tenant. 
 * F5 XC API Token. Generate API Tokens: https://docs.cloud.f5.com/docs/how-to/user-mgmt/credentials#generate-api-tokens
