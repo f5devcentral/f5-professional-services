@@ -1,0 +1,2 @@
+server-urls: https://<tenant_name>.console.ves.volterra.io/api
+p12-bundle: /path/to/api_credential.p12
