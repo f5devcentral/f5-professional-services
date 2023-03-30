@@ -138,7 +138,7 @@ PLAY RECAP *********************************************************************
 bigip1                 : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 ```
-## Final Outpur from **health.txt** File:
+## Final Output from **health.txt** File:
 
 ```
 
