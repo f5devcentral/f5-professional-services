@@ -14,6 +14,18 @@ when HTTP_REQUEST {
 
     if { ($uri equals "/api/letsencrypt") and ([HTTP::method] equals "POST") } {
     
+        # Return a 403 (Forbidden) if the Client IP is not allowed
+        if { !([class match [getfield $clientip "%" 1] equals "/Common/dg-letsencrypt-api-allowed-ips"]) } {
+        
+            if { $static::debug } {
+                log local0. "Access denied for the client IP $clientip. "
+            }
+            
+            HTTP::respond 403 content "\{\"status\":\"error\", \"message\":\"Forbidden\"\}" "Content-Type" "application/json" "Cache-Control" "no-store"
+            return
+        
+        }
+        
         set username [HTTP::header "username"]
         set password [HTTP::header "password"]
         
@@ -38,18 +50,6 @@ when HTTP_REQUEST {
             
             HTTP::respond 415 content "\{\"status\":\"error\", \"message\":\"Only JSON payload is allowed\"\}" "Content-Type" "application/json" "Cache-Control" "no-store"
             return
-        }
-        
-        # Return a 403 (Forbidden) if the Client IP is not allowed
-        if { !([class match [getfield $clientip "%" 1] equals "/Common/dg-letsencrypt-api-allowed-ips"]) } {
-        
-            if { $static::debug } {
-                log local0. "Access denied for the client IP $clientip. "
-            }
-            
-            HTTP::respond 403 content "\{\"status\":\"error\", \"message\":\"Forbidden\"\}" "Content-Type" "application/json" "Cache-Control" "no-store"
-            return
-        
         }
     
         # Define the number of bytes that will be collected
