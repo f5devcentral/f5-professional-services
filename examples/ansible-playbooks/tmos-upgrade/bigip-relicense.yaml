@@ -1,5 +1,13 @@
 ---
+# Created and tested succesfully by Steven Meisenzahl on 3/30/2023
 # This file is using the Imparative Collection module, reference https://clouddocs.f5.com/products/orchestration/ansible/devel/modules/bigip_device_license_module.html#bigip-device-license-module
+#
+# Usage 
+#   ansbile-playbook -vvv bigip-relicense.yaml
+# 
+# Host files entrie example below
+#   [lb]
+#   bigip2 hostname=bigip2-bigip.f5net f5admin=admin mgmt_ip=192.168.1.10 f5admin_pass=admin devkey=<Registration Key>
 
 - name: Relicense BIGIP
   hosts: lb
