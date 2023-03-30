@@ -1,0 +1,59 @@
+# F5 Networks, Inc.
+# Professional Services
+
+# Generally speaking, this iRule solves the need to send the same payload to several servers simultaneously in contrast to the default behavior of a pool (one server at a time).
+# It can be adjusted to virtually send any type of payload to multiple servers simultaneously.
+
+# This iRule is particularly designed to send the SNMP traps (UDP payload) of a client to multiple Remote Monitoring & Management (RMM) servers simultaneously.
+# The BIG-IP will use the client IP as a source to establish a sideband connection with all the RMM servers.
+# THe BIG-IP will send the UDP payload it receives from a client to all the RMM servers specified in a data group.
+
+# About sideband: https://clouddocs.f5.com/api/irules/SIDEBAND.html
+# About Data groups: https://my.f5.com/manage/s/article/K3386
+
+##### Requisites:
+
+# A virtual server with a UDP profile (no pool required).
+# The RMM servers must be specified in a data group of string type.
+# The string of a data group entry can be anything, but the value must be an IP address for this iRule to function correctly.
+
+##### Data Group creation:
+# the Datagroup can be created with the following TMOS command:
+# create ltm data-group internal <Datagoup NAME> records add {server1 { data x.x.x.x} server2 { data x.x.x.x} serverN {data x.x.x.x}} type string
+# 
+# For example:
+# create ltm data-group internal RMM_DG records add { server1 { data 10.73.50.10} server2 { data 1.1.1.1} server {data 2.2.2.2}} type string
+
+
+##### Variables:
+# - "total" determines the number of entries in the data group, that is, the number of servers, and is used to determine the number of times that the loop is run (one time per server).
+# - "server_ip" stores the RMM server IP grabbed from the data group.
+# - "dest" determines the destination server and port, in this case, the fixed port is 162.
+# - "conn" set up the connection using the client IP and the server destination.
+# - "data" stores the UDP payload sent by the client.
+
+when CLIENT_DATA {
+    # The data group name must be configured here (replace  RMM_DG" with the actual name of your data group)
+    set total [class size RMM_DG]
+    set client_ip [IP::client_addr]
+    # The for loop is used to establish a sideband connection with each server and to send the payload. Once a loop runs the connection is closed.
+    for {set i 0} {$i < $total} {incr i} {
+    # The server_ip is populated with the element grabbed from the data group
+    # The data group name must be configured here (replace  RMM_DG" with the actual name of your data group)
+    set server_ip [class element -value $i RMM_DG]
+    # enable the following log line only for debugging purposes. It will show the number of servers in the data group and the server IP that is being used at the moment in the loop.
+    #log local0. "servers total is $total, the server IP is $server_ip"
+    # In this case the destination port is 162 for SNMP traps but can be adjusted to a different port
+    set dest "$server_ip:162"
+    # Here the UDP protocol is specified with low timeout and idle values because no response is expected from the servers.
+    # The "myaddr" option is used to specify the source IP that will be used to communicate with the RMM servers, in this case, the client IP.
+    set conn [connect -protocol udp -timeout 3 -idle 2 -myaddr $client_ip $dest]
+    set data [UDP::payload]
+    # After the connection is established and the data is stored in the data variable, the data is sent using the connection.
+    send $conn $data
+    # Then the connection is closed
+    close $conn
+}
+# The variables are unset once the loop sends the data to each server.
+unset total client_ip i server_ip dest conn data
+}
