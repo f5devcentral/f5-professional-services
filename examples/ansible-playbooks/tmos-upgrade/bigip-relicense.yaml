@@ -1,0 +1,28 @@
+---
+# This file is using the Imparative Collection module, reference https://clouddocs.f5.com/products/orchestration/ansible/devel/modules/bigip_device_license_module.html#bigip-device-license-module
+
+- name: Relicense BIGIP
+  hosts: lb
+  connection: local
+  gather_facts: false
+  vars:
+    provider:
+      server: "{{mgmt_ip}}"
+      user: "{{f5admin}}"
+      password: "{{f5admin_pass}}"
+      server_port: 443
+      validate_certs: no
+
+  collections:
+    - f5networks.f5_bigip
+
+  tasks:
+    - name: Reactivate License
+      bigip_device_license:
+        license_key: "{{ devkey }}"
+        license_server: "license.f5net.com"
+        provider: "{{ provider }}"
+        force: yes
+        state: latest
+        accept_eula: yes
+      delegate_to: localhost
