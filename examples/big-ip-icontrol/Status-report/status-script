@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#Restcurl to pull virtual servers state
+echo -e "Subject: Report VS Ready\n" > /var/tmp/virtual_server_report.csv
+restcurl -s -u admin: -X GET /mgmt/tm/ltm/virtual | jq -r '.items[] | [.name,.destination,.enabled,.disabled] |@csv' >> /var/tmp/virtual_server_report.csv
+sed -i '3i Virtual_Server, Destination, Enabled, Disabled\n' /var/tmp/virtual_server_report.csv
+/sbin/ssmtp -f "automate@f5.com" -F "Automate Report" k.arce@f5.com < /var/tmp/virtual_server_report.csv
+sleep 1
+
+#Restcurl to pull pool member state
+echo -e "Subject: Report Pool Ready\n" > /var/tmp/pool_member_report.csv
+for pool in $(restcurl -s -u admin: -X GET /mgmt/tm/ltm/pool | jq -r '.items[].membersReference.link'); do restcurl -s -u admin: "$pool" | jq -r '.items[] | [.name,.address,.state] | @csv' ;done >> /var/tmp/pool_member_report.csv
+sleep 1
+sed -i '3i Pool_member_name, Destination, Status\n' /var/tmp/pool_member_report.csv
+/sbin/ssmtp  -f "automate@f5.com" -F "Automate Report" k.arce@f5.com < /var/tmp/pool_member_report.csv
+
+#Restcurl to pull wide ips state
+echo -e "Subject: Report Wide Ips Ready\n" > /var/tmp/wide_ip_report.csv
+restcurl -s -u admin: -X GET /mgmt/tm/gtm/wideip/a | jq -r '.items[] | [.name,.enabled,.disabled] | @csv' >> /var/tmp/wide_ip_report.csv
+sed -i '3i Name,Enabled, Disabled\n' /var/tmp/wide_ip_report.csv
+/sbin/ssmtp -f "automate@f5.com" -F "Automate Report" k.arce@f5.com < /var/tmp/wide_ip_report.csv
+
+
+#Restcurl to pull GSL pools
+echo -e "Subject: Report GTM pools Ready\n" > /var/tmp/gtm_pool_member_report.csv
+for pool in $(restcurl -s -u admin: -X GET /mgmt/tm/gtm/pool/a | jq -r '.items[].membersReference.link'); do restcurl -s -u admin: "$pool" | jq -r '.items[] | [.name,.enabled,.disabled] | @csv' ;done >> /var/tmp/gtm_pool_member_report.csv
+sleep 1
+sed -i '3i Pool_member_name,Enabled,Disabled\n' /var/tmp/gtm_pool_member_report.csv
+/sbin/ssmtp -f "automate@f5.com" -F "Automate Report" k.arce@f5.com < /var/tmp/gtm_pool_member_report.csv
