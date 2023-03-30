@@ -1,2 +1,5 @@
+[bigips]
+bigip1
+
+[local]
 localhost ansible_python_interpreter=/home/user/Desktop/Ansible/myansible/bin/python
-f5_big-ip ansible_host=A.A.A.A bigip_hostname=example.com ansible_user=admin ansible_pass=admin

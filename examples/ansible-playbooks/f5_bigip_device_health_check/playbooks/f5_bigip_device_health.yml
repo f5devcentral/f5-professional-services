@@ -1,12 +1,14 @@
+---
+
 - name: Test device Info
-  hosts: aws_big-ip
+  hosts: bigips
   gather_facts: false
   connection: local
 
   vars:
     provider:
-      password: "{{ansible_ssh_pass}}"
-      server: "{{ bigip_hostname }}"
+      password: "{{ansible_pass}}"
+      server: "{{ ansible_host }}"
       user: "{{ansible_user}}"
       validate_certs: no
       server_port: 443

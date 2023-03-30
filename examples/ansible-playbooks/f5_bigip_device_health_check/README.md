@@ -54,13 +54,22 @@ interpreter_python = python3
 enable_task_debugger = True
 
 ```
-2. Creating an Ansible **Inventory** file:
+2. Creating Ansible **Inventory**:
 
 ```
 $ cat inventory/hosts
 
+[bigips]
+bigip1
+
+[local]
 localhost ansible_python_interpreter=/home/cisco/Desktop/Ansible/myansible/bin/python
-f5_big-ip ansible_host=A.A.A.A bigip_hostname=EXAMPLE.COM ansible_user=admin ansible_pass=admin
+
+$ cat inventory/hosts_vars/bigip1
+
+ansible_host: A.A.A.A
+ansible_user: admin
+ansible_pass: admin
 
 ```
 
@@ -79,8 +88,11 @@ Here is where the final file **health.txt** will be created
 Your enviroment should look as below:
 
 ```
+├── README.md
 ├── ansible.cfg
 ├── inventory
+│   ├── host_vars
+│   │   └── bigip1
 │   └── hosts
 ├── outputs
 │   └── health.txt
@@ -92,45 +104,45 @@ Your enviroment should look as below:
 ## Running the playbook
 
 ```
-ansible-playbook playbooks/basic_device_check.yml
+ansible-playbook playbooks/f5_bigip_device_health.yml
 
 PLAY [Test device Info] **********************************************************************************************************************************************************************
 
 TASK [Checking Version] **********************************************************************************************************************************************************************
-ok: [aws_big-ip -> localhost]
+ok: [bigip1 -> localhost]
 
 TASK [Checking Interfaces] *******************************************************************************************************************************************************************
-ok: [aws_big-ip -> localhost]
+ok: [bigip1 -> localhost]
 
 TASK [Checking CPU health] *******************************************************************************************************************************************************************
-ok: [aws_big-ip -> localhost]
+ok: [bigip1 -> localhost]
 
 TASK [Checking Memory health] ****************************************************************************************************************************************************************
-ok: [aws_big-ip -> localhost]
+ok: [bigip1 -> localhost]
 
 TASK [Checking Disk Health] ******************************************************************************************************************************************************************
 [WARNING]: Using "write" commands is not idempotent. You should use a module that is specifically made for that. If such a module does not exist, then please file a bug. The command in
 question is "run util bash -c df -h..."
-ok: [aws_big-ip -> localhost]
+ok: [bigip1 -> localhost]
 
 TASK [Deleting file if already exist.] *******************************************************************************************************************************************************
-changed: [aws_big-ip]
+changed: [bigip1]
 
 TASK [Creating a file to save the systme Health.] ********************************************************************************************************************************************
-changed: [aws_big-ip]
+changed: [bigip1]
 
 TASK [generating final file] *****************************************************************************************************************************************************************
-changed: [aws_big-ip]
+changed: [bigip1]
 
 PLAY RECAP ***********************************************************************************************************************************************************************************
-aws_big-ip                 : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+bigip1                 : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 ```
 ## Final Outpur from **health.txt** File:
 
 ```
 
-######## Device Health from example.com  ################
+######## Device Health from A.A.A.A  ################
 System running version: 14.1.5.3
 Interfaces status: [
     "--------------------------------------------------------------",
@@ -177,5 +189,5 @@ Disk space Info: [
     "/dev/loop0                               340398  340398         0 100% /var/apm/mount/apmclients-7230.2022.715.1725-6010.0.iso",
     "tmpfs                                   1595896       0   1595896   0% /run/user/91"
 ]
-######## Device Health from example.com  ################
+######## Device Health from A.A.A.A  ################
 ```
