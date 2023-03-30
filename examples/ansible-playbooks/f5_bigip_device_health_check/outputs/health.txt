@@ -1,0 +1,48 @@
+######## Device Health from example.com  ################
+System running version: 14.1.5.3
+Interfaces status: [
+    "--------------------------------------------------------------",
+    "Net::Interface",
+    "Name  Status  Bits   Bits  Pkts   Pkts  Drops  Errs      Media",
+    "                In    Out    In    Out                        ",
+    "--------------------------------------------------------------",
+    "1.1       up  2.5M   2.6M  7.7K   7.7K      0     0  10000T-FD",
+    "1.2       up  2.5M  24.2M  7.7K  72.1K      0     0  10000T-FD",
+    "mgmt      up  4.7M   8.3M  8.8K  13.0K      0     0   100TX-FD"
+]
+CPU Utilization is: [
+    "System CPU Usage(%)  Current  Average  Max(since 03/22/23 08:41:48)",
+    "-------------------------------------------------------------------",
+    "Utilization                8        8                            15"
+]
+Memory Info: [
+    "Sys::System Memory Information",
+    "-----------------------------------------------------------------",
+    "Memory Used(%)     Current  Average  Max(since 03/22/23 08:41:54)",
+    "-----------------------------------------------------------------",
+    "TMM Memory Used          4        4                             4",
+    "Other Memory Used       55       55                            55",
+    "Swap Used                0        0                             0"
+]
+Disk space Info: [
+    "Filesystem                            1K-blocks    Used Available Use% Mounted on",
+    "/dev/mapper/vg--db--vda-set.1.root       428150  138767    262759  35% /",
+    "devtmpfs                                7970356       4   7970352   1% /dev",
+    "tmpfs                                   7979460    2276   7977184   1% /dev/shm",
+    "tmpfs                                   7979460    3124   7976336   1% /run",
+    "tmpfs                                   7979460       0   7979460   0% /sys/fs/cgroup",
+    "/dev/mapper/vg--db--vda-set.1._usr      5384128 4575120    512460  90% /usr",
+    "/dev/mapper/vg--db--vda-set.1._config   2171984  269684   1772252  14% /config",
+    "/dev/mapper/vg--db--vda-set.1._var      3030800  527764   2329368  19% /var",
+    "none                                    7979460   22588   7956872   1% /var/tmstat",
+    "prompt                                     4096      28      4068   1% /var/prompt",
+    "/dev/mapper/vg--db--vda-dat.appdata    25717852  775648  23635788   4% /appdata",
+    "/dev/mapper/vg--db--vda-dat.share      15350768  156396  14391556   2% /shared",
+    "none                                    7979460   30140   7949320   1% /shared/rrd.1.2",
+    "/dev/mapper/vg--db--vda-dat.log         2958224   82700   2705540   3% /var/log",
+    "none                                    7979460       4   7979456   1% /run/pamcache",
+    "none                                    7979460       0   7979460   0% /var/loipc",
+    "/dev/loop0                               340398  340398         0 100% /var/apm/mount/apmclients-7230.2022.715.1725-6010.0.iso",
+    "tmpfs                                   1595896       0   1595896   0% /run/user/91"
+]
+######## Device Health from example.com  ################

@@ -1,0 +1,5 @@
+[bigips]
+bigip1
+
+[local]
+localhost ansible_python_interpreter=/home/user/Desktop/Ansible/myansible/bin/python
