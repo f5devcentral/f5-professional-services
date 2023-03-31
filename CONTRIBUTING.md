@@ -100,9 +100,9 @@ https://community.f5.com/t5/technical-articles/irules-optimization-101-05-evalua
 
 Consider the following naming convention. If the iRule submitted also need data-groups, submit it using a folder with the same name of the iRule:  
 
-*irule-ltm-http-rewrite.tcl*  
-*irule-dns-dynamic-response.tcl*  
-*irule-asm-custom-blocking-page.tcl*  
+*irule_ltm_http_rewrite.tcl*  
+*irule_dns_dynamic_response.tcl*  
+*irule_asm_custom_blocking-page.tcl*  
 
 ## Code reviews and pull request
 
