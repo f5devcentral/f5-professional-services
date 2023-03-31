@@ -1,11 +1,11 @@
 #Take JWT from cookie and insert as Authorization header for APM
 
 when RULE_INIT {
-   # Only use different than 0 in a Non-Production enviroment to troubleshoot iRule.  Never enable in Production! 
+   # Only logging in a Non-Production enviroment to troubleshoot iRule. 
    set static::keydebug 0
 
-   #Name of the cookie that the JWT will be stored in. Replace by cookie name
-   set static::transmitcookiename "accessToken"  
+   #Name of the cookie that the JWT will be stored in. Replace cookiename by your cookie name
+   set static::transmitcookiename "cookiename"  
 }
 
 when HTTP_REQUEST {
