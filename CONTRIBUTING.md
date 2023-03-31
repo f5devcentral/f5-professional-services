@@ -20,11 +20,11 @@ When submitting your contribution, please, adhere to the following style guides,
 
 **Security**
 
-Before submit your contribution, please make sure at mininum:
-- There is no credential inside your code
-- There is no API key inside your code
-- There is no license key inside your code
-- There is no reference to any internal company document, IP addresses, email
+Before submitting your contribution, please make sure:
+- There are no credentials inside your code
+- There are no API keys inside your code
+- There are no license keys inside your code
+- There are no references to any internal company document, IP addresses, or names/email addresses of individuals inside your code
 
 **README files**
 
