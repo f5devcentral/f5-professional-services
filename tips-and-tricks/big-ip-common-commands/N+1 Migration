@@ -1,0 +1,46 @@
+*****************************************************************************
+                             N+1 Migration
+*****************************************************************************
+Lab done on GSLAB
+
+Shutdown standby vcmp guest
+Turn on the new i2600 
+Complete basic configuration (should be the same as the old standby vcmp guest)
+	license
+	resource allocation
+	device certificate 
+	platform configuration (passwords, hostname, root password, etc)
+Force new i2600 Offline 
+Configure vlans and non floating selfips
+Configure HA features
+	VLAN HA
+	SelfIP
+	ConfigSync
+	FailoverNetwork
+	Mirroring
+Sincronize both devices, primary vcmp guest and new i2600
+Confirm sincronization successfull
+Release new i2600 offline
+Force active vcmp guest to standby (new i2600)
+Confirm that all traffic is going trough the new i2600
+After customer confirm that everything is ok, proceed with the next step
+Shutdown the standby vcmp guest
+Turn on the new i2600
+Complete basic configuration (should be the same as the old active vcmp guest)
+	license
+	resource allocation
+	device certificate 
+	platform configuration (passwords, hostname, root password)
+Force Offline 
+Configure non floating selfips
+Configure HA features
+	VLAN HA
+	SelfIP
+	ConfigSync
+	FailoverNetwork
+	Mirroring
+Sincronize both devices, new ones i2600
+Confirm sincronization successful
+Release new i2600 offline
+Force active to standby
+Confirm that everything is workgin properly
