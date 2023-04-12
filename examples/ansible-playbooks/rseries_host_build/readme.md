@@ -1,44 +1,25 @@
-CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL 11/19/2022
+# Overview
 
-THIS PLAYBOOK USES THE RSERIES API TO BASE BUILD OUT AN RSERIES
+This playbook will build the base configuration on an rSeries utilizing JSON files. 
 
-THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
+## Requirements
+
+Install f5os collection for ansible using the following link "https://galaxy.ansible.com/f5networks/f5os"
+
+Run the following command from within "/root/.ansible/collections" 
+```
+ansible-galaxy collection install f5networks.f5os
+```
+For any API calls to the rSeries F5OS layer it is important to include the following header 
+ "Content-Type application/yang-data+json" 
  
-  INSTALL F5OS COLLECTION FOR ANSIBLE USING THE FOLLOWING LINK 
-     "https://galaxy.ansible.com/f5networks/f5os"
- 
-  RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
-     ansible-galaxy collection install f5networks.f5os
+ HTTP command connnection to the rSeries uses the following port;
+  8888
 
-  REFERENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
-    https://clouddocs.f5.com/training/community/rseries-training/html/introduction.html
+The following is configured with this playbook, Hostname, Banner, MOTD, DNS, NTP, Remote Logging, Portgroup Speeds, Vlans, Interfaces to Vlans, LAGs, Interfaces to LAGs, LACP on LAGs, SNMP 
+Allow List, SNMP Location, SNMP Community, SNMP Security View, SNMP Traps, SNMP Target.
 
-  NOTE: For any API calls to the rSeries F5OS layer it is important to include the header Content-Type application/yang-data+json and use port 8888 
-
-####################################################
-
-Usage: ansible-playbook -vvv rseries-base-build.yaml
-
-####################################################
-
-The following is configured with this playbook,
-  Hostname,
-  Banner,
-  MOTD,
-  DNS,
-  NTP,
-  Remote Logging,
-  Portgroup Speeds,
-  Vlans,
-  Interfaces to Vlans,
-  LAGs,
-  Interfaces to LAGs,
-  LACP on LAGs,
-  SNMP Allow List,
-  SNMP Location,
-  SNMP Community,
-  SNMP Security View,
-  SNMP Traps,
-  SNMP Target,
-  
-  Modify json files with your site information and run the playbook
+## Usage
+```
+ansible-playbook -vvv rseries-base-build.yaml
+```
