@@ -7,7 +7,7 @@
 # 
 # Host files entrie example below
 #   [lb]
-#   bigip2 hostname=bigip2-bigip.f5net f5admin=admin mgmt_ip=192.168.1.10 f5admin_pass=admin devkey=<Registration Key>
+#   bigip1 hostname=bigip1-bigip.f5net f5admin=admin mgmt_ip=192.168.1.10 f5admin_pass=admin devkey=<Registration Key>
 
 - name: Relicense BIGIP
   hosts: lb
