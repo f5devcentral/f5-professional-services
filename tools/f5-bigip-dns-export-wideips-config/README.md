@@ -23,7 +23,7 @@ pip3.X install -r requirements.txt
 ```
 Python3.X f5-export_wideip_config.py [-h] --bigip BIGIP --user USER --password PASSWORD
 
-This *Python* script helps to export BIGIP's virtual server information to a CSV file.
+This *Python* script helps to export BIGIP's wideIPs configuration to a CSV file.
 
 options:
   -h, --help           show this help message and exit
@@ -31,7 +31,7 @@ options:
   --user USER
   --password PASSWORD
 
-The script generates a CSV file named as: VSInfo-<hostname>_<date>.csv
+The script generates a CSV file named as: WideIPInfo-<hostname>_<date>.csv
 ```
 ## Parameters
 
