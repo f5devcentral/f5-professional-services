@@ -71,7 +71,7 @@ def get_vss(bigip,user,password):
 
 def main():
     currentTime = datetime.now()
-    parser = argparse.ArgumentParser(description = "This *Python* script helps to export BIGIP's virtual server information to a CSV file.", epilog='The script generates a CSV file named as: VSInfo-<hostname>_<date>.csv')    
+    parser = argparse.ArgumentParser(description = "This *Python* script helps to export BIGIP's virtual server configuration to a CSV file.", epilog='The script generates a CSV file named as: VSInfo-<hostname>_<date>.csv')    
     parser.add_argument('--bigip', type=str, required=True)
     parser.add_argument('--user', type=str, required=True)
     parser.add_argument('--password', type=str, required=True)
