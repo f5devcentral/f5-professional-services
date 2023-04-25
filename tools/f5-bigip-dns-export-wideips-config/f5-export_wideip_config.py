@@ -1,4 +1,3 @@
-#!/usr/local/bin/python3.11
 from datetime import datetime
 import argparse
 import requests
