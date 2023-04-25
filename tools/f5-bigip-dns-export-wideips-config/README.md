@@ -55,6 +55,6 @@ WideIPInfo-\<BIGIP\>_MM-DD-YYYY.csv
 | example.wideip.lab | gtm_pool ;                                                             | none                 | round_robin         | disabled        | NA           | NA                 | NA                 | none               |
 | gtm.wideip.lab     | gtm_pool_1; gtm_pool_2;                            | a /Common/gtm_pool   | global_availability | enabled         | 3600                | 24                        | 64                        | "/Common/_iRule, " |
 | j12412.wideip.lab  | gtm_pool; gtm_pool_1; gtm_pool_2; | a /Common/gtm_pool_1 | topology            | enabled         | 1564                | 32                        | 578                       | none               |
-| test.wideip.lab    | gtm_pool; gtm_pool_1; gtm_pool_2; | none                 | ratio               | disabled        | NA           | NA                 | NA                 | "/Common/_iRule, " |
+| test.wideip.lab    | gtm_pool; gtm_pool_1; gtm_pool_2; | none                 | ratio               | disabled        | NA           | NA                 | NA                 | /Common/_iRule |
 
 
