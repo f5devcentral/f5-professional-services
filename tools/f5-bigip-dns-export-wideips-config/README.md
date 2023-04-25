@@ -52,9 +52,9 @@ WideIPInfo-\<BIGIP\>_MM-DD-YYYY.csv
 
 | **WideIP**         | **Pools**                                                                               | **Last Resort Pool** | **Pool LB Mode**    | **Persistence** | **Persistence TTL** | **Persistence CIDR IPv4** | **Persistence CIDR IPv6** | **iRules**         |
 |--------------------|-----------------------------------------------------------------------------------------|----------------------|---------------------|-----------------|---------------------|---------------------------|---------------------------|--------------------|
-| example.wideip.lab | gtm-pool/<order:0, ratio:1> ;                                                             | none                 | round-robin         | disabled        | Not Apply           | Not Apply                 | Not Apply                 | none               |
-| gtm.wideip.lab     | gtm-pool-1/<order:0, ratio: 1>; gtm-pool-2 order: 1 ratio: 1;                             | a /Common/gtm-pool   | global-availability | enabled         | 3600                | 24                        | 64                        | "/Common/_iRule, " |
-| j12412.wideip.lab  | gtm-pool/<order: 0, ratio: 1>; gtm-pool-1/<order:1,ratio:1>; gtm-pool-2/<order:2,ratio:1>; | a /Common/gtm-pool-1 | topology            | enabled         | 1564                | 32                        | 578                       | none               |
-| test.wideip.lab    | gtm-pool/<order:0,ratio:1>; gtm-pool-1/<order:1,ratio:1>; gtm-pool-2/<order:2,ratio:1>; | none                 | ratio               | disabled        | Not Apply           | Not Apply                 | Not Apply                 | "/Common/_iRule, " |
+| example.wideip.lab | gtm-pool ;                                                             | none                 | round-robin         | disabled        | Not Apply           | Not Apply                 | Not Apply                 | none               |
+| gtm.wideip.lab     | gtm-pool-1; gtm-pool-2 order;                            | a /Common/gtm-pool   | global-availability | enabled         | 3600                | 24                        | 64                        | "/Common/_iRule, " |
+| j12412.wideip.lab  | gtm-pool; gtm-pool-1; gtm-pool-2; | a /Common/gtm-pool-1 | topology            | enabled         | 1564                | 32                        | 578                       | none               |
+| test.wideip.lab    | gtm-pool; gtm-pool-1; gtm-pool-2; | none                 | ratio               | disabled        | Not Apply           | Not Apply                 | Not Apply                 | "/Common/_iRule, " |
 
 
