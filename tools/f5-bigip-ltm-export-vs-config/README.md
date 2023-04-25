@@ -44,7 +44,7 @@ The script generates a CSV file named as: VSInfo-<hostname>_<date>.csv
 
 ### Example:
 ```
-python3.X getting_vs_info.py --bigip "<BIGIP's management IP>" --user "<username>" --passw "<password>"          
+python3.X f5-export_vs_config.py --bigip "<BIGIP's management IP>" --user "<username>" --passw "<password>"          
 ```
 
 ## Output - CSV file: 
