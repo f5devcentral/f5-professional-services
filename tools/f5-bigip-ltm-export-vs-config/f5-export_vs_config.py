@@ -1,7 +1,6 @@
 from datetime import datetime
 import argparse
 import requests
-import json
 from requests.auth import HTTPBasicAuth
 import pandas as pd 
 
