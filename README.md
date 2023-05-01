@@ -29,6 +29,8 @@ The tools folder contains utilities which can assist with a variaty of tasks rel
 | ----------------------------------------------- | ----------- |
 | [f5-awaf-export-policies](tools/f5-awaf-export-policies)| A small script to export all AWAF policies from a BIG-IP device. |
 | [f5-bigip-dns-wideip-lookup](tools/f5-bigipdns-wideip-lookup)| This script pulls wideip hostnames from a BIGIP-DNS device and make a DNS request using dig |
+| [f5-bigip-dns-export-wideips-config](tools/f5-bigip-dns-export-wideips-config)| Script to export WideIP config to a CSV file. |
+| [f5-bigip-ltm-export-vs-config](tools/f5-bigip-ltm-export-vs-config)| Script to export Virtual Server config to a CSV file. |
 | [f5-waf-quick-patch-cve-2021-44228](tools/f5-waf-quick-patch-cve-2021-44228)| This patches various BIG-IP ASM policies for CVE-2021-44228.  |
 | [f5-waf-quick-view](tools/f5-waf-quick-view)| This reports on some settings across BIG-IP ASM policies.  |
 | [f5-xc-backup](tools/f5-xc-backup)| A script to backup F5 XC configuration. |
