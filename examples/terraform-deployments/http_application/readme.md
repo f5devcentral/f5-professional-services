@@ -1,6 +1,7 @@
 # Overview
 
-This terraform code creates a node, pool and a virtual server, it uses local modules to expose only certain attributes that can be modified on the input.tfvars file.
+This terraform code creates a node, pool and a virtual server
+It uses local modules to expose only certain attributes that can be modified on the input.tfvars file.
 
 ## Requirements
 
