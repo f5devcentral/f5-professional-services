@@ -7,9 +7,9 @@ terraform {
   }
 }
 provider "bigip" {
-  address  = "10.154.86.118"
-  username = "admin"
-  password = "karce123"
+  address  = "x.x.x.x"
+  username = "username"
+  password = "password"
 
 }
 
