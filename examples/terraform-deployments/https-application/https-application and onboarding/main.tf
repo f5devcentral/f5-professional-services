@@ -1,6 +1,6 @@
 
 resource "bigip_do" "do-example" {
-  do_json = file("do.json")
+  do_json = file("DO_example.json")
 
 }
 
