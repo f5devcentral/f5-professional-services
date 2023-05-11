@@ -1,3 +1,5 @@
+
+
 resource "null_resource" "f5_do_installer" {
   connection {
     type     = "ssh"
@@ -31,7 +33,7 @@ resource "bigip_do" "do-example" {
 }
 
 resource "bigip_as3" "as3-example1" {
-  as3_json = file("example1.json")
+  as3_json = file("example.json")
   depends_on = [bigip_do.do-example ]
 }
 
