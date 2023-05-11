@@ -18,3 +18,20 @@ The script automates L1-L3 on-boarding for BIG-IP using DO and then configure L4
 
 For more details on Prerequisites and Requirements visit: https://clouddocs.f5.com/products/extensions/f5-declarative-onboarding/latest/prereqs.html#prerequisites-and-requirements
 
+## Usage
+
+```
+ terraform plan -var-file="<input_variable_name_file>.tfvars"
+ terraform apply -var-file="<input_variable_name_file>.tfvars"
+ 
+```
+
+## Example
+
+```
+terraform plan -var-file="input.tfvars" 
+terraform apply -var-file="input.tfvars" 
+
+```
+
+
