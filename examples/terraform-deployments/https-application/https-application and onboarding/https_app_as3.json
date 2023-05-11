@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
+    "class": "AS3",
+    "action": "deploy",
+    "declaration": {
+      "class": "ADC",
+      "schemaVersion": "3.0.0",
+      "https_app": {
+      "class": "Tenant",
+      "https__App": {
+        "class": "Application",
+        "https_vs": {
+          "class": "Service_HTTPS",
+          "virtualAddresses": [ "10.10.10.5" ],
+          "pool": "https_example_pool",
+          "profileHTTP": {
+            "use": "profile_http"
+          },        
+          "persistenceMethods": [ "source-address" ],          
+          "serverTLS": {
+           "bigip": "/Common/clientssl"
+        },
+          "clientTLS": {
+              "bigip": "/Common/serverssl"
+          }     
+        },
+        "https_example_pool": {
+          "class": "Pool",
+          "loadBalancingMode": "round-robin",          
+          "monitors": [
+            {
+              "use": "https_monitor" 
+            }
+          ],
+          "members": [{
+            "servicePort": 443,
+            "shareNodes": true,            
+            "serverAddresses": ["20.20.20.9","20.20.20.11"]
+          }]
+        },
+
+        "profile_http": {
+          "class": "HTTP_Profile",
+          "xForwardedFor": true
+        },
+      
+        "https_monitor": {
+          "class": "Monitor",
+            "clientTLS": 
+                {
+                    "bigip": "/Common/serverssl"
+                 },          
+            "monitorType": "https",
+            "interval": 30,
+            "timeout": 92,
+            "send": "GET / HTTP/1.1\r\nHost: example.com \r\nConnection: Close\r\n\r\n",
+            "receive": ""
+        }                  
+    }
+  }
+}
+}
