@@ -1,7 +1,3 @@
-variable "token" {
-  type = string
-}
-
 variable "admin_user" {
   type = string
 }
