@@ -1,7 +1,4 @@
 admin_user     = "admin"
 admin_password = "admin"
 bigip_address  = "x.x.x.x:443"
-advanced_shell_user     = "root"
-advanced_shell_user_password = "password"
-f5_do_rpm_filename      = "f5-declarative-onboarding-1.37.0-3.noarch"
-do_install_dir          = "/var/config/rest/downloads/"
+
