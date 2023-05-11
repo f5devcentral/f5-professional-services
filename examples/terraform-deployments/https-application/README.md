@@ -1,6 +1,7 @@
 # Overview
 
-This terraform deployment create the basic configuration on a F5OS tenant and an HTTPS application using AS3, DO and terraform
+This terraform deployment create the basic configuration on a F5OS tenant and an HTTPS application using AS3, DO and terraform.
+The code can be used on any BIG-IP with 13.1 and later and is not specific for a F5OS tenant
 
 ## How it works
 
