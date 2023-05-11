@@ -1,7 +1,6 @@
 
 resource "bigip_do" "do-example" {
   do_json = file("do.json")
-  depends_on = [ null_resource.f5_do_installer ]
 
 }
 
