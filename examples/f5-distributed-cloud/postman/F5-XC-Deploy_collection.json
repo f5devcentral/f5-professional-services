@@ -380,6 +380,7 @@
 							"let namespace1 = pm.environment.get(\"namespace_1\")",
 							"let appName1 = pm.environment.get(\"app_name_1\")",
 							"let AppFwName = pm.environment.get(\"shared-appfw-name\")",
+							"let tenantID = pm.environment.get(\"tenant-id\")",
 							"var appFwConfig = \"\";",
 							"var svcPolConfig = \"\";",
 							"",
