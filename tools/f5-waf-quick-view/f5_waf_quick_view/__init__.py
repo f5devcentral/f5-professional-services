@@ -4,14 +4,19 @@ import datetime
 import getpass
 import json
 import os
+import socket
 import re
 import requests
 import urllib3
+from termcolor import colored
 
 # global variable - file to save data
 dt = datetime.datetime.today()
 filename = "asm-policies-qk-%02d-%02d-%02d-%02d%02d.csv" %(dt.month,dt.day,dt.year,dt.hour,dt.minute)
 path = "data"
+dataExist = os.path.exists(path)
+if not (dataExist):
+    os.mkdir(path)
 filename = os.path.join("data", filename)
 device = ""
 
@@ -147,6 +152,18 @@ def check_active(device,token):
          
     return False
 
+def isOpen(ip, port):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(3)
+        try:
+                s.connect((ip, int(port)))
+                s.shutdown(socket.SHUT_RDWR)
+                return True
+        except:
+                return False
+        finally:
+                s.close()
+
 def main():
     urllib3.disable_warnings()
 
@@ -164,19 +181,22 @@ def main():
       with open(device,'r') as a_file:
           for line in a_file:
               device = line.strip()
-              # TODO - test connectivity with each device and report on the ones failing 
               url_base = 'https://%s/mgmt' % device
               bigip = requests.session()
               bigip.headers.update({'Content-Type': 'application/json'})
               bigip.auth = (username, password)
               bigip.verify = False
-              token = get_token(bigip, url_base, (username, password))
-              print(device)
+              print(colored(device,'green',attrs=['bold']))
+              connectAttempt = isOpen(device,"443")              
+              if (not connectAttempt):
+                  print(colored(device + ' is not responding on port 443 and may not be accessible. Moving on to the next device','red',attrs=['bold']))
+                  continue
+              token = get_token(bigip, url_base, (username, password))                            
               if (not token):
-                  print('Unable to obtain token for device ' + device)
+                  print(colored('Unable to obtain token for device ' + device,'red',attrs=['bold']))
                   continue 
               if not check_active(device, token): 
-                  print('Device ' + device + ' is not active, skipping it...')
+                  print(colored('Device ' + device + ' is not active, skipping it...','yellow',attrs=['bold']))
                   continue
               audit_asm_policies_high_level(device,token)
       print('File saved: %s' % filename)
