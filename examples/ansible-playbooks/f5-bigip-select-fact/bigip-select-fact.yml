@@ -21,7 +21,7 @@
         tcp-half-open-monitors, tcp-profiles, traffic-groups, trunks, udp-profiles, users, ucs,
         vcmp-guests, virtual-addresses, virtual-servers, vlans"
 
-- name: Select fact to gather.
+- name: Select fact to collect.
   hosts: bigips
   connection: local
   gather_facts: yes
@@ -31,6 +31,10 @@
     - name: data_entity
       prompt: "What data do you want? (select one option from above)"
       private: no
+      
+    # - name: fileChoise
+      # prompt: "Do you want to write output to a file? (yes/no)"
+      # private: no
   
   tasks:
    
@@ -43,3 +47,10 @@
       register: selectFact
     - debug: 
         msg: "{{ selectFact }}"
+        
+        
+    # - name: Copy output to file
+      # copy:
+        # content: "{{ selectFact |to_nice_json }}"
+        # dest: "/var/temp/{{ inventory_hostname }}_{{ dataEntry }}_facts.json"
+      # when: fileChoise | bool
