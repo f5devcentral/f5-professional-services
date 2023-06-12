@@ -1,0 +1,45 @@
+---
+- name: F5 fact subset options.
+  hosts: bigips
+  connection: local
+  gather_facts: no
+  
+  tasks: 
+    - debug: 
+        msg: "Options: monitors, profiles, apm-access-profiles, apm-access-policies, as3, 
+        asm-policy-stats, asm-policies, asm-server-technologies, asm-signature-
+        sets, client-ssl-profiles, cfe, devices, device-groups, do, external-monitors,
+        fasthttp-profiles, fastl4-profiles, gateway-icmp-monitors, gtm-pools, gtm-servers, gtm-
+        wide-ips, gtm-a-pools, gtm-a-wide-ips, gtm-aaaa-pools, gtm-aaaa-wide-ips, gtm-cname-
+        pools, gtm-cname-wide-ips, gtm-mx-pools, gtm-mx-wide-ips, gtm-naptr-pools, gtm-naptr-
+        wide-ips, gtm-srv-pools, gtm-srv-wide-ips, gtm-topology-regions, http-monitors, https-
+        monitors, http-profiles, iapp-services, iapplx-packages, icmp-monitors, interfaces,
+        internal-data-groups, irules, license, ltm-pools, ltm-policies, management-routes,
+        nodes, oneconnect-profiles, packages, partitions, provision-info, remote-syslog, route-
+        domains, self-ips, server-ssl-profiles, software-volumes, software-images, software-
+        hotfixes, ssl-certs, ssl-keys, sync-status, system-db, system-info, ts, tcp-monitors,
+        tcp-half-open-monitors, tcp-profiles, traffic-groups, trunks, udp-profiles, users, ucs,
+        vcmp-guests, virtual-addresses, virtual-servers, vlans"
+
+- name: Select fact to gather.
+  hosts: bigips
+  connection: local
+  gather_facts: yes
+
+  vars_prompt:
+   
+    - name: data_entity
+      prompt: "What data do you want? (select one option from above)"
+      private: no
+  
+  tasks:
+   
+    - name: COLLECT BIG-IP FACTS`
+      bigip_device_info:
+        data_increment: 10
+        provider: "{{ provider }}"
+        gather_subset:
+          - "{{ data_entity }}"
+      register: selectFact
+    - debug: 
+        msg: "{{ selectFact }}"
