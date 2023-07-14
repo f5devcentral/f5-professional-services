@@ -169,7 +169,7 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("device", help='a file containing list of BIG-IP devices separated by line, e.g. devices.txt')
+    parser.add_argument("device", help='a file containing list of BIG-IP devices separated by line, e.g. devices.txt | Example: f5-war-quick-view.py devices.txt')
     args = vars(parser.parse_args())
 
     device = args['device']
