@@ -18,8 +18,8 @@ Libraries in requirements.txt
 The host machine needs to have connection to the BIG-IP management interface.
 
 # Installation
-1. Download the repository to your machine:
-  git clone https://github.com/gerlanf/f5-professional-services.git
+1. Clone the repository to your machine:
+  git clone https://github.com/f5devcentral/f5-professional-services.git
 
 2. Go to the folder /f5-professional-services/tools/f5-waf-quick-view/
 
@@ -29,8 +29,7 @@ The host machine needs to have connection to the BIG-IP management interface.
 
 # How to Use
 
-1. Inside the folder /f5-professional-services/tools/f5-waf-quick-view/ edit the file devices.txt and add all Big-IPs that you want to collect AWAF policies information. 
-![Alt text](pico.png?raw=true "devices.txt")
+1. Inside the folder /f5-professional-services/tools/f5-waf-quick-view/ edit the file devices.txt and add all BIG-IPs that you want to collect AWAF policies information. 
 
 ```
 usage: f5-waf-quick-view.py [-h] device
