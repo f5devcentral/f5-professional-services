@@ -2,7 +2,7 @@
 
 # Overview
 
-A bash script for backing up the following F5 Distributed Cloud  objects:
+A bash script for backing up the following F5 Distributed Cloud objects:
 
 - Application Namespaces
 - HTTP Load Balancers
@@ -12,19 +12,16 @@ A bash script for backing up the following F5 Distributed Cloud  objects:
 - Application Firewalls
 - Service Policies
 
-This script leverages F5 Distributed Cloud API to get objects configuration using curl tool. It uses jq utility to format and process responses.
+# Requirements
 
-# Requirements:
-
-Set the API_TOKEN and TENANT variables:
-
-Tenant name: https://docs.cloud.f5.com/docs/ves-concepts/core-concepts#tenant
-API Token credential: https://docs.cloud.f5.com/docs/how-to/user-mgmt/credentials#generate-api-token
+1. [curl](https://curl.se/) - used to fetch object configurations via the F5 Distributed Cloud API
+2. [jq](https://jqlang.github.io/jq/) - used to format and process responses
+3. Set [TENANT](https://docs.cloud.f5.com/docs/ves-concepts/core-concepts#tenant) and [API_TOKEN](https://docs.cloud.f5.com/docs/how-to/user-mgmt/credentials#generate-api-token) variables
 
 # How to Use
 
 Run the script and select the type of object to backup:
-
+```
 $./xc-backup.sh
 
 ---------------------------------
