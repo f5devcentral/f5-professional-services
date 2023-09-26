@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script uses the vesctl utility to return an encrypted Blindfold Secret of a Private Key and a
+# This script uses the vescrl utility to return an encrypted Blindfold Secret of a Private Key and a
 # Certificate in Base64 format to a Terraform configuration file to create a F5XC Load Balancer.
 
 # Defines input variables from terraform
@@ -20,46 +20,46 @@ EVAL_KEY=$(openssl rsa -noout -modulus -in $PRIVATE_KEY &>/dev/null && echo "tru
 
 if $EVAL_CERT -eq "true" && $EVAL_KEY -eq "true"; then
 
-        # Calculates the md5 checksums of certificate and private key modulus 
-	MD5_CERT=$(openssl x509 -noout -modulus -in $CERTIFICATE | openssl md5)
-        MD5_KEY=$(openssl rsa -noout -modulus -in $PRIVATE_KEY | openssl md5)
+    # Calculates the md5 checksums of certificate and private key modulus 
+    MD5_CERT=$(openssl x509 -noout -modulus -in $CERTIFICATE | openssl md5)
+    MD5_KEY=$(openssl rsa -noout -modulus -in $PRIVATE_KEY | openssl md5)
 
 	if [[ "$MD5_CERT" == "$MD5_KEY" ]]; then # Verify if the Private Key matches the Certificate
-                # Obtain the F5XC public-key and stores the output in a temporary file
-		vesctl request secrets get-public-key > $XC_PUBLIC_KEY
+        	# Obtain the F5XC public-key and stores the output to a temporary file
+		vesctl --config ./scripts/.vesconfig request secrets get-public-key > $XC_PUBLIC_KEY
 
-		# Obtain the policy-document and stores the output in a temporary file.
-		vesctl request secrets get-policy-document --namespace shared --name ves-io-allow-volterra > $XC_POLICY_DOCUMENT
+		# Obtain the policy-document and stores the output to a temporary file.
+		vesctl --config ./scripts/.vesconfig request secrets get-policy-document --namespace shared --name ves-io-allow-volterra > $XC_POLICY_DOCUMENT
 
-		# Obtains the path of the temporary files
+		# Obtains the path of the temporary file
 		XC_PUBLIC_KEY_PATH=$(realpath ${XC_PUBLIC_KEY})
-                XC_POLICY_DOCUMENT_PATH=$(realpath ${XC_POLICY_DOCUMENT})
+        	XC_POLICY_DOCUMENT_PATH=$(realpath ${XC_POLICY_DOCUMENT})
 
-                # Make temporary unique filenames to store the encrypted blindfold secret of the private key and the certificate in Base64 format
+        	# Make temporary unique filenames to store the encrypted blindfold secret of the private key and the certificate in Base64 format
 		KEY_BLINDFOLD_SECRET="$(mktemp)"
-                BASE64_CERTIFICATE="$(mktemp)"
+        	BASE64_CERTIFICATE="$(mktemp)"
 
 		# Encrypt TLS Private Key Using Blindfold
-                vesctl request secrets encrypt --policy-document ${XC_POLICY_DOCUMENT_PATH} --public-key ${XC_PUBLIC_KEY_PATH} ${PRIVATE_KEY} > $KEY_BLINDFOLD_SECRET
+        	vesctl --config ./scripts/.vesconfig request secrets encrypt --policy-document ${XC_POLICY_DOCUMENT_PATH} --public-key ${XC_PUBLIC_KEY_PATH} ${PRIVATE_KEY} > $KEY_BLINDFOLD_SECRET
 
-                # Encode the certificate with Base64
+        	# Encode the certificate with Base64
 		cat ${CERTIFICATE} | base64 -w0 | awk '{print "string:///"$1}' > $BASE64_CERTIFICATE
 
-                # Save the Base64 Certificate and Private Key blindfold secret to an array and return it to terraform
+        	# Save the Base64 Certificate and Private Key blindfold secret to an array and return it to terraform
 		OUTPUT=($(cat $BASE64_CERTIFICATE) $(echo -e "string:///$(cat $KEY_BLINDFOLD_SECRET | tail -n +2)"))
-                echo -e ${OUTPUT[@]}
+        	echo -e ${OUTPUT[@]}
 	else
-           	# Write a message to stderr if the certificate and private key does not match.
+        	# Write a message to stderr if the certificate and private key does not match.
 		echo "$TIMESTAMP Invalid TLS certificate and/or Private key: tls: private key does not match public key" >&2
-                exit 1
-        fi
+        exit 1
+    fi
 else
         if [[ "$EVAL_CERT" == "false" ]]; then
-		# Write a message to stderr if the certificate is not in a valid PEM format
-                echo "$TIMESTAMP Could not read PEM certificate from $CERTIFICATE" >&2
+		# Write a message to stderr if the certificate is not in valid PEM format
+            	echo "$TIMESTAMP Could not read PEM certificate from $CERTIFICATE" >&2
 		exit 1
         else
-                # Write a message to stderr if the private key is not in a valid PEM format
+            	# Write a message to stderr if the private key is not in valid PEM format
 		echo "$TIMESTAMP Could not read PEM private key from $PRIVATE_KEY" >&2
 		exit 1
 	fi

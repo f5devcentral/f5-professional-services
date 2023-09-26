@@ -1,1 +1,0 @@
-VES_PASSWORD=""

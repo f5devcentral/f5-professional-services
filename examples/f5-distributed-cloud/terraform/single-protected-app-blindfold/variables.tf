@@ -1,19 +1,13 @@
-variable "api_cert" {
-        description = "API Certificate"
-        type = string
-        default = "./certs/<api credential certificate>.crt"
-}
-        
-variable "api_key" {
-        description = "API Private Key"
-        type = string
-        default = "./certs/<api credential key>.key"
-}
-        
 variable "api_url" {
         description = "Tenant server URLs"
         type = string
         default = "https://<tenant_name>.console.ves.volterra.io/api"
+}
+
+variable "api_cred" {
+        description = "F5XC Tenant API Credentials"
+        type = string
+        default = "./certs/<api_credential>.p12"
 }
 
 variable "namespace" {
@@ -31,11 +25,6 @@ variable "origin_server_dns" {
         default = "<origin server dns name>"
 }
 
-variable "VES_PASSWORD" {
-        description = "API Certificate .p12 password"
-        type        = string
-        sensitive   = true
-}
 variable "lb_key" {
         type = string
         description = "HTTP Load Balancer Private Key"
