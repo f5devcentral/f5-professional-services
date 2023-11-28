@@ -41,6 +41,10 @@ optional arguments:
   -h, --help  show this help message and exit
 
 ```
+# Optional
+
+1. Inside the folder /f5-professional-services/tools/f5-waf-quick-view/pbi there are a Microsoft Power BI files that show some graphics, please read the README.md file to get instructions how to use.
+
 
 # Output Sample
 
