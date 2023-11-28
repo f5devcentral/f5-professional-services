@@ -49,7 +49,6 @@ def audit_asm_policies_high_level(device,token):
     
     r = bigip.get(url_base_asm)
     json_data = r.json()
-    #print(json_data)
     # iterate over the data obtained and performed specific policy lookup (e.g. how many signatures are in staging)
     for i in json_data['items']:
         if( i['type']=='parent'):
@@ -95,7 +94,6 @@ def audit_asm_policy_high_level(device, policy_id, token):
 
     # # status Code Allowed
     r = bigip.get(rsp_stus_code)
-    #rsp_sts_list = r.json()['allowedResponseCodes']
     resp_stcode = [str(i) for i in r.json()['allowedResponseCodes']]
     result = ';'.join(resp_stcode)
     policy_data.append(result)
@@ -103,7 +101,6 @@ def audit_asm_policy_high_level(device, policy_id, token):
 
     # Server Tecnologies
     r = bigip.get(asm_servertecnologies)
-    #print(r.json())
     policy_data.append(r.json()['totalItems'])
     # If totalItems different 0, get set of signatures
     if (r.json()['totalItems'] != 0):
@@ -166,11 +163,10 @@ def audit_asm_policy_high_level(device, policy_id, token):
     r = bigip.get(url_sug)
     policy_data.append(r.json()['totalItems'])
 
-    # # cookies in staging
+    # cookies in staging
     r = bigip.get(asm_cookies)
     policy_data.append(r.json()['totalItems'])
     # If totalItems different 0, get cookie names
-    # print(r.json())
     if (r.json()['totalItems'] != 0):
         ckie_stg_name = [item['name'] for item in r.json()['items']]
         result_cookies = ';'.join(ckie_stg_name)
