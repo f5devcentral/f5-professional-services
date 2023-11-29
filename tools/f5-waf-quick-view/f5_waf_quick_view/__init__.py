@@ -40,7 +40,7 @@ def audit_asm_policies_high_level(device,token):
     print('Working on ASM policies for device %s' % device)
  
     # filter policies - obtains policy ID, name, enforcement mode, has parent, type and parent policy name
-    url_base_asm = 'https://%s/mgmt/tm/asm/policies/?$select=id,name,enforcementMode,hasParent,type,parentPolicyName,caseInsensitive,protocolIndependent,versionDateTime' % device
+    url_base_asm = 'https://%s/mgmt/tm/asm/policies/?$select=id,name,versionDatetime,applicationLanguage,enforcementMode,hasParent,type,parentPolicyName,caseInsensitive,protocolIndependent' % device
     bigip = requests.session()
     bigip.headers.update({'Content-Type': 'application/json'})
     bigip.headers.update({'X-F5-Auth-Token': token})
@@ -49,14 +49,13 @@ def audit_asm_policies_high_level(device,token):
     
     r = bigip.get(url_base_asm)
     json_data = r.json()
-    
     # iterate over the data obtained and performed specific policy lookup (e.g. how many signatures are in staging)
     for i in json_data['items']:
         if( i['type']=='parent'):
             continue
         if( i['hasParent'] == False):
             i['parentPolicyName'] = 'N/A'
-        policies_data = [ device, i['name'],i['id'], i['enforcementMode'],i['caseInsensitive'],i['protocolIndependent'], i['hasParent'], i['parentPolicyName']]
+        policies_data = [ device,i['name'],i['versionDatetime'],i['applicationLanguage'],i['id'], i['enforcementMode'],i['caseInsensitive'],i['protocolIndependent'], i['hasParent'], i['parentPolicyName']]
         policy_data = audit_asm_policy_high_level(device,i['id'],token)
         policies_data = policies_data + policy_data 
         asm_policy_high_level_save(policies_data)
@@ -65,16 +64,21 @@ def audit_asm_policy_high_level(device, policy_id, token):
 
     # filter data specific for each policy 
     url_sig_tot = 'https://%s/mgmt/tm/asm/policies/%s/signatures?$top=1&$select=totalItems' % (device,policy_id)
+    attack_sig_disabled = 'https://%s/mgmt/tm/asm/policies/%s/signature-settings' % (device,policy_id)
     url_sig_sta = 'https://%s/mgmt/tm/asm/policies/%s/signatures?$filter=performStaging+eq+true&$top=1&$select=totalItems' % (device,policy_id)
     url_sig_disabled = 'https://%s/mgmt/tm/asm/policies/%s/signatures?$filter=enabled+eq+false' % (device,policy_id)
     url_sig_not_block = 'https://%s/mgmt/tm/asm/policies/%s/signatures?$filter=block+eq+false' % (device,policy_id)
-    url_par_sta = 'https://%s/mgmt/tm/asm/policies/%s/parameters?$filter=performStaging+eq+true&$top=1&$select=totalItems' % (device,policy_id)
-    url_url_sta = 'https://%s/mgmt/tm/asm/policies/%s/urls?$filter=performStaging+eq+true&$top=1&$select=totalItems' % (device, policy_id)
+    url_par_sta = 'https://%s/mgmt/tm/asm/policies/%s/parameters?$filter=performStaging+eq+true&$select=totalItems,name' % (device,policy_id)
+    asm_servertecnologies = 'https://%s/mgmt/tm/asm/policies/%s/server-technologies?$select=totalItems,serverTechnologyReference' % (device,policy_id)
+    url_url_sta = 'https://%s/mgmt/tm/asm/policies/%s/urls?$filter=performStaging+eq+true&$select=name,performStaging' % (device, policy_id)
     url_sig_ready = 'https://%s/mgmt/tm/asm/policies/%s/signatures?$filter=hasSuggestions+eq+false+AND+wasUpdatedWithinEnforcementReadinessPeriod+eq+false+and+performStaging+eq+true&$top=1' % (device,policy_id)
     url_sug = 'https://%s/mgmt/tm/asm/policies/%s/suggestions?$top=1&$select=totalItems' % (device, policy_id)
-    url_learn = 'https://%s/mgmt/tm/asm/policies/%s/policy-builder?$select=learningMode' % (device, policy_id)
-    #rsp_stus_code = 'https://%s/mgmt/tm/asm/policies/%s/general' % (device, policy_id)
+    url_learn = 'https://%s/mgmt/tm/asm/policies/%s/policy-builder?$select=learningMode,responseStatusCodes' % (device, policy_id)
+    rsp_stus_code = 'https://%s/mgmt/tm/asm/policies/%s/general' % (device, policy_id)
     owasp_score = 'https://%s/mgmt/tm/asm/owasp/policy-score/%s' % (device, policy_id)
+    asm_cookies = 'https://%s/mgmt/tm/asm/policies/%s/cookies?$filter=performStaging+eq+true&$select=name,performStaging' % (device, policy_id)
+    asm_filetypes_stg = 'https://%s/mgmt/tm/asm/policies/%s/filetypes?$filter=allowed+eq+true+and+performStaging+eq+true&$select=name,performStaging,allowed' % (device, policy_id)
+    asm_filetypes_disallowed = 'https://%s/mgmt/tm/asm/policies/%s/filetypes?$filter=allowed+eq+false&$top=1' % (device, policy_id)
 
     bigip = requests.session()
     bigip.headers.update({'Content-Type': 'application/json'})
@@ -86,32 +90,103 @@ def audit_asm_policy_high_level(device, policy_id, token):
 
     # learning mode
     r = bigip.get(url_learn)
-    policy_data.append(r.json()['learningMode'])   
+    policy_data.append(r.json()['learningMode'])
+
+    # # status Code Allowed
+    r = bigip.get(rsp_stus_code)
+    resp_stcode = [str(i) for i in r.json()['allowedResponseCodes']]
+    result = ';'.join(resp_stcode)
+    policy_data.append(result)
+
+
+    # Server Tecnologies
+    r = bigip.get(asm_servertecnologies)
+    policy_data.append(r.json()['totalItems'])
+    # If totalItems different 0, get set of signatures
+    if (r.json()['totalItems'] != 0):
+        server_technology_names = [item['serverTechnologyReference']['serverTechnologyName'] for item in r.json()['items']]
+        result = ';'.join(server_technology_names)
+        policy_data.append(result)
+    else:
+        policy_data.append('N/A')
 
     # total signatures in staging, parameters, URL and signatures ready to be enforce
     r = bigip.get(url_sig_tot)
     policy_data.append(r.json()['totalItems'])
     
-    r = bigip.get(url_sig_sta)
-    policy_data.append(r.json()['totalItems'])
+    # verifiy if the option "Enable Signature Staging" is set to disabled on Learning and Blocking Settings - Attack signatures
+    r = bigip.get(attack_sig_disabled)
+    sig_en_data = r.json()
+    if("signatureStaging" in sig_en_data):
+        if( sig_en_data['signatureStaging'] == False ):
+            policy_data.append('0')
+        else:
+            r = bigip.get(url_sig_sta)
+            policy_data.append(r.json()['totalItems'])
     
-    r = bigip.get(url_sig_ready)
-    policy_data.append(r.json()['totalItems'])
+    # Signatures ready to be enforced
+    if("signatureStaging" in sig_en_data):
+        if( sig_en_data['signatureStaging'] == False ):
+            policy_data.append('0')
+        else:
+            r = bigip.get(url_sig_ready)
+            policy_data.append(r.json()['totalItems'])
 
     r = bigip.get(url_sig_not_block)
     policy_data.append(r.json()['totalItems'])
     
-
     r = bigip.get(url_sig_disabled)
     policy_data.append(r.json()['totalItems'])
-    
+
+    # Parameters in staging
     r = bigip.get(url_par_sta)
     policy_data.append(r.json()['totalItems'])
-    
+    # If totalItems different 0, get set of signatures
+    if (r.json()['totalItems'] != 0):
+        parameters_in_staging_name = [item['name'] for item in r.json()['items']]
+        result_parameters = ';'.join(parameters_in_staging_name)
+        policy_data.append(result_parameters)
+    else:
+        policy_data.append('N/A')
+
+    # URLs in staging
     r = bigip.get(url_url_sta)
     policy_data.append(r.json()['totalItems'])
+    # If totalItems different 0, get set of signatures
+    if (r.json()['totalItems'] != 0):
+        urls_in_staging_name = [item['name'] for item in r.json()['items']]
+        result_urls = ';'.join(urls_in_staging_name)
+        policy_data.append(result_urls)
+    else:
+        policy_data.append('N/A') 
 
     r = bigip.get(url_sug)
+    policy_data.append(r.json()['totalItems'])
+
+    # cookies in staging
+    r = bigip.get(asm_cookies)
+    policy_data.append(r.json()['totalItems'])
+    # If totalItems different 0, get cookie names
+    if (r.json()['totalItems'] != 0):
+        ckie_stg_name = [item['name'] for item in r.json()['items']]
+        result_cookies = ';'.join(ckie_stg_name)
+        policy_data.append(result_cookies)
+    else:
+        policy_data.append('N/A')
+
+  # Filetypes in staging
+    r = bigip.get(asm_filetypes_stg)
+    policy_data.append(r.json()['totalItems'])
+    # If totalItems different 0, get set of signatures
+    if (r.json()['totalItems'] != 0):
+        files_in_staging_name = [item['name'] for item in r.json()['items']]
+        result_files = ';'.join(files_in_staging_name)
+        policy_data.append(result_files)
+    else:
+        policy_data.append('N/A')   
+
+    # Filetypes disallowed
+    r = bigip.get(asm_filetypes_disallowed)
     policy_data.append(r.json()['totalItems'])
 
     # Get top 10
@@ -173,19 +248,21 @@ def audit_asm_policy_high_level(device, policy_id, token):
 
     return policy_data
 
+
+
 def asm_policy_high_level_save(data):
 
     # create file if it does not exist
     if(os.path.isfile(filename)==False):
         # If the version in 17 or higher
-        headers = ['device','policy', 'id', 'enforcement mode','case insensitive','No dif HTTP/HTTPS','has parent','parent policy','learning mode', 'total signatures', 'signatures in staging','signatures ready','signatures not block', 'signatures disabled','parameters in staging','URLs in satging', 'total suggestions', 'OWASP Score','A1-Broken Access Control','A2-Cryptographic Failures','A3-Injection', 'A4-Insecure Design','A5-Security Misconfiguration', 'A6-Vulnerable and Outdated Components','A7-Identification and Authentication Failures','A8-Software and Data Integrity Failures','A9-Security Logging and Monitoring Failures','A10-Server-Side Request Forgery (SSRF)']
+        headers = ['Device','Policy','Version', 'ApplicationLanguage','ID', 'Enforcement Mode','Case Insensitive','No dif HTTP/HTTPS','Has parent','Parent policy','Learning mode','Allowed Response StatusCode','ServerTechnologies','Server Technologies Names','Total Signatures', 'Signatures in staging','Signatures Ready to be Enforced','Signatures not blocked','Signatures disabled','Parameters in staging','Parameters Name in Staging','URLs in staging','URLs Names in Staging','Total suggestions','Cookies in Staging','Cookies Names in Staging','Files in Staging','File Names in Staging','Files Disallowed','OWASP Score','A1-Broken Access Control','A2-Cryptographic Failures','A3-Injection', 'A4-Insecure Design','A5-Security Misconfiguration', 'A6-Vulnerable and Outdated Components','A7-Identification and Authentication Failures','A8-Software and Data Integrity Failures','A9-Security Logging and Monitoring Failures','A10-Server-Side Request Forgery (SSRF)']
         # If version is 16
-        #headers = ['device','policy', 'id', 'enforcement mode','case insensitive','No dif HTTP/HTTPS','has parent','parent policy','learning mode', 'total signatures', 'signatures in staging','signatures ready', 'signatures not block','signatures disabled','parameters in staging','URLs in satging', 'total suggestions', 'OWASP Score','A1 Injection','A2 Broken Authentication','A3 Sensitive Data Exposure','A4 XML External Entities (XXE)','A5 Broken Access Control','A6 Security Misconfiguration','A7 Cross-Site Scripting (XSS)','A8 Insecure Deserialization','A9 Using Components with Known Vulnerabilities','A10 Insufficient Logging & Monitoring']
-        with open(filename, mode='w') as pol_file:
+        #headers = ['device','policy', 'id', 'enforcement mode','case insensitive','No dif HTTP/HTTPS','has parent','parent policy','learning mode','ServerTechnologies', 'total signatures', 'signatures in staging','signatures ready', 'signatures not block','signatures disabled','parameters in staging','URLs in satging', 'total suggestions', 'OWASP Score','A1 Injection','A2 Broken Authentication','A3 Sensitive Data Exposure','A4 XML External Entities (XXE)','A5 Broken Access Control','A6 Security Misconfiguration','A7 Cross-Site Scripting (XSS)','A8 Insecure Deserialization','A9 Using Components with Known Vulnerabilities','A10 Insufficient Logging & Monitoring']
+        with open(filename, 'w', newline='',encoding='utf-8') as pol_file:
             pol_file = csv.writer(pol_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             pol_file.writerow(headers)
     
-    with open(filename, mode='a') as pol_file:
+    with open(filename, 'a', newline="\n") as pol_file:
         pol_file = csv.writer(pol_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         pol_file.writerow(data)
 
@@ -277,7 +354,7 @@ def main():
               if not check_active(device, token): 
                   print(colored('Device ' + device + ' is not active, skipping it...','yellow',attrs=['bold']))
                   continue
-              print("test")
+              
               audit_asm_policies_high_level(device,token)
       print('File saved: %s' % filename)
     except:

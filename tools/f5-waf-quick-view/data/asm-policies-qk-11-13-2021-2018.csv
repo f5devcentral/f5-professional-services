@@ -1,6 +1,0 @@
-device,policy,enforcement mode,has parent,parent policy,learning mode,tot sig,sig in stg,sig ready,params in stg,urls in stg,total suggestions
-10.128.1.210,policy_app1,blocking,True,/Common/parent_internet,automatic,2391,2391,0,1,2,0
-10.128.1.210,policy_app2,blocking,True,/Common/parent_internet,automatic,2391,2391,0,1,2,21
-10.128.1.210,policy_app3,blocking,True,/Common/parent_internet,automatic,2391,2391,0,1,2,0
-10.128.1.210,policy_app5,blocking,True,/Common/parent_internet,automatic,2391,2391,0,1,2,11
-10.128.1.210,policy_test,blocking,False,N/A,manual,7493,0,0,0,0,6
