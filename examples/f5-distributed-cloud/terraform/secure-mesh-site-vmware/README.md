@@ -1,4 +1,4 @@
-# f5-xc-secure-mesh-site-vmware
+# Secure Mesh Site (VMware) deployment
 
 This projects contains a *Terraform* script to deploy a *F5 Distributed Cloud Secure Mesh Site* in which the site nodes are running on a *VMWare* environment. 
 
