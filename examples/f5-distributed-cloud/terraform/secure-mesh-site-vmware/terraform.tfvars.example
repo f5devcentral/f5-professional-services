@@ -1,0 +1,71 @@
+volterra_config = {
+    api_p12_file = "./creds/creds.p12"
+    url = "https://<tenant>.console.ves.volterra.io/api"
+}
+
+vsphere_config = {
+    datacenter = "my-datacenter"
+    compute_cluster = "my-compute-cluster"
+    datastore = "my-datastore-1"
+    network_outside = "Outside Network"
+    network_inside = "Inside Network"
+    folder = "/my-datacenter/vm/"
+    hosts = [
+        "my-host-1.local",
+        "my-host-2.local",
+        "my-host-3.local"
+    ]
+    virtual_machine_prefix = "f5xc"
+}
+
+cluster_config = {
+
+    shared = {
+        ova_url = "<OVA URL>"
+        cluster_name = "demo-site"
+        token = "<REGISTRATION TOKEN>"
+        admin_password = "<ADMIN PASSWORD>"
+        dns_server1 = "8.8.8.8"
+        dns_server2 = ""
+        latitude = "47.608013"
+        longitude = "-122.335167"
+        certificate_hardware = "vmware-regular-nic-voltmesh"
+    }
+
+    node1 = {
+        hostname = "master-0"
+        addresses = {
+            outside = "192.168.100.141/24"
+            inside = "10.16.100.141/16"
+        }
+        route = {
+            destination = "0.0.0.0/0"
+            gateway = "192.168.100.254"
+        }
+    }
+
+    node2 = {
+        hostname = "master-1"
+        addresses = {
+            outside = "192.168.100.142/24"
+            inside = "10.16.100.142/16"
+        }
+        route = {
+            destination = "0.0.0.0/0"
+            gateway = "192.168.100.254"
+        }
+    }
+
+    node3 = {
+        hostname = "master-2"
+        addresses = {
+            outside = "192.168.100.143/24"
+            inside = "10.16.100.143/16"
+        }
+        route = {
+            destination = "0.0.0.0/0"
+            gateway = "192.168.100.254"
+        }
+    }
+
+}
