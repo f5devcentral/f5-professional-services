@@ -1,0 +1,50 @@
+{
+    "openconfig-interfaces:interfaces": {
+        "interface": [
+            {
+                "name": "1.0",
+                "config": {
+                    "name": "1.0"
+                },
+                "openconfig-if-ethernet:ethernet": {
+                    "config": {
+                        "openconfig-if-aggregate:aggregate-id": "Nexus"
+                    }
+                }
+            },
+            {
+                "name": "2.0",
+                "config": {
+                    "name": "2.0"
+                },
+                "openconfig-if-ethernet:ethernet": {
+                    "config": {
+                        "openconfig-if-aggregate:aggregate-id": "Nexus"
+                    }
+                }
+            },
+            {
+                "name": "7.0",
+                "config": {
+                    "name": "7.0"
+                },
+                "openconfig-if-ethernet:ethernet": {
+                    "config": {
+                        "openconfig-if-aggregate:aggregate-id": "HA-Interconnect"
+                    }
+                }
+            },
+            {
+                "name": "8.0",
+                "config": {
+                    "name": "8.0"
+                },
+                "openconfig-if-ethernet:ethernet": {
+                    "config": {
+                        "openconfig-if-aggregate:aggregate-id": "HA-Interconnect"
+                    }
+                }
+            }
+        ]
+    }
+}
