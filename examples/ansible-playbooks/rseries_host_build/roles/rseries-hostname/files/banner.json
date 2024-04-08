@@ -1,0 +1,9 @@
+{
+    "openconfig-system:system": {
+            "config": {
+                "hostname": "<hostname>",
+                "login-banner": "*************** THIS SYSTEM IS A SECURE AND PRIVATE DEVICE. IF YOU HAVE CONNECTED TO THIS DEVICE BY MISTAKE, PLEASE DISCONNECT NOW. ***************",
+                "motd-banner": "*************** F5 private system please disconnect. ***************"
+         }
+    }
+}
