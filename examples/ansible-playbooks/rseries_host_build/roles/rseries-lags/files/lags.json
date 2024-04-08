@@ -1,0 +1,53 @@
+{
+    "openconfig-interfaces:interfaces": {
+        "interface": [
+            {
+                "name": "Nexus",
+                "config": {
+                    "description": "LAG to Nexus",
+                    "name": "Nexus",
+                    "type": "iana-if-type:ieee8023adLag",
+                    "enabled": true
+                },
+                "openconfig-if-aggregate:aggregation": {
+                    "config": {
+                        "lag-type": "LACP",
+                        "f5-if-aggregate:distribution-hash": "src-dst-ipport"
+                    },
+                    "openconfig-vlan:switched-vlan": {
+                        "config": {
+                            "trunk-vlans": [
+                                1310,
+                                1311
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "name": "HA-Interconnect",
+                "config": {
+                    "description": "LAG to other r10900",
+                    "name": "HA-Interconnect",
+                    "type": "iana-if-type:ieee8023adLag",
+                    "enabled": true
+                },
+                "openconfig-if-aggregate:aggregation": {
+                    "config": {
+                        "lag-type": "LACP",
+                        "f5-if-aggregate:distribution-hash": "src-dst-ipport"
+                    },
+                    "openconfig-vlan:switched-vlan": {
+                        "config": {
+                            "trunk-vlans": [
+                                1312,
+                                1313,
+                                1314
+                            ]
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
