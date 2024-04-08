@@ -2,8 +2,8 @@
 
 Create by Steve Meisenzahl
 
-This playbook will build the base configuration on an rSeries utilizing roles and JSON files.
-For more information on roles see the document below
+This playbook will build the base configuration for a rSeries utilizing roles and JSON files.
+For more information on roles see the document below.
     https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
 
 ## Requirements
