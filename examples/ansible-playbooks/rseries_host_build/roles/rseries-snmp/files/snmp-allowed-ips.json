@@ -1,0 +1,31 @@
+{
+    "allowed-ip": [
+        {
+            "name": "SNMP-142",
+            "config": {
+                "ipv4": {
+                    "address": "x.x.x.x",
+                    "port": 161
+                }
+            }
+        },
+        {
+            "name": "SNMP-143",
+            "config": {
+                "ipv4": {
+                    "address": "y.y.y.y",
+                    "port": 161
+                }
+            }
+        },
+        {
+            "name": "SNMP-144",
+            "config": {
+                "ipv4": {
+                    "address": "z.z.z.z",
+                    "port": 161
+                }
+            }
+        }
+    ]
+}
