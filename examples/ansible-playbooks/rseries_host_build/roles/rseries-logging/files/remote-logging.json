@@ -1,0 +1,29 @@
+{
+    "openconfig-system:system": {
+        "logging": {
+            "remote-servers": {
+                "remote-server": [
+                    {
+                        "host": "x.x.x.x",
+                        "config": {
+                            "host": "x.x.x.x",
+                            "remote-port": "514"
+                        },
+                        "selectors": {
+                            "selector": [
+                                {
+                                    "facility": "LOCAL0",
+                                    "severity": "INFORMATIONAL",
+                                    "config": {
+                                        "facility": "LOCAL0",
+                                        "severity": "INFORMATIONAL"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
