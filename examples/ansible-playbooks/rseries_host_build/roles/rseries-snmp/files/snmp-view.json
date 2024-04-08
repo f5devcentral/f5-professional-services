@@ -1,0 +1,14 @@
+{
+    "SNMP-VIEW-BASED-ACM-MIB:SNMP-VIEW-BASED-ACM-MIB": {
+        "vacmSecurityToGroupTable": {
+            "vacmSecurityToGroupEntry": [
+                {
+                    "vacmSecurityModel": 2,
+                    "vacmSecurityName": "<community_name>",
+                    "vacmGroupName": "read-access",
+                    "vacmSecurityToGroupStorageType": "nonVolatile"
+                }
+            ]
+        }
+    }
+}
