@@ -1,0 +1,34 @@
+{
+    "SNMP-TARGET-MIB:SNMP-TARGET-MIB": {
+        "snmpTargetAddrTable": {
+            "snmpTargetAddrEntry": [
+                {
+                    "snmpTargetAddrName": "<target-name>",
+                    "snmpTargetAddrTDomain": "1.3.6.1.6.1.1",
+                    "snmpTargetAddrTAddress": "2.2.2.2.0.162",
+                    "snmpTargetAddrTimeout": 1500,
+                    "snmpTargetAddrRetryCount": 3,
+                    "snmpTargetAddrTagList": "v2_trap",
+                    "snmpTargetAddrParams": "<target-name>",
+                    "snmpTargetAddrStorageType": "nonVolatile",
+                    "snmpTargetAddrEngineID": "",
+                    "snmpTargetAddrTMask": "",
+                    "snmpTargetAddrMMS": 2048,
+                    "enabled": true
+                }
+            ]
+        },
+        "snmpTargetParamsTable": {
+            "snmpTargetParamsEntry": [
+                {
+                    "snmpTargetParamsName": "<target-name>",
+                    "snmpTargetParamsMPModel": 1,
+                    "snmpTargetParamsSecurityModel": 2,
+                    "snmpTargetParamsSecurityName": "<community_name>",
+                    "snmpTargetParamsSecurityLevel": "noAuthNoPriv",
+                    "snmpTargetParamsStorageType": "nonVolatile"
+                }
+            ]
+        }
+    }
+}
