@@ -1,0 +1,18 @@
+---
+  - name: Configure VLANS
+    ansible.builtin.uri:
+      url: https://{{ mgmt_ip }}:8888/restconf/data/
+      user: "{{ ansible_admin }}"
+      password: "{{ ansible_pass }}"
+      method: PATCH
+      headers:
+        Content-Type: application/yang-data+json
+        Accept: application/yang-data+json
+      force_basic_auth: yes
+      force: yes
+      status_code: 200,204
+      return_content: true
+      validate_certs: no
+      body_format: json
+      body: "{{ lookup('ansible.builtin.file','files/vlans.json') }}"
+    register: Vlan_Config
