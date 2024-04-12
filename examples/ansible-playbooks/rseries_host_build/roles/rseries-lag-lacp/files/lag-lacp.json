@@ -1,0 +1,26 @@
+{
+    "ietf-restconf:data": {
+        "openconfig-lacp:lacp": {
+            "interfaces": {
+                "interface": [
+                    {
+                        "name": "Nexus",
+                        "config": {
+                            "name": "Nexus",
+                            "interval": "FAST",
+                            "lacp-mode": "ACTIVE"
+                        }
+                    },
+                    {
+                        "name": "HA-Interconnect",
+                        "config": {
+                            "name": "HA-Interconnect",
+                            "interval": "FAST",
+                            "lacp-mode": "ACTIVE"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+	"SNMP-COMMUNITY-MIB:SNMP-COMMUNITY-MIB": {
+		"snmpCommunityTable": {
+			"snmpCommunityEntry": {
+				"snmpCommunityIndex": "<community_name>",
+				"snmpCommunityName": "<community_name>",
+				"snmpCommunitySecurityName": "<community_name>"
+			}
+		}
+	}
+}

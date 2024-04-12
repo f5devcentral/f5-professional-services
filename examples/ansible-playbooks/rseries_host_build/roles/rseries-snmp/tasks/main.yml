@@ -1,0 +1,108 @@
+---
+  - name: Configure SNMP Allowed IPs (allow SNMP queries)
+    ansible.builtin.uri:
+      url: https://{{ private_ip }}:8888/restconf/data/openconfig-system:system/f5-allowed-ips:allowed-ips
+      user: "{{ ansible_admin }}"
+      password: "{{ ansible_ssh_pass }}"
+      method: POST
+      headers:
+        Content-Type: application/yang-data+json
+        Accept: application/yang-data+json
+      force_basic_auth: yes
+      force: yes
+      status_code: 201
+      return_content: true
+      validate_certs: no
+      body_format: json
+      body: "{{ lookup('ansible.builtin.file', 'files/snmp-allowed-ips.json') }}"
+    register: snmp_allowlist
+
+  - name: Configure SNMP Location
+    ansible.builtin.uri:
+      url: https://{{ private_ip }}:8888/restconf/data/SNMPv2-MIB:SNMPv2-MIB/system/sysContact
+      user: "{{ ansible_admin }}"
+      password: "{{ ansible_ssh_pass }}"
+      method: PATCH
+      headers:
+        Content-Type: application/yang-data+json
+        Accept: application/yang-data+json
+      force_basic_auth: yes
+      force: yes
+      status_code: 204
+      return_content: true
+      validate_certs: no
+      body_format: json
+      body: "{{ lookup('ansible.builtin.file', 'files/snmp-location.json') }}"
+    register: snmp_location
+
+  - name: Configure SNMP Community
+    ansible.builtin.uri:
+      url: https://{{ private_ip }}:8888/restconf/data/
+      user: "{{ ansible_admin }}"
+      password: "{{ ansible_ssh_pass }}"
+      method: PATCH
+      headers:
+        Content-Type: application/yang-data+json
+        Accept: application/yang-data+json
+      force_basic_auth: yes
+      force: yes
+      status_code: 200,204
+      return_content: true
+      validate_certs: no
+      body_format: json
+      body: "{{ lookup('ansible.builtin.file', 'files/snmp-community.json') }}"
+    register: snmp_community
+
+  - name: Configure SNMP Security View
+    ansible.builtin.uri:
+      url: https://{{ private_ip }}:8888/restconf/data/SNMP-VIEW-BASED-ACM-MIB:SNMP-VIEW-BASED-ACM-MIB
+      user: "{{ ansible_admin }}"
+      password: "{{ ansible_ssh_pass }}"
+      method: PATCH
+      headers:
+        Content-Type: application/yang-data+json
+        Accept: application/yang-data+json
+      force_basic_auth: yes
+      force: yes
+      status_code: 200,204
+      return_content: true
+      validate_certs: no
+      body_format: json
+      body: "{{ lookup('ansible.builtin.file', 'files/snmp-view.json') }}"
+    register: snmp_security_view
+
+  - name: Configure SNMP Traps
+    ansible.builtin.uri:
+      url: https://{{ private_ip }}:8888/restconf/data/SNMP-NOTIFICATION-MIB:SNMP-NOTIFICATION-MIB
+      user: "{{ ansible_admin }}"
+      password: "{{ ansible_ssh_pass }}"
+      method: PATCH
+      headers:
+        Content-Type: application/yang-data+json
+        Accept: application/yang-data+json
+      force_basic_auth: yes
+      force: yes
+      status_code: 200,204
+      return_content: true
+      validate_certs: no
+      body_format: json
+      body: "{{ lookup('ansible.builtin.file', 'files/snmp-traps.json') }}"
+    register: snmp_traps
+
+  - name: Configure SNMP Target
+    ansible.builtin.uri:
+      url: https://{{ private_ip }}:8888/restconf/data/SNMP-TARGET-MIB:SNMP-TARGET-MIB
+      user: "{{ ansible_admin }}"
+      password: "{{ ansible_ssh_pass }}"
+      method: PATCH
+      headers:
+        Content-Type: application/yang-data+json
+        Accept: application/yang-data+json
+      force_basic_auth: yes
+      force: yes
+      status_code: 200,204
+      return_content: true
+      validate_certs: no
+      body_format: json
+      body: "{{ lookup('ansible.builtin.file', 'files/snmp-target.json') }}"
+    register: snmp_target

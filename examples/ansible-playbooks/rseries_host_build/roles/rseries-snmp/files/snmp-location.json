@@ -1,0 +1,5 @@
+{
+    "SNMPv2-MIB:sysContact": "<email-address>",
+    "SNMPv2-MIB:sysName": "<hostname>",
+    "SNMPv2-MIB:sysLocation": "<city>"
+}

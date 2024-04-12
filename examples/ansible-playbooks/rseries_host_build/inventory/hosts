@@ -1,2 +1,2 @@
 [rseries]
-gslab1 f5admin=admin mgmt_ip=192.168.2.20 f5admin_pass=admin
+10.x.x.x ansible_host=10.x.x.x private_ip=10.x.x.x

@@ -1,0 +1,14 @@
+{
+    "SNMP-NOTIFICATION-MIB:SNMP-NOTIFICATION-MIB": {
+        "snmpNotifyTable": {
+            "snmpNotifyEntry": [
+                {
+                    "snmpNotifyName": "v2_trap",
+                    "snmpNotifyTag": "v2_trap",
+                    "snmpNotifyType": "trap",
+                    "snmpNotifyStorageType": "nonVolatile"
+                }
+            ]
+        }
+    }
+}

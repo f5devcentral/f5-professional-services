@@ -1,322 +1,96 @@
-################################################################################################
-# CREATED and TESTED SUCCESSFULLY BY STEVEN MEISENZAHL 11/19/2022
-#
-# THERE IS NO SUPPORT FOR THIS SOLUTION, USE AT YOUR OWN RISK
-# 
-# INSTALL F5OS COLLECTION FOR ANSIBLE USING THE FOLLOWING LINK 
-#     "https://galaxy.ansible.com/f5networks/f5os"
-# 
-# RUN THE FOLLOWING COMMAND FROM WITHIN "/root/.ansible/collections"
-#     ansible-galaxy collection install f5networks.f5os
-#
-# REFERENCE PAGES FOR THE BELOW TASKS CAN BE FOUND BY USING THE FOLLOWING LINK
-# https://clouddocs.f5.com/training/community/rseries-training/html/introduction.html
-#
-# NOTE: For any API calls to the rSeries F5OS layer it is important to include the header Content-Type application/yang-data+json and use port 8888 
-#
-# Usage: sensible-playbook -vvv rseries-base-build.yaml
-#
-################################################################################################
+- name: Play for building the base configuration of an rSeries
+  hosts: rseries
+  gather_facts: false
 
+  roles:
+    - role: rseries-hostname
+        # //////////////////////////////////////////////////////////
+        # Role 1
+        # Purpose of this role is to change the hostname and banners on the rseries
+        # The data file that needs to be updated is under files/banner.json
+        # //////////////////////////////////////////////////////////
+    - rseries-hostname
 
-  - hosts: rseries
-    connection: local
-    gather_facts: false
-    vars:
-      provider:
-        server: "{{mgmt_ip}}"
-        user: "{{f5admin}}"
-        password: "{{f5admin_pass}}"
-        validate_certs: no
+    - role: rseries-dns
+        # //////////////////////////////////////////////////////////
+        # Role 2
+        # Purpose of this role is to change the DNS configuration on the rseries
+        # The data file that needs to be updated is under files/dns-config.json
+        # //////////////////////////////////////////////////////////
+    - rseries-dns
 
-    collections:
-      - f5networks.f5_bigip
+    - role: rseries-ntp
+        # //////////////////////////////////////////////////////////
+        # Role 3
+        # Purpose of this role is to change the NTP configuration on the rseries
+        # The data file that needs to be updated is under files/ntp-config.json
+        # //////////////////////////////////////////////////////////
+    - rseries-ntp
 
-    tasks:
-      - name: Modify Hostname and Banners
-        uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/
-          user: "{{ f5admin }}"
-          password: "{{f5admin_pass}}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/banner.json') }}"
-        register: Banner
+    - role: rseries-logging
+        # //////////////////////////////////////////////////////////
+        # Role 4
+        # Purpose of this role is to change the Remote Logging configuration on the rseries
+        # The data file that needs to be updated is under files/remote-logging.json
+        # //////////////////////////////////////////////////////////
+    - rseries-logging
 
-      - name: Modify DNS Config
-        uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/openconfig-system:system/dns
-          user: "{{ f5admin }}"
-          password: "{{f5admin_pass}}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/dns-config.json') }}"
-        register: DNS_Config
+    - role: rseries-portgroups
+        # //////////////////////////////////////////////////////////
+        # Role 5
+        # Purpose of this role is to change the Portgroup Speed configuration on the rseries
+        # The data file that needs to be updated is under files/portgroup-spped.json
+        # NOTE: If you do not need to change the speeds on the portgroups disable this
+        # role by entering a # infront of the name below, ex "#- rseries-portgroups"
+        # //////////////////////////////////////////////////////////
+    - rseries-portgroups
 
-      - name: Modify NTP Config
-        uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/
-          user: "{{ f5admin }}"
-          password: "{{f5admin_pass}}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/ntp-config.json') }}"
-        register: NTP_Config
+    - role: rseries-vlans
+        # //////////////////////////////////////////////////////////
+        # Role 6
+        # Purpose of this role is to add Vlans to the rseries
+        # The data file that needs to be updated is under files/vlans.json
+        # //////////////////////////////////////////////////////////
+    - rseries-vlans
 
-      - name: Modify Remote Logging Config
-        uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/
-          user: "{{ f5admin }}"
-          password: "{{f5admin_pass}}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/remote-logging.json') }}"
-        register: Remote_Logging
+    - role: rseries-interfaces-vlans
+        # //////////////////////////////////////////////////////////
+        # Role 7
+        # Purpose of this role is to add assign interfaces to Vlans on the rseries
+        # The data file that needs to be updated is under files/interface-vlans.json
+        # NOTE: This role can be used if you do not use LAGS, if you use LAGS then
+        # you will not assign interfaces to Vlans you will assign interfaces to LAGS
+        # //////////////////////////////////////////////////////////
+    - rseries-interfaces-vlans
 
-      #- name: Modify Portgroups
-        #ansible.builtin.uri:
-        # url: https://{{mgmt_ip}}:8888/restconf/data/f5-portgroup:portgroups
-        # user: "{{ f5admin }}"
-        # password: "{{ f5admin_pass }}"
-        # method: PATCH
-        # headers:
-        #   Content-Type: application/yang-data+json
-        #   Accept: application/yang-data+json
-        # force_basic_auth: yes
-        # force: yes
-        # status_code: 200
-        # return_content: true
-        # validate_certs: no
-        # body_format: json
-        # body: "{{ lookup('ansible.builtin.file','json/portgroup-speed.json') }}"
-      # register: Portgroups
+    - role: rseries-lags
+        # //////////////////////////////////////////////////////////
+        # Role 8
+        # Purpose of this role is to configure LAGs on the rseries
+        # The data file that needs to be updated is under files/lags.json
+        # //////////////////////////////////////////////////////////
+    - rseries-lags
 
-      - name: Configure VLANS
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/create-vlans.json') }}"
-        register: Vlan_Config
+    - role: rseries-lag-interfaces
+        # //////////////////////////////////////////////////////////
+        # Role 9
+        # Purpose of this role is to configure interfaces witin the LAGs on the rseries
+        # The data file that needs to be updated is under files/lag-interfaces.json
+        # //////////////////////////////////////////////////////////
+      # - rseries-lag-interfaces
 
-     # - name: Configure Interfaces on VLANS
-       # ansible.builtin.uri:
-        # url: https://{{mgmt_ip}}:8888/restconf/data/openconfig-interfaces:interfaces
-        # user: "{{ f5admin }}"
-        # password: "{{ f5admin_pass }}"
-        # method: PATCH
-        # headers:
-        #   Content-Type: application/yang-data+json
-        #   Accept: application/yang-data+json
-        # force_basic_auth: yes
-        # force: yes
-        # status_code: 200,204
-        # return_content: true
-        # validate_certs: no
-        # body_format: json
-        # body: "{{ lookup('ansible.builtin.file','json/assign-vlans-to-interfaces.json') }}"
-        # register: Interfaces_Vlans
-        #
-      - name: Configure LAGS
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/create-lags.json') }}"
-        register: LAGs_Config
+    - role: rseries-lag-lacp
+        # //////////////////////////////////////////////////////////
+        # Role 10
+        # Purpose of this role is to configure LACP withn the LAGs on the rseries
+        # The data file that needs to be updated is under files/lag-lacp.json
+        # //////////////////////////////////////////////////////////
+    - rseries-lag-lacp
 
-      - name: Configure LAGS with Interfaces
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/add-interfaces-to-lags.json') }}"
-        register: LAGs_Interfaces
-
-      - name: Configure LACP on LAGS
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/add-lacp-to-lags.json') }}"
-        register: LACP_LAGs
-
-      - name: Configure SNMP Allowed IPs
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/openconfig-system:system/f5-allowed-ips:allowed-ips
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: POST
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 201
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/snmp-allowed-ips.json') }}"
-        register: SNMP_Allowlist
-
-      - name: Configure SNMP Location
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/SNMPv2-MIB:SNMPv2-MIB/system/sysContact
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/snmp-location.json') }}"
-        register: SNMP_Location
-
-      - name: Configure SNMP Community
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/snmp-community.json') }}"
-        register: SNMP_Community
-
-      - name: Configure SNMP Security View
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/SNMP-VIEW-BASED-ACM-MIB:SNMP-VIEW-BASED-ACM-MIB
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/snmp-view.json') }}"
-        register: SNMP_Security_View
-
-      - name: Configure SNMP Traps
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/SNMP-NOTIFICATION-MIB:SNMP-NOTIFICATION-MIB
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/snmp-traps.json') }}"
-        register: SNMP_Traps
-
-      - name: Configure SNMP Target
-        ansible.builtin.uri:
-          url: https://{{mgmt_ip}}:8888/restconf/data/SNMP-TARGET-MIB:SNMP-TARGET-MIB
-          user: "{{ f5admin }}"
-          password: "{{ f5admin_pass }}"
-          method: PATCH
-          headers:
-            Content-Type: application/yang-data+json
-            Accept: application/yang-data+json
-          force_basic_auth: yes
-          force: yes
-          status_code: 200,204
-          return_content: true
-          validate_certs: no
-          body_format: json
-          body: "{{ lookup('ansible.builtin.file','json/snmp-target.json') }}"
-        register: SNMP_Target
+    - role: rseries-snmp
+        # //////////////////////////////////////////////////////////
+        # Role 11
+        # Purpose of this role is to configure SNMP on the rseries
+        # The data files that needs to be updated are under files/*.json
+        # //////////////////////////////////////////////////////////
+    - rseries-snmp
