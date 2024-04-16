@@ -1,0 +1,52 @@
+---
+- name: Task 1 - Copy file getcert.sh to remote host
+  ansible.builtin.copy:
+    src: files/getcert.sh
+    dest: /var/tmp/getcert.sh
+    owner: root
+    mode: '0644'
+
+- name: Task 1a - Sleep for 5 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 5
+
+- name: Task 2 - Execute the getcert script
+  command: sh /var/tmp/getcert.sh
+  register: output
+
+- name: Task 2a - Sleep for 30 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 30
+
+- name: Task 3 - Copy file createnewcert.sh to remote host
+  ansible.builtin.copy:
+    src: files/createnewcert.sh
+    dest: /var/tmp/createnewcert.sh
+    owner: root
+    mode: '0644'
+
+- name: Task 4 - Execute the createnewcert script
+  command: sh /var/tmp/createnewcert.sh
+  register: output
+
+- name: Task 5a - Sleep for 5 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 5
+
+- name: Task 6a - Remove getcert script from remote device
+  file:
+    path: /var/tmp/getcert.sh
+    state: absent
+
+- name: Task 6b - Remove createnewcert script from remote device
+  file:
+    path: /var/tmp/createnewcert.sh
+    state: absent
+
+- name: Task 6c - Sleep for 5 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 5
+
+- name: Task 7 - Restart HTTPD
+  command: bigstart restart httpd
+  register: restart_httpd
