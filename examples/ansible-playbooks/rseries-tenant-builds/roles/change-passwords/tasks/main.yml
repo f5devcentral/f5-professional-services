@@ -1,0 +1,27 @@
+- name: Configure the expired admin password
+  ansible.builtin.uri:
+        url: "https://{{ private_ip }}/mgmt/shared/authz/users/admin"
+        method: PATCH
+        body: '{"oldPassword":"{{ def_admin_pass }}","password":"{{ ansible_ssh_pass }}"}'
+        body_format: json
+        validate_certs: false
+        force_basic_auth: true
+        user: admin
+        password: admin
+        headers:
+          Content-Type: "application/json"
+
+- name: Configure the root password
+  bigip_user:
+        full_name: root
+        username_credential: root
+        password_credential: "{{ ansible_ssh_pass }}"
+        update_password: always
+        state: present
+        provider: "{{ provider }}"
+  delegate_to: localhost
+
+- name: Wait 60 seconds for password changes to save before the next play
+  ansible.builtin.wait_for:
+    timeout: 60
+  delegate_to: localhost
