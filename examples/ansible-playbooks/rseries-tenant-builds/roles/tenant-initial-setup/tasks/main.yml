@@ -1,0 +1,46 @@
+---
+- name: Task 1 - Disable the GUI setup utility
+  bigip_sys_global:
+    gui_setup: false
+    state: present
+    provider: "{{ provider }}"
+
+- name: Task 1a - Wait 10 seconds before provisioning
+  ansible.builtin.wait_for:
+    timeout: 10
+  delegate_to: localhost
+
+- name: Task 2 - Provision LTM at "nominal" level - This task will take a few minutes to complete!
+  bigip_provision:
+    module: ltm
+    level: nominal
+    provider: "{{ provider }}"
+  delegate_to: localhost
+  register: result
+
+- name: Task 2a - Debug Provisioning of ltm
+  debug:
+    var: result
+
+- name: Task 3 - Provision AVR at "nominal" level - This task will take a few minutes to complete!
+  bigip_provision:
+    module: avr
+    level: nominal
+    provider: "{{ provider }}"
+  delegate_to: localhost
+
+- name: Task 3a - Wait 15 seconds for provisioning to finish
+  ansible.builtin.wait_for:
+    timeout: 15
+  delegate_to: localhost
+
+- name: Task 4 - Set the hostname of the BIGIP
+  bigip_hostname:
+    hostname: "{{ hostname }}"
+    provider: "{{ provider }}"
+  delegate_to: localhost
+
+- name: Task 4a - Wait 30 seconds to let the device settle before next play
+  ansible.builtin.wait_for:
+    timeout: 30
+  delegate_to: localhost
