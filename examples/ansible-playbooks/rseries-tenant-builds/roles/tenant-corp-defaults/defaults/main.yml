@@ -1,0 +1,9 @@
+---
+
+provider:
+  server: "{{ private_ip }}"
+  user: "{{ ansible_admin }}"
+  password: "{{ ansible_ssh_pass }}"
+  server_port: 443
+  no_f5_teem: no
+  validate_certs: no
