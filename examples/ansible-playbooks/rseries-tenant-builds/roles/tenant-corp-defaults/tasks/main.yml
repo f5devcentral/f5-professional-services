@@ -1,0 +1,28 @@
+---
+- name: Task 1 - Copy file onboarding.py to remote host
+  ansible.builtin.copy:
+    src: files/onboarding.py
+    dest: /var/tmp/onboarding.py
+    owner: root
+    mode: '0644'
+
+- name: Task 1a - Sleep for 5 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 5
+
+- name: Task 2 - Execute the onboarding script
+  command: python /var/tmp/onboarding.py
+  register: output
+
+- name: Task 2a - Sleep for 30 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 30
+
+- name: Task 3 - Remove onboarding script from remote device
+  file:
+    path: /var/tmp/onboarding.py
+    state: absent
+
+- name: Task 3a - Sleep for 5 seconds then contiue to next play
+  ansible.builtin.wait_for:
+    timeout: 5
