@@ -1,0 +1,6 @@
+---
+hostname1: ha1-bigip.com
+hostname2: ha2-bigip.com
+server_2: x.x.x.x
+user: "{{ ansible_admin }}"
+password: "{{ ansible_ssh_pass }}"
