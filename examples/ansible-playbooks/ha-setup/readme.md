@@ -10,10 +10,12 @@ For more information on roles see the document below
 ## Requirements
 Refer to the following links for the f5_modules installation
      https://clouddocs.f5.com/products/orchestration/ansible/devel/f5_modules/getting_started.html
+
 Install f5_modules collection for ansible "https://galaxy.ansible.com/ui/repo/published/f5networks/f5_modules/"
 
 Refer to the following links for f5os installations
     https://clouddocs.f5.com/products/orchestration/ansible/devel/f5os/F5OS-index.html
+
 Install f5os collection for ansible "https://galaxy.ansible.com/f5networks/f5os"
 
 Run the following command from within "/root/.ansible/collections" 
