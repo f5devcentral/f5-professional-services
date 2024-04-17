@@ -1,0 +1,20 @@
+---
+  - name: Task 1 - Create Self IP on Active
+    bigip_selfip:
+      address: "{{ address_ha }}"
+      name: "{{ name_ha }}"
+      netmask: "{{ netmask_ha }}"
+      vlan: "{{ vlan_ha }}"
+      allow_service: default
+      provider: "{{ provider }}"
+    delegate_to: localhost
+
+  - name: Task 2 - Configure device connectivity on Active device
+    bigip_device_connectivity:
+      config_sync_ip: "{{ address_ha }}"
+      mirror_primary_address: "{{ address_ha }}"
+      unicast_failover:
+        - address: management-ip
+        - address: "{{ address_ha }}"
+      provider: "{{ provider }}"
+    delegate_to: localhost
