@@ -1,0 +1,86 @@
+{
+	"openconfig-system:aaa": {
+        "config": {},
+		"authentication": {
+			"config": {
+				"authentication-method": [
+					"RADIUS_ALL",
+					"LOCAL"
+				]
+			},
+			"f5-system-aaa:roles": {
+				"f5-system-aaa:role": [
+					{
+						"rolename":"admin",
+						"config": {
+							"rolename":"admin",
+							"gid":"9000"
+						}
+					},
+					{
+						"rolename":"operator",
+						"config": {
+							"rolename":"operator",
+							"gid":"9001"
+						}
+					},
+					{
+						"rolename":"resource-admin",
+						"config": {
+							"rolename":"resource-admin",
+							"gid":"9003"
+						}
+					},
+					{
+						"rolename":"tenant-console",
+						"config": {
+							"rolename":"tenant-console",
+							"gid":"9100"
+						}
+					}
+				]
+			}
+		},
+		"server-groups": {
+			"server-group": [
+				{
+					"name": "RADIUS",
+					"config": {
+						"name": "RADIUS",
+						"type": "RADIUS"
+					},
+					"servers": {
+						"server": [
+							{
+								"address": "x.x.x.x",
+								"config": {
+									"address": "x.x.x.x"
+								},
+								"radius": {
+									"config": {
+										"auth-port": 1812,
+										"secret-key": "<your encrypted secret key goes here>",
+										"f5-openconfig-aaa-radius:timeout": 5
+									}
+								}
+							},
+							{
+								"address": "y.y.y.y",
+								"config": {
+									"address": "y.y.y.y"
+								},
+								"radius": {
+									"config": {
+										"auth-port": 1812,
+										"secret-key": "<your encrypted secret key goes here>",
+										"f5-openconfig-aaa-radius:timeout": 5
+									}
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	}
+}
