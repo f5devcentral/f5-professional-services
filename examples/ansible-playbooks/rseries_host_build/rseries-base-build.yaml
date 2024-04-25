@@ -94,3 +94,11 @@
         # The data files that needs to be updated are under files/*.json
         # //////////////////////////////////////////////////////////
     - rseries-snmp
+
+    - role: rseries-radius-auth
+        # //////////////////////////////////////////////////////////
+        # Role 12
+        # Purpose of this role is to configure Radius Authentication on the rseries
+        # The data files that needs to be updated are under files/*.json
+        # //////////////////////////////////////////////////////////
+    - rseries-radius-auth
