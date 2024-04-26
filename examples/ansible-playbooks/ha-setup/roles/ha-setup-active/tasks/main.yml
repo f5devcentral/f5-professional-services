@@ -1,0 +1,19 @@
+---
+- name: Discover device for trust on BIG-IP1
+  bigip_command:
+    commands: 
+     - modify /cm trust-domain Root add-device { device-ip "{{ server_2 }}" device-name "{{ hostname2 }}" username "{{ user }}" password "{{ password }}" ca-device true }
+    provider: "{{ provider }}"
+  delegate_to: localhost
+
+- name: Create Sync-Failover group and add members
+  bigip_command:
+    commands:
+     - create /cm device-group SyncFailover devices add { "{{ hostname1 }}" "{{ hostname2 }}" } type sync-failover auto-sync enabled incremental-config-sync-size-max 1024 save-on-auto-sync true
+    provider: "{{ provider }}"
+  delegate_to: localhost
+
+- name: Wait 30 seconds for Failover group to update
+  ansible.builtin.wait_for:
+    timeout: 30
+  delegate_to: localhost

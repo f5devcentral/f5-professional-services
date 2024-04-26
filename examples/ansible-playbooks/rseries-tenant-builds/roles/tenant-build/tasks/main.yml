@@ -1,0 +1,69 @@
+---
+- name: Create New Tenant
+  ansible.builtin.uri:
+    url: https://{{ private_ip }}:8888/restconf/data/f5-tenants:tenants
+    user: "{{ ansible_admin }}"
+    password: "{{ ansible_ssh_pass }}"
+    method: POST
+    headers:
+      Content-Type: application/yang-data+json
+      Accept: application/yang-data+json
+    force_basic_auth: true
+    force: true
+    status_code: 201
+    return_content: true
+    validate_certs: false
+    body_format: json
+    body: "{{ lookup('ansible.builtin.file', 'files/tenant-shell.json') }}"
+  register: tenant_shell
+
+- name: Wait 30 seconds before deploying Tenant
+  ansible.builtin.wait_for:
+    timeout: 30
+  delegate_to: localhost
+
+- name: Deploy New Tenant
+  ansible.builtin.uri:
+    url: "https://{{ private_ip }}:8888/restconf/data/f5-tenants:tenants/tenant={{ tenant_name }}/config/running-state"
+    user: "{{ ansible_admin }}"
+    password: "{{ ansible_ssh_pass }}"
+    method: PATCH
+    headers:
+      Content-Type: application/yang-data+json
+      Accept: application/yang-data+json
+    force_basic_auth: true
+    force: true
+    status_code: 204
+    return_content: true
+    validate_certs: false
+    body_format: json
+    body: "{{ lookup('ansible.builtin.file', 'files/tenant-deploy.json') }}"
+  register: tenant_deploy
+
+- name: Wait for tenant state
+  ansible.builtin.uri:
+    url: "https://{{ private_ip }}:8888/restconf/data/f5-tenants:tenants/tenant={{ tenant_name }}"
+    method: GET
+    user: "{{ ansible_admin }}"
+    password: "{{ ansible_ssh_pass }}"
+    force_basic_auth: true
+    status_code: 200
+    validate_certs: false
+    headers:
+      Content-Type: application/yang-data+json
+      Accept: application/yang-data+json
+  register: result
+  until: (result.status == 200) and
+         (result.json is defined) and
+         (result.json['f5-tenants:tenant'] is defined) and
+         (result.json['f5-tenants:tenant'][0] is defined) and
+         (result.json['f5-tenants:tenant'][0]['state'] is defined) and
+         (result.json['f5-tenants:tenant'][0]['state']['status'] is defined) and
+         (result.json['f5-tenants:tenant'][0]['state']['status'] == tenant_state)
+  retries: 60
+  delay: 10
+
+- name: Wait 300 seconds to allow the tenant to completely start before next play
+  ansible.builtin.wait_for:
+    timeout: 300
+  delegate_to: localhost

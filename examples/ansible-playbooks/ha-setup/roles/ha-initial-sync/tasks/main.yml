@@ -1,0 +1,33 @@
+---
+- name: Force Initial Sync
+  bigip_command:
+    commands: run /cm config-sync to-group SyncFailover
+    provider: "{{ provider }}"
+  delegate_to: localhost
+
+- name: Wait 10 seconds for Sync
+  ansible.builtin.wait_for:
+    timeout: 10
+  delegate_to: localhost
+
+- name: Confirm HA pair if formed
+  bigip_command:
+    provider: "{{ provider }}"
+    commands:
+      - show cm sync-status
+    wait_for:
+      - result[0] contains "high-availability"
+  delegate_to: localhost
+
+- name: Wait 10 seconds for HA confirmation
+  ansible.builtin.wait_for:
+    timeout: 10
+  delegate_to: localhost
+
+- name: Sync configuration from device to group
+  bigip_configsync_action:
+    device_group: SyncFailover
+    overwrite_config: true
+    sync_device_to_group: true
+    provider: "{{ provider }}"
+  delegate_to: localhost

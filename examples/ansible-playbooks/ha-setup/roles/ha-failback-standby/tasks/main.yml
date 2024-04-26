@@ -1,0 +1,11 @@
+---
+- name: Force failover back to Active
+  bigip_command: 
+    commands: run /sys failover standby
+    provider: "{{ provider }}"
+  delegate_to: localhost
+
+- name: Wait 10 seconds for Failback to Active
+  ansible.builtin.wait_for:
+    timeout: 10
+  delegate_to: localhost

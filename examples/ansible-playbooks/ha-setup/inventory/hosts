@@ -1,6 +1,5 @@
-[rseries]
+[ha1]
   x.x.x.x ansible_host=x.x.x.x private_ip=x.x.x.x
 
-[tenants]
+[ha2]
   y.y.y.y ansible_host=y.y.y.y private_ip=y.y.y.y
-  z.z.z.z ansible_host=z.z.z.z private_ip=z.z.z.z

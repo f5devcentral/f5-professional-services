@@ -2,6 +2,8 @@
 
 Create by Steve Meisenzahl
 
+Tested successfully on F5OS 1.5.1
+
 This playbook will build the base configuration for a rSeries utilizing roles and JSON files.
 For more information on roles see the document below.
     https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
@@ -42,10 +44,9 @@ The following objects are configured with this playbook
     SNMP Security View
     SNMP Traps
     SNMP Target
+    Radius Authentication
 
 Each of the above objects have thier own roles, find the role and expand it.  Look for the "files" directory to edit the .json file.  Once the file is edited with your environment information save the file.
-
-Authentication will be added in the future
 
 ## Roles
 

@@ -1,0 +1,10 @@
+---
+server: x.x.x.x
+user: "{{ ansible_admin }}"
+password: "{{ ansible_ssh_pass }}"
+name_ha: selfip-ha1
+address_ha: y.y.y.y
+netmask_ha: z.z.z.z
+vlan_ha: HA
+hostname: ha1-bigip.com
+...

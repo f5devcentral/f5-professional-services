@@ -1,0 +1,83 @@
+- name: Play for setting up the HA Network on the Active BIGIP
+  hosts: ha1
+  connection: local
+  gather_facts: false
+
+  roles:
+    - role: ha-network-active
+        # //////////////////////////////////////////////////////////
+        # Role 1
+        # Purpose of this role is to setup the network that will be used for the HA interface on the Active BIGIP
+        # The data file that needs to be updated is in the vars directory under the role
+        # //////////////////////////////////////////////////////////
+    - ha-network-active
+
+################################################
+# Another play to setup the HA Network on the Standby BIGIP
+################################################
+
+- name: Play for setting up the HA Network on the Standby BIGIP
+  hosts: ha2
+  connection: local
+  gather_facts: false
+
+  roles:
+    - role: ha-network-standby
+        # //////////////////////////////////////////////////////////
+        # Role 2
+        # Purpose of this role is to setup the network that will be used for the HA interface on the Standby BIGIP
+        # The data file that needs to be updated is in the vars directory under the role
+        # //////////////////////////////////////////////////////////
+    - ha-network-standby
+
+################################################
+# Another play that will discover the Standby BIGIP and add it to the trust
+################################################
+
+- name: Play to discover the standby device and add it to the trust
+  hosts: ha1
+  connection: local
+  gather_facts: false
+
+  roles:
+    - role: ha-setup-active
+        # //////////////////////////////////////////////////////////
+        # Role 3
+        # Purpose of this role is to discover the standby device and add it to the trust
+        # The data file that needs to be updated is in the vars directory under the role
+        # //////////////////////////////////////////////////////////
+    - ha-setup-active
+
+################################################
+# Another play that will failback to Active from the Standby BIGIP
+################################################
+
+- name: Play to fail BIGIP1 back to active
+  hosts: ha2
+  connection: local
+  gather_facts: false
+
+  roles:
+    - role: ha-failback-standby
+        # //////////////////////////////////////////////////////////
+        # Role 4
+        # Purpose of this role is to setup the network that will be used for the HA interface on the Standby BIGIP
+        # //////////////////////////////////////////////////////////
+    - ha-failback-standby
+
+################################################
+# Another play that will perform the initial sync from the Active BIGIP
+################################################
+
+- name: Play to perform the initial sync
+  hosts: ha1
+  connection: local
+  gather_facts: false
+
+  roles:
+    - role: ha-initial-sync
+        # //////////////////////////////////////////////////////////
+        # Role 5
+        # Purpose of this role is to perform the initial sync from the active BIGIP1
+        # //////////////////////////////////////////////////////////
+    - ha-initial-sync

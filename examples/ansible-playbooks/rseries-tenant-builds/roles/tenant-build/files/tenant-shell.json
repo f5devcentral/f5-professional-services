@@ -1,0 +1,24 @@
+{
+    "tenant": [
+        {
+            "name": "bigip1",
+            "config": {
+                "image": "BIGIP-17.1.0.3-0.0.4.ALL-F5OS.qcow2.zip.bundle",
+                "nodes": [
+                    1
+                ],
+                "mgmt-ip": "ip_address",
+                "gateway": "gateway",
+                "prefix-length": 25,
+                "vlans": [
+                    1310,
+                    1311
+                ],
+                "vcpu-cores-per-node": 4,
+                "memory": 12288,
+                "cryptos": "enabled",
+                "running-state": "configured"
+            }
+        }
+    ]
+}
