@@ -1,0 +1,2 @@
+server-urls: <tenant url>
+p12-bundle: <.p12 path>
