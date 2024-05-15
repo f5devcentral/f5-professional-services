@@ -1,1 +1,19 @@
-
+{
+    "openconfig-system:dns": {
+        "config": {
+            "search": [
+                "your.domain.com"
+            ]
+        },
+        "servers": {
+            "server": [
+                {
+                    "address": "x.x.x.x",
+                    "config": {
+                        "address": "x.x.x.x"
+                    }
+                }
+            ]
+        }
+    }
+}
