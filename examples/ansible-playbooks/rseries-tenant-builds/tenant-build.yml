@@ -6,7 +6,7 @@
     - role: tenant-build
         # //////////////////////////////////////////////////////////
         # Role 1
-        # Purpose of this role is to build a new tenant on and rSeries
+        # The purpose of this role is to build a new tenant on an rSeries
         # The data file that needs to be updated are in the files directory under the role
         # //////////////////////////////////////////////////////////
     - tenant-build
@@ -29,10 +29,10 @@
     - change-passwords
 
 ################################################
-# Another play to complete the intial configuration on the new tenant
+# Another play to complete the initial configuration on the new tenant
 ################################################
 
-- name: Play to complete the initial configuration on new tenant
+- name: Play to complete the initial configuration on the new tenant
   hosts: tenants
   connection: local
   gather_facts: false
@@ -46,10 +46,10 @@
     - tenant-initial-setup
 
 ################################################
-# Another play to setup the company default configuration on the new tenant
+# Another play to set the company default configuration on the new tenant
 ################################################
 
-- name: Play to complete the setup of corporate defaults on new tenant
+- name: Play to complete the setup of corporate defaults on the new tenant
   hosts: tenants
   gather_facts: false
 
@@ -58,7 +58,7 @@
         # /////////////////////////////////////////////////////////////////
         # Role 4
         # The purpose of this role is to configure the corporate defaults on a new tenant
-        # Under the files directory is the onboarding script written in python, this is proprietary to the client
+        # Under the files directory is the onboarding script written in Python, this is proprietary to the client
         # /////////////////////////////////////////////////////////////////
     - tenant-corp-defaults
 
@@ -66,7 +66,7 @@
 # Another play to update the device certificate on the new tenant
 ################################################
 
-- name: Play to complete the setup of corporate defaults on new tenant
+- name: Play to complete the setup of the device certificate on the Tenant
   hosts: tenants
   gather_facts: false
 
@@ -74,7 +74,7 @@
     - role: device-cert
       # //////////////////////////////////////////////////////////
        # Role 5
-       # Purpose of this role is to upload a script file to the bigip that will change the device certificate
+       # The purpose of this role is to upload a script file to the bigip that will change the device certificate
        # The script will then be used to view the current device certificate
        # usage = ansible-playbook --ask-pass roles-getcert.yml
        # add -vvv for more detailed output
