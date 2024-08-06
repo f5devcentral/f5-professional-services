@@ -37,6 +37,7 @@ The tools folder contains utilities which can assist with a variaty of tasks rel
 | [f5-xc-blindfold](tools/f5-xc-blindfold)| Bash script to blindfold the TLS private key prior to deployment to F5 XC config. |
 | [f5-xc-convert-eap-config](tools/f5-xc-convert-eap-config)| Bash script to convert EAP configuration in JSON format to a human-readable file. |
 | [f5-xc-export-security-event-logs](tools/f5-xc-export-security-event-logs)| Script to export F5 XC security event logs from the last X hours to a CSV file. |
+| [f5-bigip-declarative-waf-toolkit](tools/f5-bigip-declarative-waf-toolkit)| Python script to manage F5 WAF declarative policies. |
 
 
 ## Tips & Tricks
