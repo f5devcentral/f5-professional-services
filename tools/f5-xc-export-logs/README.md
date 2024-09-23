@@ -31,7 +31,7 @@ options:
   --tenant TENANT
   --namespace NAMESPACE
   --loadbalancer LOADBALANCER
-  --hours HOURS
+  --hours HOURS, max is 24 hours
 
 The script generates a CSV file named as: xc-security_events-<TENANT>_<NAMESPACE>-<date>.csv
 ```
