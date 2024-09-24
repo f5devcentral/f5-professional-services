@@ -20,7 +20,8 @@ def get_access_logs(token,tenant,namespace,loadbalancer,hours):
         df_dictionary = pd.DataFrame([tmp])
         df = pd.concat([df, df_dictionary], ignore_index=True)
     while (accessLogs["scroll_id"]!=""):
-        auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(accessLogs["scroll_id"]),"scroll":True}), headers=headers)
+        BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/access_logs/scroll'.format(tenant,namespace)
+        auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(accessLogs["scroll_id"])}), headers=headers)
         accessLogs = auth_response.json()
         logs = accessLogs['logs']
         for event in logs:
