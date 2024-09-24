@@ -20,6 +20,7 @@ def get_securiy_logs(token,tenant,namespace,loadbalancer,hours):
         df_dictionary = pd.DataFrame([tmp])
         df = pd.concat([df, df_dictionary], ignore_index=True)
     while (securityLogs["scroll_id"]!=""):
+        BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/app_security/events/scroll'.format(tenant,namespace)
         auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(securityLogs["scroll_id"]),"scroll":True}), headers=headers)
         securityLogs = auth_response.json()
         events = securityLogs['events']
