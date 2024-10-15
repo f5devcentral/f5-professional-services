@@ -5,30 +5,43 @@ import requests
 import pandas as pd 
 
 def get_access_logs(token,tenant,namespace,loadbalancer,hours):
-    currentTime = datetime.now()
-    endTime = int(round(datetime.timestamp(currentTime)))
-    startTime = endTime - (hours*3600)
-    BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/access_logs'.format(tenant,namespace)
-    headers = {'Authorization': "APIToken {}".format(token)}
-    auth_response = requests.post(BASE_URL, data=json.dumps({"aggs": {}, "end_time": "{}".format(endTime), "limit": 0, "namespace": "{}".format(namespace), "query": "{{vh_name=\"ves-io-http-loadbalancer-""{}""\"}}".format(loadbalancer), "sort": "DESCENDING", "start_time": "{}".format(startTime),"scroll":True }), headers=headers)
-    accessLogs = auth_response.json()
-    logs = accessLogs['logs']
+
     df = pd.DataFrame(columns = ['Time', 'Request ID', 'Response Code', 'Source IP address', 'Domain' ,'Country', 'City', 'Response Details','Method', 'Request Path'])
-    for event in logs:
-        item_dict = json.loads(event)
-        tmp = {'Time':item_dict['time'], 'Request ID':item_dict['req_id'], 'Response Code':item_dict['rsp_code'], 'Source IP address':item_dict['src_ip'],'Domain':item_dict['original_authority'], 'Country':item_dict['country'], 'City':item_dict['city'], 'Response Details':item_dict['rsp_code_details'],'Method':item_dict['method'], 'Request Path':item_dict['req_path']}   
-        df_dictionary = pd.DataFrame([tmp])
-        df = pd.concat([df, df_dictionary], ignore_index=True)
-    while (accessLogs["scroll_id"]!=""):
-        BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/access_logs/scroll'.format(tenant,namespace)
-        auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(accessLogs["scroll_id"])}), headers=headers)
+
+    currentTime = datetime.now()
+    midTime = int(round(datetime.timestamp(currentTime)))
+    startTime = midTime - (hours*3600)
+    while True:
+        endTime = midTime
+        midTime= endTime - (24*3600)
+        if hours < 24:
+            midTime=startTime
+        BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/access_logs'.format(tenant,namespace)
+        headers = {'Authorization': "APIToken {}".format(token)}
+        auth_response = requests.post(BASE_URL, data=json.dumps({"aggs": {}, "end_time": "{}".format(endTime), "limit": 0, "namespace": "{}".format(namespace), "query": "{{vh_name=\"ves-io-http-loadbalancer-""{}""\"}}".format(loadbalancer), "sort": "DESCENDING", "start_time": "{}".format(midTime),"scroll":True }), headers=headers)
         accessLogs = auth_response.json()
-        logs = accessLogs['logs']
-        for event in logs:
-            item_dict = json.loads(event)
-            tmp = {'Time':item_dict['time'], 'Request ID':item_dict['req_id'], 'Response Code':item_dict['rsp_code'], 'Source IP address':item_dict['src_ip'],'Domain':item_dict['original_authority'], 'Country':item_dict['country'], 'City':item_dict['city'], 'Response Details':item_dict['rsp_code_details'],'Method':item_dict['method'], 'Request Path':item_dict['req_path']}   
-            df_dictionary = pd.DataFrame([tmp])
-            df = pd.concat([df, df_dictionary], ignore_index=True)
+        if 'logs' in accessLogs:
+            logs = accessLogs['logs']
+        
+            for event in logs:
+                item_dict = json.loads(event)
+                tmp = {'Time':item_dict['time'], 'Request ID':item_dict['req_id'], 'Response Code':item_dict['rsp_code'], 'Source IP address':item_dict['src_ip'],'Domain':item_dict['original_authority'], 'Country':item_dict['country'], 'City':item_dict['city'], 'Response Details':item_dict['rsp_code_details'],'Method':item_dict['method'], 'Request Path':item_dict['req_path']}   
+                df_dictionary = pd.DataFrame([tmp])
+                df = pd.concat([df, df_dictionary], ignore_index=True)
+            while (accessLogs["scroll_id"]!=""):
+                BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/access_logs/scroll'.format(tenant,namespace)
+                auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(accessLogs["scroll_id"])}), headers=headers)
+                accessLogs = auth_response.json()
+                logs = accessLogs['logs']
+                for event in logs:
+                    item_dict = json.loads(event)
+                    tmp = {'Time':item_dict['time'], 'Request ID':item_dict['req_id'], 'Response Code':item_dict['rsp_code'], 'Source IP address':item_dict['src_ip'],'Domain':item_dict['original_authority'], 'Country':item_dict['country'], 'City':item_dict['city'], 'Response Details':item_dict['rsp_code_details'],'Method':item_dict['method'], 'Request Path':item_dict['req_path']}   
+                    df_dictionary = pd.DataFrame([tmp])
+                    df = pd.concat([df, df_dictionary], ignore_index=True)
+        hours=hours-24
+        if hours<24:
+            break
+       
     return df
 
 
