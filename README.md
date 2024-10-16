@@ -36,7 +36,7 @@ The tools folder contains utilities which can assist with a variaty of tasks rel
 | [f5-xc-backup](tools/f5-xc-backup)| A script to backup F5 XC configuration. |
 | [f5-xc-blindfold](tools/f5-xc-blindfold)| Bash script to blindfold the TLS private key prior to deployment to F5 XC config. |
 | [f5-xc-convert-eap-config](tools/f5-xc-convert-eap-config)| Bash script to convert EAP configuration in JSON format to a human-readable file. |
-| [f5-xc-export-security-event-logs](tools/f5-xc-export-security-event-logs)| Script to export F5 XC security event logs from the last X hours to a CSV file. |
+| [f5-xc-export-logs](tools/f5-xc-export-logs)| Scripts to export F5 XC security and access event logs from the last X hours to a CSV file. |
 | [f5-bigip-declarative-waf-toolkit](tools/f5-bigip-declarative-waf-toolkit)| Python script to manage F5 WAF declarative policies. |
 | [f5-awaf-attack-signature-enforcer](tools/f5-awaf-attack-signature-enforcer)| A tool written in *Go* to help manage and enforce attack signatures on a *BIG-IP Advanced WAF System*. |
 
