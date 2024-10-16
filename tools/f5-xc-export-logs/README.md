@@ -1,8 +1,8 @@
 # f5-xc-export-security-logs
 
-This *Python* script helps to export the Security Events logs from *F5 Distributed Cloud* into a CSV file.
+This *Python* script helps to export the Security Events\Access logs from *F5 Distributed Cloud* into a CSV file.
 
-The script generates a CSV file named as: security_events-\<TENANT\>-\<NAMESPACE\>_\<date\>-\<hour\>.csv
+The script generates a CSV file named as: security_events\access_logs-\<TENANT\>-\<NAMESPACE\>_\<date\>-\<hour\>.csv
 
 # How it Works
 
@@ -31,7 +31,7 @@ options:
   --tenant TENANT
   --namespace NAMESPACE
   --loadbalancer LOADBALANCER
-  --hours HOURS
+  --hours HOURS, For Access Logs, max is 168 hour. For Security Events, max is 720 hours.
 
 The script generates a CSV file named as: xc-security_events-<TENANT>_<NAMESPACE>-<date>.csv
 ```
@@ -57,6 +57,7 @@ python3.X f5-xc_get_security_logs.py\
 
 ## Output - CSV file: 
 f5-xc-security_events-\<TENANT\>_\<NAMESPACE\>-MM-DD-YYYY.csv
+f5-xc-access_logs-\<TENANT\>_\<NAMESPACE\>-MM-DD-YYYY.csv
 
 | Time                | Request ID                           | Event Type          | Source IP address | X-Forwarded-For | Country | City        | Browser        | Domain     | Method | Request Path         | Response Code |
 |:-------------------:|:------------------------------------:|:-------------------:|:-----------------:|:---------------:|:-------:|:-----------:|:--------------:|:----------:|:------:|:--------------------:|:-------------:|
