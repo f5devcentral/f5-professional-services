@@ -2,7 +2,7 @@
 api_token=$1
 tenant=$2
 namespace_provider=$3
-csv_file="./vs.csv"
+csv_file="./global-advertise-policy.csv"
 
 # Generate timestamp
 timestamp=$(date +"%Y%m%d")
@@ -38,7 +38,7 @@ fi
 
 # Prep CSV with headers
 log "Preparing CSV"
-echo "Origin_Pool_name,Origin_Pool_site,namespace,LB_name,FQDN" > "$csv_file"
+echo "Origin_Pool_name,Origin_Pool_site,namespace,LB_name,FQDN,LB_advertise_policy" > "$csv_file"
 
 #### MAIN ####
 # Retrieve namespaces based on input
@@ -82,12 +82,21 @@ for namespace in $namespaces; do
         # Fetch Domain from Load Balancer
         attached_lb_fqdn=$(curl -s -X GET -H "Authorization: APIToken $api_token" "https://$tenant.console.ves.volterra.io/api/config/namespaces/$namespace/http_loadbalancers/$origin_attached_lb" | jq -r '.spec.domains[0]?')
         
+        # Fetch Domain from Load Balancer Advertise Policy
+        attached_lb_advertise_policy=$(curl -s -X GET -H "Authorization: APIToken $api_token" "https://$tenant.console.ves.volterra.io/api/config/namespaces/$namespace/http_loadbalancers/$origin_attached_lb" | jq  -r '.spec.advertise_custom.advertise_where.[]? | (.site? // .virtual_site? // .virtual_site_with_vip?) | .site.name // .virtual_site.name // .virtual_site.name')
+        
+        # Logic to check Advertise Policy
+        if [[ -z "$attached_lb_advertise_policy" && ( -z "$attached_lb_fqdn" || "$attached_lb_fqdn" == "null" ) ]]; then
+            attached_lb_advertise_policy="not_advertised"
+        elif [ -z "$attached_lb_advertise_policy" ]; then
+            attached_lb_advertise_policy="RE"
+        fi
+
         # Write to CSV
-        line="$origin,$origin_advertise_policy,$namespace,$origin_attached_lb,$attached_lb_fqdn"
+        line="$origin,$origin_advertise_policy,$namespace,$origin_attached_lb,$attached_lb_fqdn,$attached_lb_advertise_policy"
         echo "$line" >> "$csv_file"
         log "Collected: $line"
     done
 done
 
 log "Data collection complete."
-
