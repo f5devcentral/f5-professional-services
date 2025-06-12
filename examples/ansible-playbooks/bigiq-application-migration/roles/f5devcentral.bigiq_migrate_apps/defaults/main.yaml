@@ -1,0 +1,14 @@
+---
+timeout: 120
+
+dir_as3: ~/tmp # Working directory to store migration files on your local machine
+
+new_bigiq_app_name: "App Services migrated" # Name of the Application in BIG-IQ Dashboard which will contain the migrated App Services
+
+remove_old_tenant: false # false by default
+
+old_device_not_reachable: false # false by default
+
+deploy_objects_only: false
+deploy_as3_only: false
+cleanup_only: false

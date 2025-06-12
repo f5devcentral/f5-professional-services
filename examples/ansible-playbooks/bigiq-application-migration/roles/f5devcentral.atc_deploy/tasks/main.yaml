@@ -1,0 +1,113 @@
+---
+
+- name: Setup provider and varables
+  set_fact:
+    provider: "{{ provider }}"
+    atc_declaration: "{{ atc_declaration|default(omit) }}"
+    atc_declaration_url: "{{ atc_declaration_url|default(omit) }}"
+    atc_declaration_file: "{{ atc_declaration_file|default(omit) }}"
+    atc_tenant: "{{ as3_tenant|default(omit) }}"
+    atc_show: "{{ as3_show|default(omit) }}"
+    atc_show_hash: "{{ as3_showhash|default(false) }}"
+
+- name: Get declaration from file
+  set_fact:
+    atc_declaration: "{{ lookup('file', atc_declaration_file, errors='strict')| from_json }}"
+  when: atc_declaration_file is defined
+
+- name: Download file if url specified
+  uri:
+    url: "{{ atc_declaration_url }}"
+    method: GET
+    return_content: true
+    status_code: 200
+    body_format: json
+  when: atc_declaration_url is defined
+  register: result
+  retries: 10
+  delay: 5
+
+- name: Update the atc_declaration
+  set_fact:
+    atc_declaration: "{{ result.json }}"
+  when: atc_declaration_url is defined
+
+- name: Set Automated Tool Chain service type from file
+  set_fact:
+    atc_service: "{{ atc_declaration.get('class') }}"
+  when: atc_declaration is defined and atc_service is undefined
+
+- name: Validate if atc_service name is correct if defined
+  fail:
+    msg: The specified atc_service is not valid
+  when: atc_service not in valid_services
+
+- name: Set Automated Tool Chain metadata
+  set_fact:
+    toolchain_metadata: "{{ lookup('file', 'files/toolchain_metadata.json', errors='strict') }}"
+
+- name: Setup service "{{ atc_service }}" endpoints
+  set_fact:
+    atc_url: "{{ toolchain_metadata['components'][atc_service]['endpoints']['configure']['uri'] }}"
+    atc_check_url: "{{ toolchain_metadata['components'][atc_service]['endpoints']['info']['uri'] }}"
+
+- name: include authentication.yaml
+  include_tasks: authentication.yaml
+
+- name: Verify "{{ atc_service }}" service is available, and collect service info
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ atc_check_url }}"
+    timeout: "{{ atc_timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: atc_response
+  until:
+    - atc_response is success
+    - atc_response.json is defined
+  retries: "{{ atc_retries }}"
+  delay: "{{ atc_delay }}"
+
+- name: include as3_filtering.yaml
+  include_tasks: as3_filtering.yaml
+  when:
+    - atc_service == "AS3"
+    - atc_method in ['POST', 'GET', 'DELETE']
+
+- name: check as3 declaration and include teem data if needed
+  teem_check:
+    atc_json_data: "{{ atc_declaration }}"
+    atc_version: "{{ atc_response.json }}"
+  register: result
+  when: check_teem and atc_declaration is defined
+
+- name: Update the atc_declaration
+  set_fact:
+    atc_declaration_updated: "{{ result.result | default(omit) }}"
+
+- name: include declare.yaml
+  include_tasks: declare.yaml
+
+- name: Check if BIG-IQ (ignore if failed)
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/info/system"
+    timeout: "{{ atc_timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: check_bigiq
+  ignore_errors: yes
+
+# BIG-IP task check
+- name: include atc_task_check_bigip.yaml
+  include_tasks: atc_task_check_bigip.yaml
+  when:
+    - check_bigiq.status == 404 ## if /info/system does not exist, it is a BIG-IP
+    - atc_service == "AS3" or atc_service == "Device"
+
+# BIG-IQ task check
+- name: include atc_task_check_bigiq.yaml
+  include_tasks: atc_task_check_bigiq.yaml
+  when:
+    - check_bigiq.status == 200 ## if /info/system exists, it is a BIG-IQ
+    - atc_service == "AS3" or atc_service == "Device"

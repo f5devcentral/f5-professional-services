@@ -1,0 +1,113 @@
+---
+- name: Show object to unpin
+  debug:
+    msg: "Module: {{ module }} - Name: {{ object_name }} - Type: {{ object_type }}"
+
+- name: Set Objets metadata
+  set_fact:
+    objects_metadata: "{{ lookup('file', 'files/objects_metadata.json', errors='strict') }}"
+
+# Get device under Pinning Policy
+- name: Get existing object pinned on the device - Any LTM or Shared Security object but ASM
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}?$filter=deviceReference.machineId%20eq%20'{{ machine_id }}'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+  when: module != "asm"
+
+- name: Get the ID of the Device under Pinning Policy - Any LTM or Shared Security object but ASM
+  set_fact:
+    object_pinning_id: "{{ json_response | json_query(query) }}"
+  vars: 
+    query: "json.items[0].id"
+  when: module != "asm"
+
+# Get existing object already pin on the device
+- name: Get the existing object - Any LTM or Shared Security object but ASM
+  set_fact:
+    existing_objects: "{{ json_response | json_query(query) }}"
+  vars: 
+    query: "json.items[0].{{ object_type }}"
+  when: module != "asm"
+
+# Get device under Inactive Virtual Server
+- name: Get existing object pinned on the device - ASM only
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}?$filter=deviceReference.machineId%20eq%20'{{ machine_id }}'%20and%20name%20eq%20'inactive'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+  when: module == "asm"
+
+- name: Get the ID of the Device under Inactive Virtual Server - ASM only
+  set_fact:
+    object_pinning_id: "{{ json_response | json_query(query) }}"
+  vars: 
+    query: "json.items[0].id"
+  when: module == "asm"
+
+# Get existing object already pin on the device
+- name: Get the existing object - ASM only
+  set_fact:
+    existing_objects: "{{ json_response | json_query(query) }}"
+  vars: 
+    query: "json.items[0].{{ object_type }}"
+  when: module == "asm"
+
+# Common part
+#- debug:
+#    var: existing_objects
+
+- name: Get object details 
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+
+- name: Get id of the object to pin
+  set_fact:
+    object_id: "{{ json_response | json_query(query) }}"
+  vars: 
+    query: "json.items[0].id"
+
+- name: Get object_id
+  fail: msg="Not able to retreive the object_id. Please check the object exist in BIG-IQ or re-try."
+  when: object_id|length == 0
+
+- name: Remove {{ object_name }} from existing_objects
+  set_fact:
+    all_objects: "{{ existing_objects | rejectattr('name', 'match', object_name) | list }}"
+
+#- debug:
+#    var: all_objects
+
+#- debug:
+#    var: object_id
+
+- name: Unpinning object to the device
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][module]['endpoints']['pinning']['uri'] }}/{{ object_pinning_id }}"
+    method: PATCH
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+        "id": "{{ object_pinning_id }}",
+        "{{ object_type }}": {{ all_objects }}
+      }
+    body_format: json
+  register: json_response

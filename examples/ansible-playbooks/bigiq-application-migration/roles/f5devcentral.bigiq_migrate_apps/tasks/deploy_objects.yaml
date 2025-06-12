@@ -1,0 +1,56 @@
+---
+- name: Pin and deploy SSL Certificates
+  include_role:
+    name: f5devcentral.bigiq_pinning_deploy_objects
+  vars:
+    bigiq_task_name: "Migration SSL Certificates - {{ new_bigiq_app_name }}"
+    modules: 
+    - name: ltm
+      pin: "{{ certificates_array }}"
+    device_address: "{{ new_device_address }}"
+  register: status
+  when: 
+    - certificates_array is defined
+    - certificates_array | length > 0
+
+- name: Pin and deploy SSL Private Keys
+  include_role:
+    name: f5devcentral.bigiq_pinning_deploy_objects
+  vars:
+    bigiq_task_name: "Migration SSL Private Keys - {{ new_bigiq_app_name }}"
+    modules: 
+    - name: ltm
+      pin: "{{ privateKeys_array }}"
+    device_address: "{{ new_device_address }}"
+  register: status
+  when: 
+    - privateKeys_array is defined
+    - privateKeys_array | length > 0
+
+- name: Pin and deploy WAF Policies
+  include_role:
+    name: f5devcentral.bigiq_pinning_deploy_objects
+  vars:
+    bigiq_task_name: "Migration WAF Policies - {{ new_bigiq_app_name }}"
+    modules: 
+    - name: asm
+      pin: "{{ policyWAFs_array }}"
+    device_address: "{{ new_device_address }}"
+  register: status
+  when: 
+    - policyWAFs is defined
+    - policyWAFs | length > 0
+
+- name: Pin and deploy Security Logging Profiles
+  include_role:
+    name: f5devcentral.bigiq_pinning_deploy_objects
+  vars:
+    bigiq_task_name: "Migration Security Logging Profiles - {{ new_bigiq_app_name }}"
+    modules: 
+    - name: shared_security
+      pin: "{{ securityLogProfiles_array }}"
+    device_address: "{{ new_device_address }}"
+  register: status
+  when: 
+    - securityLogProfiles_array is defined
+    - securityLogProfiles_array | length > 0

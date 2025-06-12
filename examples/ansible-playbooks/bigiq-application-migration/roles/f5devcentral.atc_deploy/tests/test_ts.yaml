@@ -1,0 +1,83 @@
+---
+
+- hosts: all
+  connection: local
+
+  vars:
+    provider:
+      user: admin
+      server: "{{ ansible_host }}"
+      server_port: 443
+      password: admin
+      validate_certs: no
+
+  tasks:
+    - name: Telemetry Streaming Remove Existing Declarations
+      block:
+        - name: Telemetry Streaming Remove Existing Declarations
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/empty_ts_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert Telemetry Streaming Remove Existing Declarations
+      assert:
+        that:
+          - atc_TS_status is not failed
+
+    - name: Telemetry Streaming Example Declaration
+      block:
+        - name: Telemetry Streaming Example Declaration
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/example_ts_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert Telemetry Streaming Example Declaration
+      assert:
+        that:
+          - atc_TS_status is not failed
+
+    - name: Telemetry Streaming Example Declaration GET
+      block:
+        - name: Telemetry Streaming Example Declaration GET
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: GET
+            atc_service: Telemetry
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert Telemetry Streaming Example Declaration
+      assert:
+        that:
+          - atc_GET_status is not failed
+          - atc_GET_status.json.declaration.My_Consumer is defined
+
+    - name: Telemetry Streaming Incorrect Declaration
+      block:
+        - name: Telemetry Streaming Incorrect Declaration
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/incorrect_ts_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+      ignore_errors: yes
+
+    - name: Assert Telemetry Streaming Incorrect Declaration failed as expected
+      assert:
+        that:
+          - atc_TS_status is failed

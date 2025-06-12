@@ -1,0 +1,22 @@
+---
+
+dependencies: []
+galaxy_info:
+  role_name: atc_deploy
+  author: crosbygw
+  description: Allows declaration to be sent to automation tool chain service (AS3, DO, or TS)
+  company: F5 Networks
+  license: Apache
+  min_ansible_version: 2.8
+  platforms:
+    - name: TMOS
+      versions:
+        - all
+  galaxy_tags:
+    - f5
+    - networking
+    - as3
+    - do
+    - ts
+    - bigip
+    - bigiq
