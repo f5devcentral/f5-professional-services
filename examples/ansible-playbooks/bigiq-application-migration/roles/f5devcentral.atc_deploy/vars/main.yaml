@@ -1,7 +1,0 @@
----
-
-valid_services:
-  - AS3
-  - Device
-  - Telemetry
-  - Failover

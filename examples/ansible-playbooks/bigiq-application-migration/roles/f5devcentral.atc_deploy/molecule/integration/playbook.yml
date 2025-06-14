@@ -1,7 +1,0 @@
----
-
-- name: Converge
-  hosts: all
-
-  roles:
-    - role: f5_act_deploy_declaration

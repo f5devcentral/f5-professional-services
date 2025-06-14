@@ -1,6 +1,0 @@
-provider:
-  server: 10.155.41.72
-  server_port: 443
-  user: admin
-  password: admin
-  validate_certs: false
