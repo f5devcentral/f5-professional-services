@@ -1,0 +1,236 @@
+---
+
+- hosts: all
+  connection: local
+
+  vars:
+    provider:
+      user: admin
+      server: "{{ ansible_host }}"
+      server_port: 443
+      password: admin
+      validate_certs: no
+
+  tasks:
+    - name: AS3 Remove Existing Declarations
+      block:
+        - name: AS3 Remove Existing Declarations
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: DELETE
+            atc_declaration: "{{ lookup('file', 'tests/files/combined_as3_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert AS3 Remove Existing Declarations
+      assert:
+        that:
+          - atc_AS3_status is not failed
+
+    - name: AS3 T1 Declaration
+      block:
+        - name: AS3 T1 Declaration
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/t1_as3_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert AS3 T1 Declaration
+      assert:
+        that:
+          - atc_AS3_status is not failed
+
+    - name: AS3 T1 Declaration GET
+      block:
+        - name: AS3 T1 Declaration GET
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: GET
+            atc_service: AS3
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert AS3 T1 Declaration
+      assert:
+        that:
+          - atc_GET_status is not failed
+          - atc_GET_status.json.T1 is defined
+
+    - name: AS3 Combined Declaration
+      block:
+        - name: AS3 Combined Declaration
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/combined_as3_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert AS3 Combined Declaration
+      assert:
+        that:
+          - atc_AS3_status is not failed
+
+    - name: AS3 Combined Declaration GET
+      block:
+        - name: AS3 Combined Declaration GET
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: GET
+            atc_service: AS3
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert AS3 Combined Declaration
+      assert:
+        that:
+          - atc_GET_status is not failed
+          - atc_GET_status.json.T1 is defined
+          - atc_GET_status.json.T2 is defined
+
+    #######################################################
+    # Commenting these out due to issue described in PR #12
+    # - name: AS3 Remove Only T2 Declarations
+    #   block:
+    #     - name: AS3 Remove Only T2 Declarations
+    #       include_role:
+    #         name: ansible-role-f5_atc_deploy_declaration
+    #       vars:
+    #         atc_method: DELETE
+    #         atc_declaration: "{{ lookup('file', 'tests/files/combined_as3_declaration.json') }}"
+    #         atc_tenant: T2
+    #         atc_delay: 10
+    #         atc_retries: 5
+    #       register: result
+
+    # - name: Assert AS3 Remove Only T2 Declarations
+    #   assert:
+    #     that:
+    #       - atc_AS3_status is not failed
+
+    # - name: AS3 Remove Only T2 Declarations GET
+    #   block:
+    #     - name: AS3 Remove Only T2 Declaration GET
+    #       include_role:
+    #         name: ansible-role-f5_atc_deploy_declaration
+    #       vars:
+    #         atc_method: GET
+    #         atc_service: AS3
+    #         atc_delay: 10
+    #         atc_retries: 5
+    #       register: result
+
+    # - name: Assert AS3 Remove Only T2 Declarations
+    #   assert:
+    #     that:
+    #       - atc_GET_status is not failed
+    #       # Commenting these out due to issue described in PR #12
+    #       # - atc_GET_status.json.T1 is defined
+    #       # - atc_GET_status.json.T2 is not defined
+    #######################################################
+
+    - name: AS3 Remove All Declarations
+      block:
+        - name: AS3 Remove Only T2 Declarations
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: DELETE
+            atc_declaration: "{{ lookup('file', 'tests/files/combined_as3_declaration.json') }}"
+            atc_tenant: T2
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert AAS3 Remove All Declarations
+      assert:
+        that:
+          - atc_AS3_status is not failed
+
+    - name: AS3 Remove All Declarations GET
+      block:
+        - name: AS3 Combined Declaration GET
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: GET
+            atc_service: AS3
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert AS3 Remove All Declarations
+      assert:
+        that:
+          - atc_GET_status is not failed
+          - atc_GET_status.json.T1 is not defined
+          - atc_GET_status.json.T2 is not defined
+
+    - name: AS3 Incorrect Declaration
+      block:
+        - name: AS3 Incorrect Declaration
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/incorrect_as3_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+      ignore_errors: yes
+
+    - name: Assert AS3 Incorrect Declaration failed as expected
+      assert:
+        that:
+          - atc_AS3_status is failed
+
+    - name: AS3 Incorrect Combined Declaration
+      block:
+        - name: AS3 Incorrect Combined Declaration
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/incorrect_combined_as3_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert AS3 Incorrect Combined Declaration
+      assert:
+        that:
+          - atc_AS3_status is not failed
+
+    - name: AS3 Incorrect Combined Declaration GET
+      block:
+        - name: AS3 Incorrect Combined Declaration GET
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: GET
+            atc_service: AS3
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - debug: msg="{{ result }}"
+    - debug: msg="{{ atc_GET_status }}"
+
+    - name: Assert AS3 Incorrect Combined Declaration
+      assert:
+        that:
+          - atc_GET_status is not failed
+          - atc_GET_status.json.T1 is not defined
+          - atc_GET_status.json.T2 is defined

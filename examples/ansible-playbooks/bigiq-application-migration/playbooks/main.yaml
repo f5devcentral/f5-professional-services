@@ -1,0 +1,25 @@
+---
+- name: Migrate Application Services to a new BIGIP
+  hosts: iq
+  connection: local
+  gather_facts: false
+  vars:
+    timeout: 120
+  tasks:
+    - name: Load csv file to find the new target address
+      community.general.read_csv:
+        path: ../Files/ips.csv
+      register: new_target
+
+    - name: Process each Target address in the loop
+      vars:
+        current_target: "{{ ta.target_address }}"
+        current_tenant: "{{ ta.tenantName }}"
+        to_target: "{{ ta.new_target }}"
+        new_tenant: "{{ ta.tenantName }}_new"
+        move_to_app: "{{ ta.parentApplication }}"
+      loop: "{{ new_target.list }}"
+      loop_control:
+        loop_var: ta
+      ansible.builtin.include_tasks:
+        move_app.yaml

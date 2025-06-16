@@ -1,0 +1,394 @@
+---
+- name: Set Objets metadata
+  set_fact:
+    objects_metadata: "{{ lookup('file', 'files/objects_metadata.json', errors='strict') }}"
+
+### DEPLOY LTM
+- name: Get object details  - LTM
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][item.0.name]['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+  vars:
+    object_name: "{{ item.1.name }}"
+    object_type: "{{ item.1.type }}"
+  with_subelements:
+    - "{{ modules }}"
+    - unpin
+    - skip_missing: True
+  when: item.0.name == "ltm"
+
+- name: Initiate objects_deploy List  - LTM
+  set_fact:
+    objects_deploy_ltm: []
+
+- name: Build objects_deploy - LTM
+  set_fact:
+    objects_deploy_ltm: "{{ objects_deploy_ltm + [{ 'link': item }] }}"
+  loop: "{{ json_response | json_query('results[*].json.items[0].selfLink') }}"
+
+#- debug:
+#    var: objects_deploy_ltm
+
+- name: Trigger evaluation full config to the device - LTM - Standalone
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints']['deploy']['uri'] }}"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+          "skipVerifyConfig": false,
+          "skipDistribution": true,
+          "snapshotReference": null,
+          "objectsToDeployReferences": [],
+          "deviceReferences": [
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id }}"
+              }
+          ],
+          "deploySpecifiedObjectsOnly": false,
+          "name": "{{ bigiq_task_name }} - LTM"
+      }
+    body_format: json
+    status_code: 202
+  register: json_response
+  when: 
+    - objects_deploy_ltm | length > 0
+    - machine_id2 is not defined
+
+- name: Check evaluation status - LTM - Standalone
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+  until: status.json.status in ['FINISHED', 'FAILED']
+  retries: 40
+  delay: 10
+  failed_when: "'FAILED' in status.json.status"
+  changed_when: "'FINISHED' in status.json.status"
+  when: 
+    - objects_deploy_ltm | length > 0
+    - machine_id2 is not defined
+
+- name: Trigger evaluation full config to the device - LTM - Cluster (maximum 2 devices in the HA)
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints']['deploy']['uri'] }}"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+          "skipVerifyConfig": false,
+          "skipDistribution": true,
+          "snapshotReference": null,
+          "objectsToDeployReferences": [],
+          "deviceReferences": [
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id }}"
+              },
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id2 }}"
+              }
+          ],
+          "deploySpecifiedObjectsOnly": false,
+          "name": "{{ bigiq_task_name }} - LTM"
+      }
+    body_format: json
+    status_code: 202
+  register: json_response
+  when: 
+    - objects_deploy_ltm | length > 0
+    - machine_id2 is defined
+  
+- name: Check evaluation status - LTM - Cluster (maximum 2 devices in the HA)
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['ltm']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+  until: status.json.status in ['FINISHED', 'FAILED']
+  retries: 40
+  delay: 10
+  failed_when: "'FAILED' in status.json.status"
+  changed_when: "'FINISHED' in status.json.status"
+  when: 
+    - objects_deploy_ltm | length > 0
+    - machine_id2 is defined
+
+### DEPLOY Shared Security
+- name: Get object details - Shared Security
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][item.0.name]['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+  vars:
+    object_name: "{{ item.1.name }}"
+    object_type: "{{ item.1.type }}"
+  with_subelements:
+    - "{{ modules }}"
+    - unpin
+    - skip_missing: True
+  when: item.0.name == "shared_security"
+
+- name: Initiate objects_deploy List - Shared Security
+  set_fact:
+    objects_deploy_shared_security: []
+
+- name: Build objects_deploy - Shared Security
+  set_fact:
+    objects_deploy_shared_security: "{{ objects_deploy_shared_security + [{ 'link': item }] }}"
+  loop: "{{ json_response | json_query('results[*].json.items[0].selfLink') }}"
+
+#- debug:
+#    var: objects_deploy_shared_security
+
+- name: Trigger evaluation full config to the device - Shared Security - Standalone
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['shared_security']['endpoints']['deploy']['uri'] }}"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+          "skipVerifyConfig": false,
+          "skipDistribution": true,
+          "snapshotReference": null,
+          "objectsToDeployReferences": [],
+          "deviceReferences": [
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id }}"
+              }
+          ],
+          "deploySpecifiedObjectsOnly": false,
+          "name": "{{ bigiq_task_name }} - Shared Security"
+      }
+    body_format: json
+    status_code: 202
+  register: json_response
+  when: 
+    - objects_deploy_shared_security | length > 0
+    - machine_id2 is not defined
+
+- name: Check evaluation status - Shared Security - Standalone
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['shared_security']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+  until: status.json.status in ['FINISHED', 'FAILED']
+  retries: 40
+  delay: 10
+  failed_when: "'FAILED' in status.json.status"
+  changed_when: "'FINISHED' in status.json.status"
+  when: 
+    - objects_deploy_shared_security | length > 0
+    - machine_id2 is not defined
+
+- name: Trigger evaluation full config - Shared Security - Cluster (maximum 2 devices in the HA)
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['shared_security']['endpoints']['deploy']['uri'] }}"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+          "skipVerifyConfig": false,
+          "skipDistribution": true,
+          "snapshotReference": null,
+          "objectsToDeployReferences": [],
+          "deviceReferences": [
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id }}"
+              },
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id2 }}"
+              }
+          ],
+          "deploySpecifiedObjectsOnly": false,
+          "name": "{{ bigiq_task_name }} - Shared Security"
+      }
+    body_format: json
+    status_code: 202
+  register: json_response
+  when: 
+    - objects_deploy_shared_security | length > 0
+    - machine_id2 is defined
+
+- name: Check evaluation status - Shared Security - Cluster (maximum 2 devices in the HA)
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['shared_security']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+  until: status.json.status in ['FINISHED', 'FAILED']
+  retries: 40
+  delay: 10
+  failed_when: "'FAILED' in status.json.status"
+  changed_when: "'FINISHED' in status.json.status"
+  when: 
+    - objects_deploy_shared_security | length > 0
+    - machine_id2 is defined
+
+### DEPLOY ASM
+- name: Get object details - ASM
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components'][item.0.name]['endpoints'][object_type]['uri'] }}?$filter=name%20eq%20'{{ object_name }}'"
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+  vars:
+    object_name: "{{ item.1.name }}"
+    object_type: "{{ item.1.type }}"
+  with_subelements:
+    - "{{ modules }}"
+    - unpin
+    - skip_missing: True
+  when: item.0.name == "asm"
+
+- name: Initiate objects_deploy List - ASM
+  set_fact:
+    objects_deploy_asm: []
+
+#- debug:
+#    var: objects_deploy_asm
+
+- name: Build objects_deploy - ASM
+  set_fact:
+    objects_deploy_asm: "{{ objects_deploy_asm + [{ 'link': item }] }}"
+  loop: "{{ json_response | json_query('results[*].json.items[0].selfLink') }}"
+
+- name: Trigger evaluation full config to the device - ASM - Standalone
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['asm']['endpoints']['deploy']['uri'] }}"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+          "skipVerifyConfig": false,
+          "skipDistribution": true,
+          "snapshotReference": null,
+          "objectsToDeployReferences": [],
+          "deviceReferences": [
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id }}"
+              }
+          ],
+          "deploySpecifiedObjectsOnly": false,
+          "name": "{{ bigiq_task_name }} - ASM"
+      }
+    body_format: json
+    status_code: 202
+  register: json_response
+  when: 
+    - objects_deploy_asm | length > 0
+    - machine_id2 is not defined
+
+- name: Check evaluation status - ASM - Standalone
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['asm']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+  until: status.json.status in ['FINISHED', 'FAILED']
+  retries: 40
+  delay: 10
+  failed_when: "'FAILED' in status.json.status"
+  changed_when: "'FINISHED' in status.json.status"
+  when: 
+    - objects_deploy_asm | length > 0
+    - machine_id2 is not defined
+
+- name: Trigger evaluation full config to the device - ASM - Cluster (maximum 2 devices in the HA)
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['asm']['endpoints']['deploy']['uri'] }}"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+          "skipVerifyConfig": false,
+          "skipDistribution": true,
+          "snapshotReference": null,
+          "objectsToDeployReferences": [],
+          "deviceReferences": [
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id }}"
+              },
+              {
+                  "link": "https://localhost/mgmt/shared/resolver/device-groups/cm-adccore-allbigipDevices/devices/{{ machine_id2 }}"
+              }
+          ],
+          "deploySpecifiedObjectsOnly": false,
+          "name": "{{ bigiq_task_name }} - ASM"
+      }
+    body_format: json
+    status_code: 202
+  register: json_response
+  when: 
+    - objects_deploy_asm | length > 0
+    - machine_id2 is defined
+
+- name: Check evaluation status - ASM - Cluster (maximum 2 devices in the HA)
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ objects_metadata['components']['asm']['endpoints']['deploy']['uri'] }}/{{ json_response.json.id }}"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+  until: status.json.status in ['FINISHED', 'FAILED']
+  retries: 40
+  delay: 10
+  failed_when: "'FAILED' in status.json.status"
+  changed_when: "'FINISHED' in status.json.status"
+  when: 
+    - objects_deploy_asm | length > 0
+    - machine_id2 is defined

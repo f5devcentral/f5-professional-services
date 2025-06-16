@@ -1,0 +1,79 @@
+---
+
+- hosts: all
+  connection: local
+
+  vars:
+    provider:
+      user: admin
+      server: "{{ ansible_host }}"
+      server_port: 443
+      password: admin
+      validate_certs: no
+
+  tasks:
+    - name: Declarative Onboarding Example Declaration
+      block:
+        - name: Declarative Onboarding Example Declaration
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/example_do_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 50
+          register: result
+
+    - name: Assert Declarative Onboarding Example Declaration
+      assert:
+        that:
+          - atc_DO_result is not failed
+
+    - name: Declarative Onboarding Example Declaration GET
+      block:
+        - name: Declarative Onboarding Example Declaration GET
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: GET
+            atc_service: Device
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+
+    - name: Assert Declarative Onboarding Example Declaration
+      assert:
+        that:
+          - atc_GET_status is not failed
+          - atc_GET_status.json.declaration.Common is defined
+
+    - name: Declarative Onboarding Incorrect Declaration
+      block:
+        - name: Declarative Onboarding Incorrect Declaration
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: POST
+            atc_declaration: "{{ lookup('file', 'tests/files/incorrect_do_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+      ignore_errors: yes
+
+    - name: Declarative Onboarding Incorrect Declaration GET
+      block:
+        - name: Declarative Onboarding Incorrect Declaration GET
+          include_role:
+            name: ansible-role-f5_atc_deploy_declaration
+          vars:
+            atc_method: GET
+            atc_declaration: "{{ lookup('file', 'tests/files/incorrect_do_declaration.json') }}"
+            atc_delay: 10
+            atc_retries: 5
+          register: result
+      ignore_errors: yes
+
+    - name: Assert Declarative Onboarding Incorrect Declaration failed as expected
+      assert:
+        that:
+          - atc_GET_status is failed

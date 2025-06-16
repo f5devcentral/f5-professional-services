@@ -1,0 +1,17 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: bigiq_pinning_deploy_objects
+  author: rjouhann
+  description: Pin objects on BIG-IQ and deploy it to BIG-IP(s)
+  company: F5 Networks
+  license: Apache
+  min_ansible_version: 2.7
+  platforms:
+    - name: TMOS
+      versions:
+        - all
+  galaxy_tags:
+    - f5
+    - bigiq

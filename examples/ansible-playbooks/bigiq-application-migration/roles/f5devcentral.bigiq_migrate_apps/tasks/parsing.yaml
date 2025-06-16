@@ -1,0 +1,142 @@
+---
+- name: Show Application Service to migrate
+  debug:
+    msg: "Tenant {{ tenant_to_migrate }} to migrate to device {{ new_device_address }}"
+
+- name: Create a directory if it does not exist where we will store the AS3 declaration
+  file:
+    path: "{{ dir_as3 }}"
+    state: directory
+    mode: '0755'
+
+# Retrieve AS3 declarations in Tenant
+- name: Get AS3 declaration for the tenant specified {{ tenant_to_migrate }}
+  uri:
+    url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/tenants?$filter=name%20eq%20'{{ tenant_to_migrate }}'%20and%20body.target.address%20eq%20'{{ device_address }}...{{ device_address }}'
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    status_code: 200, 202
+  register: json_response
+
+- name: Save output in a file {{ dir_as3 }}/{{ tenant_to_migrate }}.json
+  copy:
+    content: "{{ json_response | json_query(query) | to_nice_json }}"
+    dest: "{{ dir_as3 }}/{{ tenant_to_migrate }}.json"
+  delegate_to: localhost
+  vars: 
+    query: "json.items[0].body"
+
+- name: Make a copy of previous file to {{ dir_as3 }}/{{ tenant_to_migrate }}
+  copy:
+    src: "{{ dir_as3 }}/{{ tenant_to_migrate }}.json"
+    dest: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+  delegate_to: localhost
+
+- name: Replace {{ tenant_to_migrate }} with {{ new_tenant_name }} in the declaration body
+  replace:
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    regexp: "/{{ tenant_to_migrate }}/"
+    replace: "/{{ new_tenant_name }}/"
+  delegate_to: localhost
+
+- name: Replace {{ tenant_to_migrate }} with {{ new_tenant_name }} in the declaration tenant value of the declaration
+  replace:
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    regexp: '"{{ tenant_to_migrate }}": {'
+    replace: '"{{ new_tenant_name }}": {'
+  delegate_to: localhost
+
+- name: Remove BIG-IQ id
+  lineinfile: 
+    dest: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    state: absent 
+    regexp: '^    "id":'
+  delegate_to: localhost
+
+- name: Replace target BIG-IP with new target {{ new_device_address }}
+  lineinfile:
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    regexp: '^        "address":'
+    line: '        "address": "{{ new_device_address }}"'
+  delegate_to: localhost
+
+# Replace VIP if new_virtual_server specified
+- name: Show all old/new VIPs
+  debug:
+    msg: "old: {{ item.old }} - new: {{ item.new }}"
+  with_items: "{{ new_virtual_servers }}"
+  when: 
+    - new_virtual_servers is defined
+    - new_virtual_servers | length > 0
+
+- name: Replace Virtual IP Addresses in the declaration body (if specified)
+  replace:
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    regexp: '"{{ item.old }}"'
+    replace: '"{{ item.new }}"'
+  delegate_to: localhost
+  with_items: "{{ new_virtual_servers }}"
+  when: 
+    - new_virtual_servers is defined
+    - new_virtual_servers | length > 0
+
+### Look for objects referenced in the AS3 declaration in order to pin & deploy them to the new BIG-IP where the app service will be move to
+- name: Load AS3 tenant
+  include_vars:
+    file: "{{ dir_as3 }}/{{ tenant_to_migrate }}.json"
+    name: tenant
+
+# CERTIFICATES
+- name: Get all certificates references
+  set_fact:
+    certificates: "{{ tenant| json_query(query1) | flatten | json_query(query2) }}"
+  vars:
+    query1: "*.*.*"
+    query2: "[?class=='Certificate'].certificate.bigip"
+
+- name: Populate certificates array
+  set_fact:
+    certificates_array: "{{ certificates_array|default([]) + [ {'type': 'sslCertReferences', 'name': item | basename } ] }}"
+  with_items: "{{ certificates }}"
+  
+# KEYS
+- name: Get all privateKeys references
+  set_fact:
+    privateKeys: "{{ tenant| json_query(query1) | flatten | json_query(query2) }}"
+  vars:
+    query1: "*.*.*"
+    query2: "[?class=='Certificate'].privateKey.bigip"
+
+- name: Populate privateKeys array
+  set_fact:
+    privateKeys_array: "{{ privateKeys_array|default([]) + [ {'type': 'sslKeyReferences', 'name': item | basename } ] }}"
+  with_items: "{{ privateKeys }}"
+
+# WAF POLICIES
+- name: Get all WAF Policies references
+  set_fact:
+    policyWAFs: "{{ tenant| json_query(query1) | flatten | json_query(query2) }}"
+  vars:
+    query1: "*.*.*"
+    query2: "[*].policyWAF.bigip"
+  
+- name: Populate policyWAFs array
+  set_fact:
+    policyWAFs_array: "{{ policyWAFs_array|default([]) + [ {'type': 'attachedPoliciesReferences', 'name': item | basename } ] }}"
+  with_items: "{{ policyWAFs }}"
+
+# SECURITY LOGGING PROFILES
+- name: Get all Security Logging Profile references
+  set_fact:
+    securityLogProfiles: "{{ tenant| json_query(query1) | flatten | json_query(query2) }}"
+  vars:
+    query1: "*.*.*"
+    query2: "[*].securityLogProfiles[*].bigip"
+  
+- name: Populate securityLogProfiles array
+  set_fact:
+    securityLogProfiles_array: "{{ securityLogProfiles_array|default([]) + [ {'type': 'logProfileReferences', 'name': item | basename } ] }}"
+  with_items: "{{ securityLogProfiles }}"

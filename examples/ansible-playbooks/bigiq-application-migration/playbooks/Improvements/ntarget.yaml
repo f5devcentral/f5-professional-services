@@ -1,0 +1,24 @@
+# process_tenant.yaml
+---
+- name: Checcking all variables are correct
+  debug:
+    msg: 
+      - "This is the tenant: {{iqtenant}}"
+      - "This is teh target: {{target_address}}"
+      - "This is the selfLink: {{ cs_selfLink }}"
+
+- name: load csv file to find the new target address
+  read_csv:
+    path: ../Files/ips.csv
+  register: new_target
+
+- name: loop to get the new Target address for the Application
+  vars:
+    new_tgt_addr: "{{ ta.new_address }}"
+    #iqtenant_new: "{{ ta.new_tenant }}"
+  include_tasks:
+    migrate.yaml
+  loop: "{{ new_target.list }}"
+  loop_control:
+    loop_var: ta
+  when: target_address == ta.target_address

@@ -1,0 +1,30 @@
+---
+
+- name: Setup AS3 endpoint with specified tenant when tenant specified
+  set_fact:
+    atc_url: "{{ atc_url }}/{{ atc_tenant }}"
+  when:
+    - atc_tenant is defined
+    - atc_response.json.version is version('3.14.0', '>=') or atc_method in ['DELETE']
+
+- name: Setup URL query 'show' when using GET, POST, or DELETE with AS3
+  set_fact:
+    atc_url: "{{ atc_url }}?show={{ atc_show }}"
+  when:
+    - atc_response.json.version is version('3.6.0', '>=')
+    - atc_show is defined
+
+- name: Setup optional URL query 'showHash' when using POST with AS3
+  set_fact:
+    atc_url: "{{ atc_url }}&showHash={{ atc_show_hash }}"
+  when:
+    - atc_response.json.version is version('3.14.0', '>=')
+    - atc_show_hash | bool
+    - atc_method in ['POST', 'GET']
+
+- name: Setup URL query 'async' when using POST with AS3
+  set_fact:
+    atc_url: "{{ atc_url }}&async=true"
+  when:
+    - atc_response.json.version is version('3.5.0', '>=')
+    - atc_method in ['POST', 'DELETE']

@@ -1,0 +1,5 @@
+parentApplication,name,tenantName,target_address,new_target
+BIGI_IQ_App_2,App_IQ_2_Service,App_IQ_2,10.10.10.52,10.10.10.53
+BIG_IQ_App,App_IQ_Zoro,App_IQ,10.10.10.52,10.10.10.53
+
+

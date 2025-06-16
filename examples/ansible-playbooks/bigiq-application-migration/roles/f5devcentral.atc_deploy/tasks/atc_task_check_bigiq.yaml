@@ -1,0 +1,65 @@
+---
+
+- name: Wait for AS3 Task to complete
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/appsvcs/task/{{ atc_AS3_result.json.id }}"
+    method: GET
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    return_content: true
+    validate_certs: "{{ provider.validate_certs }}"
+    status_code: 200
+  register: atc_AS3_status
+  until: atc_AS3_status.json.results | map(attribute='message') | list | first != 'in progress'
+  retries: "{{ atc_retries }}"
+  delay: "{{ atc_delay }}"
+  changed_when: atc_AS3_status.json.results | map(attribute='message') | list | first != 'no change'
+  failed_when:
+    - atc_AS3_status.json.results | map(attribute='message') | list | first != 'success'
+    - atc_AS3_status.json.results | map(attribute='message') | list | first != 'no change'
+  delegate_to: localhost
+  when:
+    - atc_service == "AS3"
+    - atc_method in ['POST', 'DELETE']
+
+- name: Wait for DO Task to complete (with retry)
+  block:
+    - name: Set the retry count
+      set_fact:
+        retry_count: "{{ 0 if retry_count is undefined else retry_count|int + 1 }}"
+
+    - name: Run check
+      uri:
+        url: "https://{{ provider.server }}:{{ provider.server_port }}{{ atc_url }}/task/{{ atc_DO_result.json.id }}"
+        method: GET
+        headers:
+          X-F5-Auth-Token: "{{ f5_auth_token }}"
+        return_content: true
+        validate_certs: "{{ provider.validate_certs }}"
+        status_code: 200
+      register: atc_DO_status
+      until: "atc_DO_status is success or atc_DO_status.status == 401"
+      retries: "{{ atc_retries }}"
+      delay: "{{ atc_delay }}"
+      delegate_to: localhost
+      when:
+        - atc_service == "Device"
+        - atc_method == "POST"
+  # Rescue block for handling BIG-IQ token timeouts (max 4*300sec=20min, 300sec is the default expiration time for BIG-IQ, 1200sec for BIG-IP)
+  rescue:
+    - name: Fail after 4 retries
+      fail:
+        msg: Ended after 4 retries
+      when: retry_count|int == 4
+    
+    - name: Display error message
+      debug:
+        msg: "caught error: {{ atc_DO_status.msg }}"
+
+    - name: Re authenticate to BIG-IQ/BIG-IP
+      include_tasks: authentication.yaml
+      when: atc_DO_status.status == 401
+
+    - name: Redo check
+      include_tasks: atc_task_check_bigiq.yaml
+      when: atc_DO_status.status == 401

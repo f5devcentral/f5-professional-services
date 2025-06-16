@@ -1,0 +1,116 @@
+---
+- name: Setup provider and varables
+  set_fact:
+    provider: "{{ provider }}"
+
+- name: Install Galaxy roles and conditions
+  include_tasks: install-galaxy-roles-collections.yml
+
+- name: Get authentication token
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/authn/login"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    body:
+      username: "{{ provider.user }}"
+      password: "{{ provider.password }}"
+      loginProviderName: "{{ provider.auth_provider | default('tmos') }}"
+    body_format: json
+  register: authtoken
+
+- name: Set the token fact if authentication succeeded
+  set_fact:
+    f5_auth_token: "{{ authtoken.json.token.token }}"
+  when: authtoken is success
+
+- name: Test authentication
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/echo"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+
+- name: Get device provisioning type
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/system/provisioning"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: rprov
+
+- name: Fail if you're running the role against a DCD device
+  fail:
+    msg: "This role should be run against a CM device, but you appear to be running it against a DCD device"
+  when: rprov.json.systemPersonality == 'logging_node'
+
+- name: Check if system is setup
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/system/setup"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: setupchk
+
+- name: Stop if the system is not setup
+  fail:
+    msg: "The CM device has not been setup. Please onboard the DCD device first."
+  when: setupchk.json.isSystemSetup is not defined or not setupchk.json.isSystemSetup|bool
+
+- name: Fail tenant_to_migrate != new_tenant_name
+  fail:
+    msg: tenant_to_migrate must be different than new_tenant_name
+  when:  tenant_to_migrate == new_tenant_name
+  
+- name: device_address != new_device_address
+  fail:
+    msg: device_address must be different than new_device_address
+  when:  device_address == new_device_address
+
+- name: Get AS3 declaration from the tenant user want to migrate and perform lots of parsing to get objects references and prepare apps migration
+  include_tasks: "parsing.yaml"
+  when: 
+    - not cleanup_only
+
+# SSL cert, key, security logging profile and WAF policy in /Common supported only for now
+- name: Deploy objects referenced in AS3 declaration
+  include_tasks: "deploy_objects.yaml"
+  when: 
+    - not deploy_as3_only
+    - not cleanup_only
+
+- name: Deploy AS3 declaration to new device
+  include_tasks: "deploy_as3.yaml"
+  when: 
+    - not deploy_objects_only
+    - not cleanup_only 
+
+- name: Get app services details to cleanup
+  include_tasks: "cleanup-get-apps-details.yaml"
+  when: 
+    - remove_old_tenant
+    - not deploy_objects_only
+    - not deploy_as3_only
+
+- name: Cleanup old tenant AS3 apps when device is reachable
+  include_tasks: "cleanup-apps.yaml"
+  when: 
+    - remove_old_tenant
+    - not deploy_objects_only
+    - not deploy_as3_only
+    - not old_device_not_reachable
+
+- name: Cleanup old tenant AS3 apps when device is NOT reachable
+  include_tasks: "cleanup-apps-unreachable.yaml"
+  when: 
+    - remove_old_tenant
+    - not deploy_objects_only
+    - not deploy_as3_only
+    - old_device_not_reachable
+  with_items: "{{ configSetNames }}"
+  loop_control:
+    loop_var: item2
