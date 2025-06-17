@@ -32,33 +32,62 @@
 - name: Make a copy of previous file to {{ dir_as3 }}/{{ tenant_to_migrate }}
   copy:
     src: "{{ dir_as3 }}/{{ tenant_to_migrate }}.json"
-    dest: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    dest: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
   delegate_to: localhost
 
 - name: Replace {{ tenant_to_migrate }} with {{ new_tenant_name }} in the declaration body
   replace:
-    path: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
     regexp: "/{{ tenant_to_migrate }}/"
     replace: "/{{ new_tenant_name }}/"
   delegate_to: localhost
 
 - name: Replace {{ tenant_to_migrate }} with {{ new_tenant_name }} in the declaration tenant value of the declaration
   replace:
-    path: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
     regexp: '"{{ tenant_to_migrate }}": {'
     replace: '"{{ new_tenant_name }}": {'
   delegate_to: localhost
 
+- name: Load csv file to find the new target address
+  community.general.read_csv:
+    path: ../Files/ips.csv
+  register: new_service
+
+- name: debug new service
+  ansible.builtin.debug:
+    msg: "{{ new_service.list }}"
+  
+- name: Changed App services name
+  loop: "{{ new_service.list }}"
+  loop_control:
+    loop_var: new_svc_name
+  replace:
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
+    regexp: "/{{ new_svc_name.tenantName ~ '/' ~ new_svc_name.applicationName }}/"
+    replace: "/{{new_svc_name.tenantName ~ '/' ~ new_svc_name.newApplicationName }}/"
+  when: new_svc_name.tenantName == tenant_to_migrate 
+
+- name: Changed App services name
+  loop: "{{ new_service.list }}"
+  loop_control:
+    loop_var: new_svc_name
+  replace:
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
+    regexp: '"{{ new_svc_name.applicationName }}": {'
+    replace: '"{{ new_svc_name.newApplicationName }}": {'
+  when: new_svc_name.tenantName == tenant_to_migrate 
+
 - name: Remove BIG-IQ id
   lineinfile: 
-    dest: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    dest: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
     state: absent 
     regexp: '^    "id":'
   delegate_to: localhost
 
 - name: Replace target BIG-IP with new target {{ new_device_address }}
   lineinfile:
-    path: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
     regexp: '^        "address":'
     line: '        "address": "{{ new_device_address }}"'
   delegate_to: localhost
@@ -74,7 +103,7 @@
 
 - name: Replace Virtual IP Addresses in the declaration body (if specified)
   replace:
-    path: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    path: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
     regexp: '"{{ item.old }}"'
     replace: '"{{ item.new }}"'
   delegate_to: localhost

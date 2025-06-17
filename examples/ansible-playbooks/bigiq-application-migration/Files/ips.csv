@@ -1,5 +1,4 @@
-parentApplication,name,tenantName,target_address,new_target
-BIGI_IQ_App_2,App_IQ_2_Service,App_IQ_2,10.10.10.52,10.10.10.53
-BIG_IQ_App,App_IQ_Zoro,App_IQ,10.10.10.52,10.10.10.53
-
-
+parentApplication,applicationName,tenantName,target_address,new_target,newApplicationName
+BIGI_IQ_App_2,Service,App_IQ_2,10.10.10.52,10.10.10.53,Chopper
+BIG_IQ_App,Zoro,App_IQ,10.10.10.52,10.10.10.53,Sanji
+BIG_IQ_App,Luffy,App_IQ,10.10.10.52,10.10.10.53,Ace

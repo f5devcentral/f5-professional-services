@@ -73,7 +73,7 @@
     status_code: 200, 202
   register: json_tenants
 
-- name: Saving tenant name in a list
+- name: Saving tenant link in a list
   set_fact:
     tenant_slink: "{{ json_tenants.json | json_query('items[0].selfLink')}}" 
 

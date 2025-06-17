@@ -6,7 +6,7 @@
   vars:
     atc_service: AS3
     atc_method: POST
-    atc_declaration_file: "{{ dir_as3 }}/{{ new_tenant_name }}.json"
+    atc_declaration_file: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
     atc_delay: 15
     atc_retries: 30
   register: atc_AS3_status
@@ -25,9 +25,10 @@
 
 - name: Get new tenant selfLink in new_tenant_selfLink
   set_fact:
-    new_tenant_selfLink: "{{ json_response | json_query(query) }}"
-  vars: 
-    query: "json.items[0].selfLink"
+    new_tenant_selfLink: "{{ json_response | json_query(query) | default([]) | first }}"
+  vars:
+    query: "json.items[?body.target.address=='{{to_target}}'].selfLink"
+  when: json_response.json.items is defined
 
 - name: Get app services name (configSetName) with new_tenant_selfLink
   uri:

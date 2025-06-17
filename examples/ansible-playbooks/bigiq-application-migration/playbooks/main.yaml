@@ -11,15 +11,24 @@
         path: ../Files/ips.csv
       register: new_target
 
+    - name: Deduplicate target list based on parentApplication
+      set_fact:
+        tg: "{{ new_target.list | unique(attribute='parentApplication') }}"
+
+    - name: Debug deduplicated list
+      ansible.builtin.debug:
+        var: tg
+
     - name: Process each Target address in the loop
       vars:
         current_target: "{{ ta.target_address }}"
         current_tenant: "{{ ta.tenantName }}"
         to_target: "{{ ta.new_target }}"
-        new_tenant: "{{ ta.tenantName }}_new"
+        new_tenant: "{{ ta.tenantName }}"
         move_to_app: "{{ ta.parentApplication }}"
-      loop: "{{ new_target.list }}"
+      loop: "{{ tg }}"
       loop_control:
         loop_var: ta
       ansible.builtin.include_tasks:
         move_app.yaml
+      #when: ta.parentApplication  not in app_rep

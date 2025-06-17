@@ -8,10 +8,14 @@
       - "This is the were services will be moved {{ move_to_app }}"
 
 - name: Get old Application services.
+  tags:
+    - iqtest
   ansible.builtin.include_tasks:
     cs_names.yaml
 
 - name: Migrate AS3 application service(s) from a BIG-IP to another.
+  tags:
+    - iqtest
   ansible.builtin.include_role:
     name: f5devcentral.bigiq_migrate_apps
   vars:
@@ -24,12 +28,16 @@
   register: status
 
 - name: Services array
+  tags:
+      - iqtest
   ansible.builtin.debug:
     msg:
       - "These are the old CS names: {{ oldconfigSetNames }}"
       - "These are the new CS names: {{ configSetNames }}"
 
 - name: Setting Service role permissions
+  tags:
+    - iqtest
   loop:
     - Manager
     - Viewer
@@ -39,12 +47,14 @@
     rbac.yaml
 
 - name: Resetting variables
+  tags:
+    - iqtest
   ansible.builtin.set_fact:
     configSetNames_array: []
 
 - name: Services array
+  tags:
+    - iqtest
   ansible.builtin.debug:
     msg: 
       - "{{ configSetNames_array }}"
-
-    

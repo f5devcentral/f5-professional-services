@@ -61,10 +61,10 @@
     msg: "The CM device has not been setup. Please onboard the DCD device first."
   when: setupchk.json.isSystemSetup is not defined or not setupchk.json.isSystemSetup|bool
 
-- name: Fail tenant_to_migrate != new_tenant_name
-  fail:
-    msg: tenant_to_migrate must be different than new_tenant_name
-  when:  tenant_to_migrate == new_tenant_name
+# - name: Fail tenant_to_migrate != new_tenant_name
+#   fail:
+#     msg: tenant_to_migrate must be different than new_tenant_name
+#   when:  tenant_to_migrate == new_tenant_name
   
 - name: device_address != new_device_address
   fail:
