@@ -1,0 +1,41 @@
+---
+
+- name: Wait for AS3 Task to complete
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/appsvcs/task/{{ atc_AS3_result.json.id }}"
+    method: GET
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    return_content: true
+    validate_certs: "{{ provider.validate_certs }}"
+    status_code: 200
+  register: atc_AS3_status
+  until: atc_AS3_status.json.results | map(attribute='message') | list | first != 'in progress'
+  retries: "{{ atc_retries }}"
+  delay: "{{ atc_delay }}"
+  changed_when: atc_AS3_status.json.results | map(attribute='message') | list | first != 'no change'
+  failed_when:
+    - atc_AS3_status.json.results | map(attribute='message') | list | first != 'success'
+    - atc_AS3_status.json.results | map(attribute='message') | list | first != 'no change'
+  delegate_to: localhost
+  when:
+    - atc_service == "AS3"
+    - atc_method in ['POST', 'DELETE']
+
+- name: Wait for DO Task to complete
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ atc_url }}/task/{{ atc_DO_result.json.id }}"
+    method: GET
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    return_content: true
+    validate_certs: "{{ provider.validate_certs }}"
+    status_code: 200
+  register: atc_DO_status
+  until: atc_DO_status is success
+  retries: "{{ atc_retries }}"
+  delay: "{{ atc_delay }}"
+  delegate_to: localhost
+  when:
+    - atc_service == "Device"
+    - atc_method == "POST"

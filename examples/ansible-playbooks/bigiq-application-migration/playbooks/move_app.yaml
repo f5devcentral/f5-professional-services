@@ -1,0 +1,60 @@
+- name: Check variables from previous task
+  ansible.builtin.debug:
+    msg:
+      - "This is the current target {{ current_target }}"
+      - "This is the current tenant {{ current_tenant }}"
+      - "This is the new target {{ to_target }}"
+      - "This is the new tenant {{ new_tenant }}"
+      - "This is the were services will be moved {{ move_to_app }}"
+
+- name: Get old Application services.
+  tags:
+    - iqtest
+  ansible.builtin.include_tasks:
+    cs_names.yaml
+
+- name: Migrate AS3 application service(s) from a BIG-IP to another.
+  tags:
+    - iqtest
+  ansible.builtin.include_role:
+    name: f5devcentral.bigiq_migrate_apps
+  vars:
+    dir_as3: ~/tmp
+    device_address: "{{ current_target }}"
+    tenant_to_migrate: "{{ current_tenant }}"
+    new_device_address: "{{ to_target }}"
+    new_tenant_name: "{{ new_tenant }}"
+    new_bigiq_app_name: "{{ move_to_app }}"
+  register: status
+
+- name: Services array
+  tags:
+      - iqtest
+  ansible.builtin.debug:
+    msg:
+      - "These are the old CS names: {{ oldconfigSetNames }}"
+      - "These are the new CS names: {{ configSetNames }}"
+
+- name: Setting Service role permissions
+  tags:
+    - iqtest
+  loop:
+    - Manager
+    - Viewer
+  loop_control:
+    loop_var: svc_role
+  ansible.builtin.include_tasks:
+    rbac.yaml
+
+- name: Resetting variables
+  tags:
+    - iqtest
+  ansible.builtin.set_fact:
+    configSetNames_array: []
+
+- name: Services array
+  tags:
+    - iqtest
+  ansible.builtin.debug:
+    msg: 
+      - "{{ configSetNames_array }}"

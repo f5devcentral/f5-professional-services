@@ -1,0 +1,95 @@
+- name: Check variables from previous task
+  debug:
+    msg:
+      - "This is the current target {{ current_target }}"
+      - "This is the current tenant {{ current_tenant }}"
+      - "This is the new target {{ to_target }}"
+      - "This is the new tenant {{ new_tenant }}"
+      - "This is the were services will be moved {{ move_to_app }}"
+
+- name: Get authentication token
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/authn/login"
+    method: POST
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    body:
+      username: "{{ provider.user }}"
+      password: "{{ provider.password }}"
+      loginProviderName: "{{ provider.auth_provider | default('tmos') }}"
+    body_format: json
+  register: authtoken
+
+- name: Set the token fact if authentication succeeded
+  set_fact:
+      f5_auth_token: "{{ authtoken.json.token.token }}"
+  when: authtoken is success
+
+- name: Test authentication
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/echo"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: status
+
+- name: Get device provisioning type
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/system/provisioning"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: rprov
+
+- name: Fail if you're running the role against a DCD device
+  fail:
+    msg: "This role should be run against a CM device, but you appear to be running it against a DCD device"
+  when: rprov.json.systemPersonality == 'logging_node'
+
+- name: Check if system is setup
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/system/setup"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: setupchk
+
+- name: Stop if the system is not setup
+  fail:
+    msg: "The CM device has not been setup. Please onboard the DCD device first."
+  when: setupchk.json.isSystemSetup is not defined or not setupchk.json.isSystemSetup|bool
+
+- name: Get Config set for Application Service
+  uri:
+    url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/tenants?$filter=name%20eq%20'{{ current_tenant }}'
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    status_code: 200, 202
+  register: json_tenants
+
+- name: Saving tenant link in a list
+  set_fact:
+    tenant_slink: "{{ json_tenants.json | json_query('items[0].selfLink')}}" 
+
+- name: Get app services name (configSetName) with new_tenant_selfLink
+  uri:
+    url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/config-sets?$filter=tenantReference.link%20eq%20'{{ tenant_slink }}'
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    status_code: 200, 202
+  register: json_csets
+
+- name: Get all configSetName
+  set_fact:
+    oldconfigSetNames: "{{ json_csets | json_query(query) }}"
+  vars: 
+    query: "json.items[*].configSetName"

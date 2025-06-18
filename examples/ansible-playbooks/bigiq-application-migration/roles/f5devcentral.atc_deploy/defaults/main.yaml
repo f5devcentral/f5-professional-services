@@ -1,0 +1,86 @@
+---
+### Automated Tool Chain service configuration.
+#
+# Timeout in seconds used during web connections.
+atc_timeout: 120
+
+# act_method accepted values include [POST, GET] for all services, and [DELETE] for AS3 only,
+# f5_act_deply_declaration role currently does not support AS3 PATCH method.
+#
+# Required
+atc_method: GET
+
+# URL of declaration location
+#
+# Optional
+#
+# File at url specfied is downloaded to path/filename specified in varable act_declaration_file.
+#
+# Default is null.
+# atc_declaration_url:
+
+# Amount of time between retires when checking service status
+#
+# Required
+atc_delay: 30
+
+# Number of times to retry service status
+#
+# Required
+atc_retries: 10
+
+# POSTing to a specific AS3 tenant.
+#
+# Optional
+#
+# Starting with AS3 3.14.0, you have the option of using POST to the /declare endpoint
+# with a specific tenant in the URI (for example …/declare/tenant1). This only updates
+# the tenant you specified, even if there are other tenants in the declaration. This
+# can be useful in some automation scenarios involving AS3.
+
+# For example, when POSTING to the URI /mgmt/shared/appsvcs/declare/tenant1,tenant2:
+#
+# If both tenant1 and tenant2 are in the declaration you are posting, both tenants are
+# updated and AS3 returns both tenants in the response.
+#
+# If only tenant1 is present in the declaration you are posting, only tenant1 is updated
+# and returned in the response, despite the fact tenant2 is included in the URI.
+#
+# If the tenant in the URI and the tenant in the declaration do not match (for example, only
+# tenant3 is present in the declaration), AS3 returns a “no change” response.
+#
+# Default is null.
+as3_tenant:
+
+# You can use the following URL query parameters for POST, GET, or DELETE
+#
+# Required
+#
+# base means system returns the declaration as originally deployed (but with secrets
+# like passphrases encrypted), full returns the declaration with all default schema
+# properties populated, expanded includes all URLs, base64s, and other references expanded
+# to their final static values.
+#
+# Acceptable values include: base, full, expanded
+#
+# Default is base
+as3_show: base
+
+# You can use the following URL query parameters for POST (Note: showHash for POST was
+# introduced in AS3 3.14.0 and will only work on 3.14.0 and later):
+#
+# This was introduced as a protection mechanism for tenants in a declaration
+# (previously you had to use a separate GET request to retrieve the Optimistic lock).
+# If you set “showHash=true”, the results include an optimisticLockKey for each tenant.
+# Attempts to change/update any of the tenants without the correct optimisticLockKey will fail.
+#
+# Optional
+#
+# Default is false.
+as3_showhash: false
+
+# When downloading a remote file, select to overwrite or not if it exists already
+download_force: true
+
+# Add Control data to AS3 declaration for identifying ansible version
+check_teem: true

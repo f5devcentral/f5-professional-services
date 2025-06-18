@@ -1,0 +1,66 @@
+---
+# Post AS3 declaration to new device using atc_deploy
+- name: ATC POST - create new {{ new_tenant_name }}
+  include_role:
+    name: f5devcentral.atc_deploy
+  vars:
+    atc_service: AS3
+    atc_method: POST
+    atc_declaration_file: "{{ dir_as3 }}/{{ new_tenant_name }}_new.json"
+    atc_delay: 15
+    atc_retries: 30
+  register: atc_AS3_status
+
+# GET new app name to move them to new_bigiq_app_name
+- name: Get new tenant info
+  uri:
+    url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/tenants?$filter=name%20eq%20'{{ new_tenant_name }}'
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    status_code: 200, 202
+  register: json_response
+
+- name: Get new tenant selfLink in new_tenant_selfLink
+  set_fact:
+    new_tenant_selfLink: "{{ json_response | json_query(query) | default([]) | first }}"
+  vars:
+    query: "json.items[?body.target.address=='{{to_target}}'].selfLink"
+  when: json_response.json.items is defined
+
+- name: Get app services name (configSetName) with new_tenant_selfLink
+  uri:
+    url: https://{{ provider.server }}:{{ provider.server_port }}/mgmt/cm/global/config-sets?$filter=tenantReference.link%20eq%20'{{ new_tenant_selfLink }}'
+    method: GET
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    status_code: 200, 202
+  register: json_response
+
+- name: Get all configSetName
+  set_fact:
+    configSetNames: "{{ json_response | json_query(query) }}"
+  vars: 
+    query: "json.items[*].configSetName"
+
+- name: Populate configSetName array
+  set_fact:
+    configSetNames_array: "{{ configSetNames_array|default([]) + [ {'name': item } ] }}"
+  with_items: "{{ configSetNames }}"
+
+#- debug:
+#    var: configSetNames_array
+
+# Move it there using role bigiq_move_app_dashboard
+- name: Move AS3 application service(s) in BIG-IQ application dashboard.
+  include_role:
+    name: f5devcentral.bigiq_move_app_dashboard
+  vars:
+      apps: 
+      - name: "{{ new_bigiq_app_name }}"
+        pin: "{{ configSetNames_array }}"
+  register: status

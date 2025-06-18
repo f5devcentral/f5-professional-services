@@ -1,0 +1,24 @@
+---
+
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible
+    command: ${MOLECULE_DOCKER_COMMAND:-"sleep infinity"}
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+scenario:
+  name: default
+  test_sequence:
+    - lint
+verifier:
+  name: testinfra
+lint: |
+  yamllint -c molecule/default/yaml-lint.yml .
+  ansible-lint
+  flake8

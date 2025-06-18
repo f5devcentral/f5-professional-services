@@ -1,0 +1,30 @@
+---
+
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible
+    command: ${MOLECULE_DOCKER_COMMAND:-"sleep infinity"}
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      retry_files_enabled: false
+      host_key_checking: false
+  env:
+    ANSIBLE_ROLES_PATH: ../../../
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-playbook.yml}
+scenario:
+  name: integration
+verifier:
+  name: testinfra
+lint: |
+  yamllint -c molecule/default/yaml-lint.yml .
+  ansible-lint
+  flake8

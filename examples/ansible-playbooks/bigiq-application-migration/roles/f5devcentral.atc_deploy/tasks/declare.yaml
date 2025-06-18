@@ -1,0 +1,76 @@
+---
+- name: "{{ atc_method }} AS3 declaration"
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ atc_url }}"
+    method: "{{ atc_method }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    return_content: true
+    validate_certs: "{{ provider.validate_certs }}"
+    body_format: json
+    body: "{{ atc_declaration_updated | default(omit) }}"
+    status_code: 204, 202, 200
+  register: atc_AS3_result
+  changed_when:
+    - atc_AS3_result.json.results | map(attribute='message') | list | first != 'no change'
+    - atc_AS3_result.json.results | map(attribute='message') | list | first != 'Declaration successfully submitted'
+  failed_when:
+    - atc_AS3_result.json.results | map(attribute='message') | list | first != 'success'
+    - atc_AS3_result.json.results | map(attribute='message') | list | first != 'no change'
+    - atc_AS3_result.json.results | map(attribute='message') | list | first != 'Declaration successfully submitted'
+  when:
+    - atc_method == 'POST' or atc_method == 'DELETE'
+    - atc_service == "AS3"
+    # - atc_declaration_updated is defined
+  delegate_to: localhost
+
+- name: "{{ atc_method }} DO declaration"
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ atc_url }}"
+    method: "{{ atc_method }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    return_content: true
+    validate_certs: "{{ provider.validate_certs }}"
+    body_format: json
+    body: "{{ atc_declaration_updated }}"
+    status_code: 202
+  register: atc_DO_result
+  when:
+    - atc_method == 'POST'
+    - atc_service == "Device"
+    - atc_declaration_updated is defined
+  delegate_to: localhost
+
+- name: "{{ atc_method }} TS declaration"
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ atc_url }}"
+    method: "{{ atc_method }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    return_content: true
+    validate_certs: "{{ provider.validate_certs }}"
+    body_format: json
+    body: "{{ atc_declaration_updated }}"
+    status_code: 204, 202, 200
+  register: atc_TS_status
+  failed_when:
+    - atc_TS_status.json.message != 'success'
+  when:
+    - atc_method == 'POST'
+    - atc_service == "Telemetry"
+    - atc_declaration_updated is defined
+
+- name: "GET {{ atc_service }} declaration"
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ atc_url }}"
+    method: "{{ atc_method }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    return_content: true
+    validate_certs: "{{ provider.validate_certs }}"
+    status_code: 204, 202, 200
+  register: atc_GET_status
+  when:
+    - atc_method == 'GET'
+  delegate_to: localhost

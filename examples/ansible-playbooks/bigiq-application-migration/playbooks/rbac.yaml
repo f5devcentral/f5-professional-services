@@ -1,0 +1,10 @@
+- name: Assign Application Service role to users with existing Application Role
+  loop: "{{ oldconfigSetNames }}"
+  loop_control:
+    index_var: cs
+  include_role:
+    name: f5devcentral.bigiq_apps_rbac
+  vars:
+    application_role_name: "{{ oldconfigSetNames[cs] ~ '%20' ~ svc_role }}"
+    application_service_role_name: "{{ configSetNames[cs] ~ '%20' ~ svc_role }}"
+  register: status

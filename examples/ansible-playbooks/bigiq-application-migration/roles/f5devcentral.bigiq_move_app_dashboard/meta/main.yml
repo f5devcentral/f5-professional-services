@@ -1,0 +1,17 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: bigiq_move_app_dashboard
+  author: rjouhann
+  description: Move application service(s) in BIG-IQ application dashboard.
+  company: F5 Networks
+  license: Apache
+  min_ansible_version: 2.7
+  platforms:
+    - name: TMOS
+      versions:
+        - all
+  galaxy_tags:
+    - f5
+    - bigiq

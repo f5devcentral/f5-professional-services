@@ -1,0 +1,61 @@
+---
+- name: Get details on BIG-IQ {{ application_role_name }} role
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/authorization/roles?$filter=displayName%20eq%20'{{ application_role_name }}'"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+
+- name: Show all users assigned to this role {{ application_role_name }}
+  set_fact:
+    existing_users: "{{ json_response | json_query(query) }}"
+  vars: 
+    query: "json.items[0].principalReferences"
+
+- name: Fails if {{ application_role_name }} has no users assigned
+  fail:
+    msg: "{{ application_role_name }} has no existing users assigned."
+  when:  existing_users | length == 0
+
+- name: Get details on BIG-IQ {{ application_service_role_name }} role
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}/mgmt/shared/authorization/roles?$filter=displayName%20eq%20'{{ application_service_role_name }}'"
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+  register: json_response
+
+- name: Get selflink of role {{ application_service_role_name }}
+  set_fact:
+    application_service_role_name_selfLink_localhost: "{{ json_response | json_query(query) }}"
+  vars: 
+    query: "json.items[0].selfLink"
+
+- name: Fails if {{ application_service_role_name }} does not exist
+  fail:
+    msg: "{{ application_service_role_name }} does not exist. Please check the role name (App Service Viewer or App Service Manager)"
+  when:  application_service_role_name_selfLink_localhost | length == 0
+
+- name: Remove https://localhost from the selfLink for later use
+  set_fact:
+    application_service_role_name_selfLink: "{{ application_service_role_name_selfLink_localhost | regex_replace('https://localhost', '') }}"
+
+- name: Assign {{ application_service_role_name }} to users which already are assigned to {{ application_role_name }} role
+  uri:
+    url: "https://{{ provider.server }}:{{ provider.server_port }}{{ application_service_role_name_selfLink }}"
+    method: PATCH
+    timeout: "{{ timeout }}"
+    validate_certs: "{{ provider.validate_certs }}"
+    headers:
+      Content-Type: application/json
+      X-F5-Auth-Token: "{{ f5_auth_token }}"
+    body: |
+      {
+          "principalReferences": {{ existing_users }}
+      }
+    body_format: json
+    status_code: 200
+  register: json_response
