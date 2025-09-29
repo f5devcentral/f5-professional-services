@@ -24,14 +24,18 @@ Collection contains subfolder with examples for the following tasks:
 
 
 ### **F5-XC-Data-Retrieval_collection.json**
-Used to retrieve logs and configuration information from a tenant/namespace/application
+Used to retrieve logs, configuration information from a tenant/namespace/application as well as application health score, alerts and CE health score.
 
 Collection contains subfolder with examples for the following tasks:
   * **Retrieve HTTP App Config (1 App)**
   * **Retrieve HTTP App Configs (1 Namespace)**
   * **Retrieve WAF+HTTP Request Logs (1 App)**
-  * **Retreive WAF+HTTP Requests Logs (Tenant)**
-  * **Retreive HTTP LB CNAMES (Tenant)** - also includes IP address Advertisements for each HTTP LB object
+  * **Retrieve WAF+HTTP Requests Logs (Tenant)**
+  * **Retrieve HTTP LB CNAMES (Tenant)** - also includes IP address Advertisements for each HTTP LB object
+  * **Retrieve alerts from a given CE site**
+  * **Retrieve specific CE health score**
+  * **Retrieve specific load balancer health score**
+  * **Retrieve all load balancers health score**
   
 ### **F5-XC-Migrate_collection.json**
 Used to migrate individual applications from one namespace to another.  Creates a new destination namespace if non-existent.
