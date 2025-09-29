@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2b894bf5-1332-428d-a068-f2f00aad24b0",
+		"_postman_id": "4d491546-ce4a-4943-89b6-9cd7e979ae76",
 		"name": "F5 XC Data Retrieval",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "12415464"
 	},
 	"item": [
 		{
@@ -14,7 +15,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ce4daad6-c593-456d-a47f-77099dddb550",
 								"exec": [
 									"//Get app name and http payload ",
 									"const appName = pm.environment.get(\"app_name_1\");",
@@ -33,10 +33,6 @@
 							}
 						}
 					],
-					"_postman_id": "ab5cb166-0f06-4b2a-b5c7-6e29c7912345",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -74,7 +70,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1f58e7ab-bcdd-4125-b201-5b6ff83a92b2",
 								"exec": [
 									"// get namespaces and set variables for object counts and payload",
 									"var JSONobj = JSON.parse(responseBody);",
@@ -96,10 +91,6 @@
 							}
 						}
 					],
-					"_postman_id": "a534c26d-c795-4d7a-84a3-36f3054d4f1f",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -114,7 +105,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6825e733-169d-4ea5-8084-b8c49bc36fc3",
 								"exec": [
 									"// get namespaces and set variables for object counts and payload",
 									"var JSONobj = JSON.parse(responseBody);",
@@ -138,10 +128,6 @@
 							}
 						}
 					],
-					"_postman_id": "bcffb69f-7266-44c0-89b6-898de2d230c8",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -156,7 +142,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bd097a62-d9c4-4fb5-9a6c-1af911e94554",
 								"exec": [
 									"// get namespaces and set variables for object counts and payload",
 									"var JSONobj = JSON.parse(responseBody);",
@@ -180,7 +165,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "9cf6f8b1-eaf3-43e7-a3c1-56d90c56ff63",
 								"exec": [
 									""
 								],
@@ -188,10 +172,6 @@
 							}
 						}
 					],
-					"_postman_id": "5e7d7654-fb72-4188-b18c-48e45b712733",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -200,8 +180,7 @@
 					},
 					"response": []
 				}
-			],
-			"_postman_id": "2c159ec5-9493-4f80-accc-75f6427a7374"
+			]
 		},
 		{
 			"name": "Retrieve HTTP App Configs (1 Namespace)",
@@ -212,7 +191,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d07bd9ea-1694-48e9-8e89-e85a78b6ef43",
 								"exec": [
 									"//get configuration and set to collection variable",
 									"pm.collectionVariables.set(\"LBConfig\", responseBody);"
@@ -221,10 +199,6 @@
 							}
 						}
 					],
-					"_postman_id": "34d04eb0-cec6-4757-8a2b-5b881806997f",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -262,7 +236,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d07bd9ea-1694-48e9-8e89-e85a78b6ef43",
 								"exec": [
 									"//get configuration and set to collection variable",
 									"pm.collectionVariables.set(\"poolConfig\", responseBody);"
@@ -271,10 +244,6 @@
 							}
 						}
 					],
-					"_postman_id": "d8eea1b8-9067-4920-84b4-8382fbed20c9",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -312,7 +281,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d07bd9ea-1694-48e9-8e89-e85a78b6ef43",
 								"exec": [
 									"//get configuration and set to collection variable",
 									"pm.collectionVariables.set(\"monitorConfig\", responseBody);"
@@ -321,10 +289,6 @@
 							}
 						}
 					],
-					"_postman_id": "b3158d09-4be0-4425-8463-71cc199a5410",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -356,8 +320,7 @@
 					},
 					"response": []
 				}
-			],
-			"_postman_id": "b3007e97-2c95-4725-b777-4b2259360eae"
+			]
 		},
 		{
 			"name": "Retrieve WAF + HTTP Request Logs (1 App)",
@@ -368,7 +331,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fd463f55-9f6a-4a4c-a39c-2c0c1cc5bccf",
 								"exec": [
 									"//Get app name and http payload ",
 									"const appName = pm.environment.get(\"app_name_1\");",
@@ -389,7 +351,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8a360a86-3fdc-4e97-b8d6-73d75e334c87",
 								"exec": [
 									"const log_range = pm.environment.get(\"log_duration\")",
 									"var moment = require(\"moment\");",
@@ -416,10 +377,6 @@
 							}
 						}
 					],
-					"_postman_id": "8d1fe623-b826-4e8d-a762-2810b7d6b4e4",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -457,7 +414,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "29d1917e-a4d7-49a9-9b8a-3ce3c7f3dcea",
 								"exec": [
 									""
 								],
@@ -467,7 +423,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "74da9578-3e1e-423c-9a04-779a56767bba",
 								"exec": [
 									"//get active WAF Rule Logs from namespaces that utliize WAF",
 									"var lbName = pm.collectionVariables.get(\"lbName\");",
@@ -483,10 +438,6 @@
 							}
 						}
 					],
-					"_postman_id": "01395032-c3ad-42f4-a61b-7c53dfc73668",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -509,7 +460,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "29d1917e-a4d7-49a9-9b8a-3ce3c7f3dcea",
 								"exec": [
 									""
 								],
@@ -519,7 +469,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "74da9578-3e1e-423c-9a04-779a56767bba",
 								"exec": [
 									"//get active WAF Rule Logs from namespaces that utliize WAF",
 									"var lbName = pm.collectionVariables.get(\"lbName\");",
@@ -535,10 +484,6 @@
 							}
 						}
 					],
-					"_postman_id": "5571f736-c211-4583-ae07-50c19a6b33a5",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -561,7 +506,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "29d1917e-a4d7-49a9-9b8a-3ce3c7f3dcea",
 								"exec": [
 									""
 								],
@@ -571,7 +515,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "74da9578-3e1e-423c-9a04-779a56767bba",
 								"exec": [
 									"//get active WAF Rule Logs from namespaces that utliize WAF",
 									"var lbName = pm.collectionVariables.get(\"lbName\");",
@@ -587,10 +530,6 @@
 							}
 						}
 					],
-					"_postman_id": "b1f808f2-9507-47b5-99e6-79b848f00050",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -613,7 +552,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "29d1917e-a4d7-49a9-9b8a-3ce3c7f3dcea",
 								"exec": [
 									""
 								],
@@ -623,7 +561,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "74da9578-3e1e-423c-9a04-779a56767bba",
 								"exec": [
 									"//get active WAF Rule Logs from namespaces that utliize WAF",
 									"var lbName = pm.collectionVariables.get(\"lbName\");",
@@ -639,10 +576,6 @@
 							}
 						}
 					],
-					"_postman_id": "8e6b4ace-1652-437f-ac55-bda432a1e76d",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -659,8 +592,7 @@
 					},
 					"response": []
 				}
-			],
-			"_postman_id": "1444a43a-6ec7-4a92-a2e8-d359089975e5"
+			]
 		},
 		{
 			"name": "Retrieve WAF + HTTP Request Logs (Tenant)",
@@ -671,7 +603,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f14e2e50-c59e-4287-9080-0b704bfaabb9",
 								"exec": [
 									"// get namespace configuraiotn JSON body and save to collection variable",
 									"var jsonData = JSON.parse(responseBody);",
@@ -683,7 +614,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "ed739ef6-aada-4c23-aa14-45239765c72f",
 								"exec": [
 									"const log_range = pm.environment.get(\"log_duration\")",
 									"var moment = require(\"moment\");",
@@ -710,10 +640,6 @@
 							}
 						}
 					],
-					"_postman_id": "31cfa90c-25e8-4819-b352-5a51026dbbd3",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -727,7 +653,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "29d1917e-a4d7-49a9-9b8a-3ce3c7f3dcea",
 								"exec": [
 									"let namespaces = pm.collectionVariables.get(\"namespaces\");",
 									"if(!namespaces || namespaces.length == 0) {",
@@ -750,7 +675,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "74da9578-3e1e-423c-9a04-779a56767bba",
 								"exec": [
 									"const namespaces = pm.collectionVariables.get(\"namespaces\");",
 									"if (namespaces && namespaces.length > 0){",
@@ -776,10 +700,6 @@
 							}
 						}
 					],
-					"_postman_id": "2081a95d-9e33-47fd-ad3d-b73a4d54aaef",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -796,8 +716,7 @@
 					},
 					"response": []
 				}
-			],
-			"_postman_id": "dcb1eaf5-d95c-4182-9ac6-f70bd0686487"
+			]
 		},
 		{
 			"name": "Retrieve HTTP LB CNAMES (Tenant)",
@@ -808,7 +727,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f14e2e50-c59e-4287-9080-0b704bfaabb9",
 								"exec": [
 									"// get namespace configuraiotn JSON body and save to collection variable",
 									"var jsonData = JSON.parse(responseBody);",
@@ -818,10 +736,6 @@
 							}
 						}
 					],
-					"_postman_id": "6ca0b218-23e5-4ed5-a646-cff02c30584b",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -835,7 +749,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d07bd9ea-1694-48e9-8e89-e85a78b6ef43",
 								"exec": [
 									"const namespaces = pm.collectionVariables.get(\"namespaces\");",
 									"if (namespaces && namespaces.length > 0){",
@@ -862,7 +775,6 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "82917d40-78ea-4e25-8331-01349f564365",
 								"exec": [
 									"let namespaces = pm.collectionVariables.get(\"namespaces\");",
 									"if(!namespaces || namespaces.length == 0) {",
@@ -884,10 +796,6 @@
 							}
 						}
 					],
-					"_postman_id": "5516d742-1922-4942-899b-b1026dde8626",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -919,8 +827,284 @@
 					},
 					"response": []
 				}
-			],
-			"_postman_id": "c5b57ac5-0925-4b46-bbf1-c515a9a10a80"
+			]
+		},
+		{
+			"name": "Alerts & Health",
+			"item": [
+				{
+					"name": "Active alerts for a given CE Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get namespace configuraiotn JSON body and save to collection variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"namespaces_body\", responseBody); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces"
+					},
+					"response": []
+				},
+				{
+					"name": "Active alerts for a given CE Site - Critical, Major",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get namespace configuraiotn JSON body and save to collection variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"namespaces_body\", responseBody); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces"
+					},
+					"response": []
+				},
+				{
+					"name": "Alerts history for a given CE Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get namespace configuraiotn JSON body and save to collection variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"namespaces_body\", responseBody); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces"
+					},
+					"response": []
+				},
+				{
+					"name": "Alerts from a given namespace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get namespace configuraiotn JSON body and save to collection variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"namespaces_body\", responseBody); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/web/namespaces"
+					},
+					"response": []
+				},
+				{
+					"name": "Specific CE Site healthscore",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get namespace configuraiotn JSON body and save to collection variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"namespaces_body\", responseBody); "
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"field_selector\":{\"healthscore\":{\"types\":[\"HEALTHSCORE_OVERALL\"]},\"metric\":{\"types\":[],\"features\":[],\"instances\":[],\"interfaces\":[]}},\"id\":{\"site\":\"tbledsoe-smsv2-ce-sea\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/data/namespaces/system/graph/connectivity/node"
+					},
+					"response": []
+				},
+				{
+					"name": "Specific Load Balancer healthscore",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Set current timestamp for start_time and calculate end_time\r",
+									"const currentTime = Math.floor((Date.now() / 1000) - 60); // Current time in seconds\r",
+									"const endTime = currentTime + 60; // Current time + 50 seconds\r",
+									"\r",
+									"// Convert currentTime and endTime to strings\r",
+									"const currentTimeStr = currentTime.toString(); // Current time as string\r",
+									"const endTimeStr = endTime.toString(); // End time as string\r",
+									"\r",
+									"// Set values to request body\r",
+									"pm.request.body.raw = JSON.stringify({\r",
+									"    field_selector: {\r",
+									"        healthscore: {\r",
+									"            types: [\"HEALTHSCORE_OVERALL\"]\r",
+									"        }\r",
+									"    },\r",
+									"    label_filter: [{\r",
+									"        label: \"LABEL_VHOST\",\r",
+									"        op: \"EQ\",\r",
+									"        value: \"ves-io-http-loadbalancer-test-lb\"\r",
+									"    }],\r",
+									"    start_time: currentTimeStr,\r",
+									"    end_time: endTimeStr\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get namespace configuraiotn JSON body and save to collection variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"namespaces_body\", responseBody); "
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"field_selector\":{\"healthscore\":{\"types\":[\"HEALTHSCORE_OVERALL\"]}},\"label_filter\":[{\"label\":\"LABEL_VHOST\",\"op\":\"EQ\",\"value\":\"ves-io-http-loadbalancer-test-lb\"}],\"start_time\": \"1758818195\",\"end_time\": \"1758918395\"}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/data/namespaces/i-goncalves/graph/service/node/instances"
+					},
+					"response": []
+				},
+				{
+					"name": "All Load Balancers healthscore",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Set values to request body\r",
+									"// Set current timestamp for start_time and calculate end_time\r",
+									"const currentTime = Math.floor((Date.now() / 1000) - 60); // Current time in seconds\r",
+									"const endTime = currentTime + 60; // Current time + 50 seconds\r",
+									"\r",
+									"// Convert currentTime and endTime to strings\r",
+									"const currentTimeStr = currentTime.toString(); // Current time as string\r",
+									"const endTimeStr = endTime.toString(); // End time as string\r",
+									"\r",
+									"// Set values to request body\r",
+									"pm.request.body.raw = JSON.stringify({\r",
+									"    field_selector: {\r",
+									"        node: {\r",
+									"            metric: {\r",
+									"                downstream: [\"HTTP_ERROR_RATE\", \"RESPONSE_THROUGHPUT\"]\r",
+									"            },\r",
+									"            healthscore: {\r",
+									"                types: [\"HEALTHSCORE_OVERALL\"]\r",
+									"            }\r",
+									"        }\r",
+									"    },\r",
+									"    step: \"300s\",\r",
+									"    end_time: endTimeStr,\r",
+									"    start_time: currentTimeStr,\r",
+									"    namespace: \"system\",\r",
+									"    label_filter: [{\r",
+									"        label: \"LABEL_VHOST_TYPE\",\r",
+									"        op: \"EQ\",\r",
+									"        value: \"HTTP_LOAD_BALANCER\"\r",
+									"    }],\r",
+									"    group_by: [\"NAMESPACE\", \"VHOST\"]\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// get namespace configuraiotn JSON body and save to collection variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"namespaces_body\", responseBody); "
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"field_selector\":{\"node\":{\"metric\":{\"downstream\":[\"HTTP_ERROR_RATE\",\"RESPONSE_THROUGHPUT\",\"REQUEST_THROUGHPUT\",\"HTTP_RESPONSE_LATENCY\",\"HTTP_REQUEST_RATE\",\"REQUEST_TO_ORIGIN_RATE\"]},\"healthscore\":{\"types\":[\"HEALTHSCORE_OVERALL\"]}}},\"step\":\"300s\",\"end_time\":\"1759153450\",\"start_time\":\"1759153150\",\"namespace\":\"system\",\"label_filter\":[{\"label\":\"LABEL_VHOST_TYPE\",\"op\":\"EQ\",\"value\":\"HTTP_LOAD_BALANCER\"}],\"group_by\":[\"NAMESPACE\",\"VHOST\"]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://{{voltconsole-host}}.console.ves.volterra.io/api/data/namespaces/system/graph/all_ns_service"
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -934,7 +1118,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "cbef3380-9a4a-41d1-bbc2-86bdfd300cf4",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -944,7 +1127,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "9184f8ac-615a-4d9f-8918-77b49f3e6357",
 				"type": "text/javascript",
 				"exec": [
 					""
