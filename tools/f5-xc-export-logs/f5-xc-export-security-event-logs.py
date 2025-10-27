@@ -3,47 +3,53 @@ import argparse
 import json
 import requests
 import pandas as pd 
+import sys
 
 def get_securiy_logs(token,tenant,namespace,loadbalancer,hours):
+    try:
+        df = pd.DataFrame(columns = ['Time', 'Request ID', 'Event Type', 'Source IP address', 'X-Forwarded-For' ,'Country', 'City', 'Browser', 'Domain','Method', 'Request Path', 'Response Code'])
 
-    df = pd.DataFrame(columns = ['Time', 'Request ID', 'Event Type', 'Source IP address', 'X-Forwarded-For' ,'Country', 'City', 'Browser', 'Domain','Method', 'Request Path', 'Response Code'])
+        currentTime = datetime.now()
+        midTime = int(round(datetime.timestamp(currentTime)))
+        startTime = midTime - (hours*3600)
+        print("Start to fetch security event logs, please wait for some moments...")
 
-    currentTime = datetime.now()
-    midTime = int(round(datetime.timestamp(currentTime)))
-    startTime = midTime - (hours*3600)
-
-    while True:
-        endTime = midTime
-        midTime= endTime - (24*3600)
-        if hours < 24:
-            midTime=startTime
-        BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/app_security/events'.format(tenant,namespace)
-        headers = {'Authorization': "APIToken {}".format(token)}
-        auth_response = requests.post(BASE_URL, data=json.dumps({"aggs": {}, "end_time": "{}".format(endTime), "limit": 0, "namespace": "{}".format(namespace), "query": "{{vh_name=\"ves-io-http-loadbalancer-""{}""\"}}".format(loadbalancer), "sort": "DESCENDING", "start_time": "{}".format(midTime), "scroll":True } ), headers=headers)
-        securityLogs = auth_response.json()
-        events = securityLogs['events']
-        if 'events' in securityLogs:
-            
-            for event in events:
-                item_dict = json.loads(event)
-                tmp = {'Time':item_dict['time'], 'Request ID':item_dict['req_id'], 'Event Type':item_dict['sec_event_name'], 'Source IP address':item_dict['src_ip'],'X-Forwarded-For':item_dict['x_forwarded_for'], 'Country':item_dict['country'], 'City':item_dict['city'], 'Browser':item_dict['browser_type'], 'Domain':item_dict['domain'],'Method':item_dict['method'], 'Request Path':item_dict['req_path'], 'Response Code':item_dict['rsp_code']}   
-                df_dictionary = pd.DataFrame([tmp])
-                df = pd.concat([df, df_dictionary], ignore_index=True)
-            while (securityLogs["scroll_id"]!=""):
-                BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/app_security/events/scroll'.format(tenant,namespace)
-                auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(securityLogs["scroll_id"]),"scroll":True}), headers=headers)
-                securityLogs = auth_response.json()
-                events = securityLogs['events']
+        while True:
+            endTime = midTime
+            midTime= endTime - (24*3600)
+            if hours < 24:
+                midTime=startTime
+            BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/app_security/events'.format(tenant,namespace)
+            headers = {'Authorization': "APIToken {}".format(token)}
+            auth_response = requests.post(BASE_URL, data=json.dumps({"aggs": {}, "end_time": "{}".format(endTime), "limit": 0, "namespace": "{}".format(namespace), "query": "{{vh_name=\"ves-io-http-loadbalancer-""{}""\"，sec_event_type=~\"waf_sec_event|bot_defense_sec_event|api_sec_event|svc_policy_sec_event\"}}".format(loadbalancer), "sort": "DESCENDING", "start_time": "{}".format(midTime), "scroll":True } ), headers=headers)
+            securityLogs = auth_response.json()
+            events = securityLogs['events']     
+            if 'events' in securityLogs:
+                
                 for event in events:
                     item_dict = json.loads(event)
                     tmp = {'Time':item_dict['time'], 'Request ID':item_dict['req_id'], 'Event Type':item_dict['sec_event_name'], 'Source IP address':item_dict['src_ip'],'X-Forwarded-For':item_dict['x_forwarded_for'], 'Country':item_dict['country'], 'City':item_dict['city'], 'Browser':item_dict['browser_type'], 'Domain':item_dict['domain'],'Method':item_dict['method'], 'Request Path':item_dict['req_path'], 'Response Code':item_dict['rsp_code']}   
                     df_dictionary = pd.DataFrame([tmp])
                     df = pd.concat([df, df_dictionary], ignore_index=True)
-        hours=hours-24
-        if hours<24:
-            break
-        
-    return df
+                while (securityLogs["scroll_id"]!=""):
+                    BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/app_security/events/scroll'.format(tenant,namespace)
+                    auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(securityLogs["scroll_id"]),"scroll":True}), headers=headers)
+                    securityLogs = auth_response.json()
+                    events = securityLogs['events']
+                    for event in events:
+                        item_dict = json.loads(event)
+                        tmp = {'Time':item_dict['time'], 'Request ID':item_dict['req_id'], 'Event Type':item_dict['sec_event_name'], 'Source IP address':item_dict['src_ip'],'X-Forwarded-For':item_dict['x_forwarded_for'], 'Country':item_dict['country'], 'City':item_dict['city'], 'Browser':item_dict['browser_type'], 'Domain':item_dict['domain'],'Method':item_dict['method'], 'Request Path':item_dict['req_path'], 'Response Code':item_dict['rsp_code']}   
+                        df_dictionary = pd.DataFrame([tmp])
+                        df = pd.concat([df, df_dictionary], ignore_index=True)
+            hours=hours-24
+            print("Still processing logs, please wait for some moments...")
+            if hours<24:
+                break
+            
+        return df
+    except Exception as e:
+        print(f"An error occurred: {e}, and the error is {e.doc}")
+        sys.exit()# Return an empty DataFrame in case of error
 
 
 def main():
@@ -58,6 +64,7 @@ def main():
 
     security_logs = get_securiy_logs(args.token,args.tenant,args.namespace,args.loadbalancer,args.hours)
     security_logs.to_csv("f5-xc-security_events-{}_{}-{}.csv".format(args.tenant,args.namespace,currentTime.strftime("%m-%d-%Y")), index = False, sep=',', encoding='utf-8')
+    print("The log has been exported successfully, Please Check it")
 
 
 if __name__ == "__main__":
