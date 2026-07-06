@@ -8,6 +8,8 @@
 
 feedService is an iApp- and Python-based automation solution that enables F5 BIG-IP devices to automatically download and process remote threat intelligence feeds, URL blocklists, and IP address lists. The solution intelligently classifies feed data and imports it into BIG-IP data constructs (Data Groups and Custom URL Categories) for use in Local Traffic Policies, security policies, URL filtering, iRules, and more.
 
+<img src="iapp-example.png" alt="iApp Example" width="467" height="537">
+
 ## Features
 
 - **Multi-Format Feed Support**: Parse feeds in multiple formats
