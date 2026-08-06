@@ -1,0 +1,12 @@
+output/
+myvenv/
+__pycache__/
+*.csv
+*.xlsx
+*.tfstate
+*.tfstate.*
+*.p12
+*.conf
+.terraform*
+*.crt
+*.key
