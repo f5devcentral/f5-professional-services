@@ -50,7 +50,7 @@ def get_audit_logs(token,tenant,namespace,hours):
             auditLogs = auth_response.json()
             if 'logs' in auditLogs:
                 df = logs_processor(auditLogs['logs'], df)
-                while (auditLogs["scroll_id"]!=""):
+                while (len(auditLogs['logs'])!=0):
                     BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/audit_logs/scroll'.format(tenant,namespace)
                     auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(auditLogs["scroll_id"])}), headers=headers)
                     auditLogs = auth_response.json()

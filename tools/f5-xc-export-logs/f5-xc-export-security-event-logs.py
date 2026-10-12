@@ -21,7 +21,7 @@ def get_securiy_logs(token,tenant,namespace,loadbalancer,hours):
                 midTime=startTime
             BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/app_security/events'.format(tenant,namespace)
             headers = {'Authorization': "APIToken {}".format(token)}
-            auth_response = requests.post(BASE_URL, data=json.dumps({"aggs": {}, "end_time": "{}".format(endTime), "limit": 0, "namespace": "{}".format(namespace), "query": "{{vh_name=\"ves-io-http-loadbalancer-""{}""\"，sec_event_type=~\"waf_sec_event|bot_defense_sec_event|api_sec_event|svc_policy_sec_event\"}}".format(loadbalancer), "sort": "DESCENDING", "start_time": "{}".format(midTime), "scroll":True } ), headers=headers)
+            auth_response = requests.post(BASE_URL, data=json.dumps({"aggs": {}, "end_time": "{}".format(endTime), "limit": 0, "namespace": "{}".format(namespace), "query": "{{vh_name=\"ves-io-http-loadbalancer-""{}""\",sec_event_type=~\"waf_sec_event|bot_defense_sec_event|api_sec_event|svc_policy_sec_event\"}}".format(loadbalancer), "sort": "DESCENDING", "start_time": "{}".format(midTime), "scroll":True } ), headers=headers)
             securityLogs = auth_response.json()
             events = securityLogs['events']     
             if 'events' in securityLogs:
@@ -31,7 +31,8 @@ def get_securiy_logs(token,tenant,namespace,loadbalancer,hours):
                     tmp = {'Time':item_dict['time'], 'Request ID':item_dict['req_id'], 'Event Type':item_dict['sec_event_name'], 'Source IP address':item_dict['src_ip'],'X-Forwarded-For':item_dict['x_forwarded_for'], 'Country':item_dict['country'], 'City':item_dict['city'], 'Browser':item_dict['browser_type'], 'Domain':item_dict['domain'],'Method':item_dict['method'], 'Request Path':item_dict['req_path'], 'Response Code':item_dict['rsp_code']}   
                     df_dictionary = pd.DataFrame([tmp])
                     df = pd.concat([df, df_dictionary], ignore_index=True)
-                while (securityLogs["scroll_id"]!=""):
+
+                while (len(securityLogs['events'])!=0):
                     BASE_URL = 'https://{}.console.ves.volterra.io/api/data/namespaces/{}/app_security/events/scroll'.format(tenant,namespace)
                     auth_response = requests.post(BASE_URL, data=json.dumps({"namespace": "{}".format(namespace), "scroll_id": "{}".format(securityLogs["scroll_id"]),"scroll":True}), headers=headers)
                     securityLogs = auth_response.json()
